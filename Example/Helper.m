@@ -1,0 +1,29 @@
+//
+//  Helper.m
+//  RRNavigationBar
+//
+//  Created by Moch Xiao on 3/27/17.
+//  Copyright © 2017 RedRain. All rights reserved.
+//
+
+#import "Helper.h"
+
+UIImage *_Nullable RRUIImageMake(UIColor * _Nonnull color) {
+    CGSize size = CGSizeMake(1, 1);
+    UIGraphicsBeginImageContextWithOptions(size, false, 0);
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    if (!context) {
+        UIGraphicsEndImageContext();
+        return nil;
+    }
+    CGContextRetain(context);
+    
+    CGContextSetFillColorWithColor(context, color.CGColor);
+    CGContextFillRect(context, (CGRect){.origin = CGPointZero, .size = size});
+    
+    UIImage *output = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    CGContextRelease(context);
+    
+    return output;
+}
