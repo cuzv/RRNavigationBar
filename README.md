@@ -76,7 +76,7 @@ For more information see the demo in project.
 - `shadowImage`
 - `setBackgroundImage:forBarMetrics:`
 - `alpha`
-- `rr_forceHidden`
+- `rr_forceShadowImageHidden`
 
 Try not change `translucent` property, which is may cause navigationBar flash when animation complete with extends container ViewController's view backgroundColor.
 

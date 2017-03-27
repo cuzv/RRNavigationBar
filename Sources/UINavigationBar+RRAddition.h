@@ -10,6 +10,6 @@
 
 @interface UINavigationBar (RRAddition)
 
-@property (nonatomic, assign) BOOL rr_forceHidden;
+@property (nonatomic, assign) BOOL rr_forceShadowImageHidden;
 
 @end

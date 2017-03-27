@@ -33,14 +33,14 @@
     navigationBar.shadowImage = self.shadowImage;
     [navigationBar setBackgroundImage:[self backgroundImageForBarMetrics:UIBarMetricsDefault] forBarMetrics:UIBarMetricsDefault];
     navigationBar.alpha = self.alpha;
-    navigationBar.rr_forceHidden = self.rr_forceHidden;
+    navigationBar.rr_forceShadowImageHidden = self.rr_forceShadowImageHidden;
 }
 
-- (void)setRr_forceHidden:(BOOL)rr_forceHidden {
-    if (self.rr_forceHidden == rr_forceHidden) {
+- (void)setRr_forceShadowImageHidden:(BOOL)rr_forceShadowImageHidden {
+    if (self.rr_forceShadowImageHidden == rr_forceShadowImageHidden) {
         return;
     }
-    objc_setAssociatedObject(self, @selector(rr_forceHidden), @(rr_forceHidden), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    objc_setAssociatedObject(self, @selector(rr_forceShadowImageHidden), @(rr_forceShadowImageHidden), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 
     Class clazz1 = NSClassFromString(@"_UINavigationBarBackground");
     Class clazz2 = NSClassFromString(@"_UIBarBackground");
@@ -53,7 +53,7 @@
             for (UIView *subview in view.subviews) {
                 if ([subview isKindOfClass:UIImageView.class] &&
                     CGRectGetHeight(subview.bounds) == 1.0f / UIScreen.mainScreen.scale) {
-                    subview.hidden = rr_forceHidden;
+                    subview.hidden = rr_forceShadowImageHidden;
                 }
             }
         }
@@ -62,7 +62,7 @@
             for (UIView *subview in view.subviews) {
                 if ([subview isKindOfClass:UIImageView.class] &&
                     CGRectGetHeight(subview.bounds) == 1.0f / UIScreen.mainScreen.scale) {
-                    subview.hidden = rr_forceHidden;
+                    subview.hidden = rr_forceShadowImageHidden;
                 }
             }
         }
@@ -70,11 +70,11 @@
     
     if (self._holder.isViewLoaded &&
         self._holder.view.window) {
-        self._holder.navigationController.navigationBar.rr_forceHidden = rr_forceHidden;
+        self._holder.navigationController.navigationBar.rr_forceShadowImageHidden = rr_forceShadowImageHidden;
     }
 }
 
-- (BOOL)rr_forceHidden {
+- (BOOL)rr_forceShadowImageHidden {
     return [objc_getAssociatedObject(self, _cmd) boolValue];
 }
 
