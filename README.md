@@ -7,21 +7,17 @@
 # RRNavigationBar
 bring `UINavigationBar` to` UIViewController`.
 
-
-
 ## Introduction
 
 [KMNavigationBarTransition](https://github.com/MoZhouqi/KMNavigationBarTransition) provide a grace method deal with `navigationBar` transition, and requires zero  line of code changes, which is awesome.
 
-Here is the situation I couldn't doing well by using [KMNavigationBarTransition](https://github.com/MoZhouqi/KMNavigationBarTransition): first page is a product list, click product line, push to product details page, requires transparent `navigationBar`, while you scrolling, it could recover to default `navigationBar`'s appearance. Continue  push to the next page, the `navigationBar` needs to look like the first page, which is the default appearance.
+Here is the situation I couldn't doing well by using [KMNavigationBarTransition](https://github.com/MoZhouqi/KMNavigationBarTransition): first page is a product list, click product line, push to product details page, requires transparent `navigationBar`, while you scrolling, it could recover to default `navigationBar`'s appearance. Continue  push to the next page, the `navigationBar` needs to look like the first page, which is the default appearance. (like the following 1st gif tells.)
 
 In a word, what I wanted is change the  `navigationBar`'s appearance only affect current viewController, which is this repo trying to do.
 
 <p align="left">
 <img src="./Preview/1.gif" width=240px">
-
 <img src="./Preview/2.gif" width=240px">
-
 </p>
 
 ## Requirements
@@ -29,8 +25,6 @@ In a word, what I wanted is change the  `navigationBar`'s appearance only affect
 - iOS 7.0+
 
 My working environment is iOS 10.2 + Xcode 8.2.1, the minimum support version is iOS7 in theory, but without test passed.
-
-
 
 ## CocoaPods
 
@@ -60,8 +54,6 @@ $ pod install
 
 You should open the `{Project}.xcworkspace` instead of the `{Project}.xcodeproj` after you installed anything from CocoaPods.
 
-
-
 ## Usage
 
 In ViewController's `viewDidLoad` method:
@@ -88,7 +80,7 @@ For more information see the demo in project.
 
 Try not change `translucent` property, which is may cause navigationBar flash when animation complete with extends container ViewController's view backgroundColor.
 
- `hidden`property will have no effect, try use `setBackgroundImage:forBarMetrics:` & `shadowImage` make navigationBar invisible.
+Set `hidden`property will have no effect, try use `setBackgroundImage:forBarMetrics:` & `shadowImage` make navigationBar invisible.
 
 ## License
 
