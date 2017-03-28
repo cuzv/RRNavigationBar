@@ -9,7 +9,7 @@ bring `UINavigationBar` to` UIViewController`.
 
 ## Introduction
 
-[KMNavigationBarTransition](https://github.com/MoZhouqi/KMNavigationBarTransition) provide a grace method deal with `navigationBar` transition, and requires zero  line of code changes, which is awesome.
+[KMNavigationBarTransition](https://github.com/MoZhouqi/KMNavigationBarTransition) provides a grace method deal with `navigationBar` transition, and requires zero  line of code changes, which is awesome.
 
 Here is the situation I couldn't doing well by using [KMNavigationBarTransition](https://github.com/MoZhouqi/KMNavigationBarTransition): first page is a product list, click product line, push to product details page, requires transparent `navigationBar`, while you scrolling, it could recover to default `navigationBar`'s appearance. Continue  push to the next page, the `navigationBar` needs to look like the first page, which is the default appearance. (like the following 1st gif tells.)
 

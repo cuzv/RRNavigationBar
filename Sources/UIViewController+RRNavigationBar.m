@@ -41,7 +41,7 @@
 
 #pragma mark - Public
 
-- (UINavigationBar *)rr_navigationBar {
+- (nonnull UINavigationBar *)rr_navigationBar {
     UINavigationBar *bar = objc_getAssociatedObject(self, _cmd);
     if (bar) {
         return bar;
@@ -55,7 +55,7 @@
     return bar;
 }
 
-- (void)setRr_navigationBar:(UINavigationBar *)rr_navigationBar {
+- (void)setRr_navigationBar:(nonnull UINavigationBar *)rr_navigationBar {
     objc_setAssociatedObject(self, @selector(rr_navigationBar), rr_navigationBar, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
     rr_navigationBar._holder = self;
 }
