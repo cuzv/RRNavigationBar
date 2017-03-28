@@ -16,6 +16,7 @@
 
 @interface UINavigationController ()<UINavigationControllerDelegate>
 @property (nonatomic, weak, nullable) UIViewController *_visibleTopViewController;
+@property (nonatomic, assign) BOOL _navigationBarInitialized;
 @end
 
 @implementation UINavigationController (RRNavigationBar)
@@ -25,6 +26,7 @@
     dispatch_once(&onceToken, ^{
         if (self.class == UINavigationController.class) {
             RRSwizzleInstanceMethod(self.class, @selector(viewDidLoad), @selector(_rr_viewDidLoad));
+            RRSwizzleInstanceMethod(self.class, @selector(viewWillLayoutSubviews), @selector(_rr_nvc_viewWillLayoutSubviews));
             RRSwizzleInstanceMethod(self.class, @selector(preferredStatusBarStyle), @selector(_rr_preferredStatusBarStyle));
         }
     });
@@ -41,23 +43,46 @@
     objc_setAssociatedObject(self, @selector(_visibleTopViewController), wrapper, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
+- (BOOL)_navigationBarInitialized {
+    return [objc_getAssociatedObject(self, _cmd) boolValue];
+}
+
+- (void)set_navigationBarInitialized:(BOOL)_navigationBarInitialized {
+    objc_setAssociatedObject(self, @selector(_navigationBarInitialized), @(_navigationBarInitialized), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+
 - (void)_makeNavigationBarVisible:(BOOL)visible {
     [[self.navigationBar valueForKey:@"_backgroundView"] setHidden:!visible];
 }
 
 #pragma mark - Swizzle
 
+BOOL _rr_appearanceDeployed = NO;
+
 - (void)_rr_viewDidLoad {
     [self _rr_viewDidLoad];
     self.delegate = self;
-    self.rr_navigationBar = RRUINavigationBarDuplicate(self.navigationBar);
+    _rr_appearanceDeployed = UINavigationBar.appearance.rr_appearanceDeployed;
+    if (!_rr_appearanceDeployed && !self._navigationBarInitialized) {
+        self.rr_navigationBar = RRUINavigationBarDuplicate(self.navigationBar);
+        self._navigationBarInitialized = YES;
+    }
+}
+
+- (void)_rr_nvc_viewWillLayoutSubviews {
+    [self _rr_nvc_viewWillLayoutSubviews];
+    if (_rr_appearanceDeployed && !self._navigationBarInitialized) {
+        self.rr_navigationBar = RRUINavigationBarDuplicate(self.navigationBar);
+        [self.rr_navigationBar _apply];
+        self._navigationBarInitialized = YES;
+    }
 }
 
 - (UIStatusBarStyle)_rr_preferredStatusBarStyle {
     if (self.topViewController) {
         return self.topViewController.preferredStatusBarStyle;
     }
-    return  [self _rr_preferredStatusBarStyle];
+    return self._rr_preferredStatusBarStyle;
 }
 
 #pragma mark - UINavigationControllerDelegate
@@ -119,7 +144,6 @@
 - (void)navigationController:(UINavigationController *)navigationController didShowViewController:(UIViewController *)viewController animated:(BOOL)animated {
     [self _handleDidShowViewController:viewController];
     RRLog(@"DID SHOW VC %@", viewController.navigationItem.title);
-    RRLog(@"%@", viewController.rr_navigationBar.hidden ? @"HIDDEN" : @"NOT HIDDEN");
 }
 
 - (void)_handleDidShowViewController:(UIViewController *)viewController {

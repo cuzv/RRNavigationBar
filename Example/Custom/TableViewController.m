@@ -40,7 +40,7 @@
     [super viewDidLoad];
 
     if (!self.nextVCData.count) {
-        ConfigItem *tintColor = [[ConfigItem alloc] initWithType:ConfigTypeTintColor value:ConfigValueColorBlue];
+        ConfigItem *tintColor = [[ConfigItem alloc] initWithType:ConfigTypeTintColor value:ConfigValueColorNone];
         ConfigItem *barTintColor = [[ConfigItem alloc] initWithType:ConfigTypeBarTintColor value:ConfigValueColorNone];
         ConfigItem *backgroundImageColor = [[ConfigItem alloc] initWithType:ConfigTypeBackgroundImageColor value:ConfigValueColorNone];
         ConfigItem *shadowImage = [[ConfigItem alloc] initWithType:ConfigTypeShadowImage value:ConfigValueTrue];

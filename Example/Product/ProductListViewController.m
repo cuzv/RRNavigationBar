@@ -8,6 +8,7 @@
 
 #import "ProductListViewController.h"
 #import "ProductViewController.h"
+#import "RRNavigationBar.h"
 
 @interface ProductListViewController ()
 
@@ -21,6 +22,11 @@
     self.view.backgroundColor = [UIColor whiteColor];
     self.navigationItem.title = @"Product List";
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Next" style:UIBarButtonItemStylePlain target:self action:@selector(handleClickNext:)];
+
+//    {
+//        [self.rr_navigationBar setBackgroundImage:[UIImage new] forBarMetrics:UIBarMetricsDefault];
+//        self.rr_navigationBar.shadowImage = [UIImage new];
+//    }
 }
 
 - (void)handleClickNext:(UIBarButtonItem *)sender {

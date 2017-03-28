@@ -88,7 +88,6 @@
     }
     self.rr_navigationBar.hidden = NO;
     [self.rr_navigationBar.superview bringSubviewToFront:self.rr_navigationBar];
-    RRLog(@"--NOT HIDDEN");
 }
 
 @end
