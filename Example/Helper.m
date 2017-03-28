@@ -8,8 +8,7 @@
 
 #import "Helper.h"
 
-UIImage *_Nullable RRUIImageMake(UIColor * _Nonnull color) {
-    CGSize size = CGSizeMake(1, 1);
+UIImage *_Nullable RRUIImageMakeWithSize(UIColor * _Nonnull color, CGSize size) {
     UIGraphicsBeginImageContextWithOptions(size, false, 0);
     CGContextRef context = UIGraphicsGetCurrentContext();
     if (!context) {
@@ -26,4 +25,8 @@ UIImage *_Nullable RRUIImageMake(UIColor * _Nonnull color) {
     CGContextRelease(context);
     
     return output;
+}
+
+UIImage *_Nullable RRUIImageMake(UIColor * _Nonnull color) {
+    return RRUIImageMakeWithSize(color, CGSizeMake(1, 1));
 }

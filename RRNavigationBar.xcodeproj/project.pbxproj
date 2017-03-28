@@ -20,6 +20,8 @@
 		465E1C2B1E8662830082389A /* UINavigationController+RRNavigationBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 465E1C2A1E8662830082389A /* UINavigationController+RRNavigationBar.m */; };
 		465E1C2E1E8662CF0082389A /* RRUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 465E1C2D1E8662CF0082389A /* RRUtils.m */; };
 		465FE9D61E87E92A000654C1 /* UINavigationBar+RRAddition.m in Sources */ = {isa = PBXBuildFile; fileRef = 465FE9D51E87E92A000654C1 /* UINavigationBar+RRAddition.m */; };
+		46C646F81E8A377500A3349A /* _RRWeakAssociatedObjectWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 46C646F71E8A377500A3349A /* _RRWeakAssociatedObjectWrapper.m */; };
+		46C6471F1E8A56D700A3349A /* EmbedTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 46C6471E1E8A56D700A3349A /* EmbedTabBarController.m */; };
 		46F46E0A1E7AEEB9000C8011 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 46F46DFE1E7AEEB9000C8011 /* Assets.xcassets */; };
 		46F46E0B1E7AEEB9000C8011 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 46F46E001E7AEEB9000C8011 /* LaunchScreen.storyboard */; };
 		46F46E0D1E7AEEB9000C8011 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 46F46E051E7AEEB9000C8011 /* AppDelegate.m */; };
@@ -33,7 +35,6 @@
 		460410FC1E82C08F00FC3E2B /* UIColor+EKExtension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+EKExtension.m"; sourceTree = "<group>"; };
 		4625A8191E88F4B40092247A /* _RRNavigationBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _RRNavigationBar.h; sourceTree = "<group>"; };
 		4625A81A1E88F4B40092247A /* _RRNavigationBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _RRNavigationBar.m; sourceTree = "<group>"; };
-		4625A81C1E89068A0092247A /* UIViewController+RRNavigationBar_Internal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIViewController+RRNavigationBar_Internal.h"; sourceTree = "<group>"; };
 		4625A81E1E8917C20092247A /* UINavigationBar+RRAddition_Internal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UINavigationBar+RRAddition_Internal.h"; sourceTree = "<group>"; };
 		4625A81F1E8918070092247A /* RRNavigationBar.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RRNavigationBar.h; sourceTree = "<group>"; };
 		4625A8251E8931940092247A /* ProductListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProductListViewController.h; sourceTree = "<group>"; };
@@ -57,6 +58,10 @@
 		465FE9D41E87E92A000654C1 /* UINavigationBar+RRAddition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UINavigationBar+RRAddition.h"; sourceTree = "<group>"; };
 		465FE9D51E87E92A000654C1 /* UINavigationBar+RRAddition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UINavigationBar+RRAddition.m"; sourceTree = "<group>"; };
 		4692E41A1E7AED4A00C53A89 /* RRNavigationBar.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RRNavigationBar.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		46C646F61E8A377500A3349A /* _RRWeakAssociatedObjectWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _RRWeakAssociatedObjectWrapper.h; sourceTree = "<group>"; };
+		46C646F71E8A377500A3349A /* _RRWeakAssociatedObjectWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _RRWeakAssociatedObjectWrapper.m; sourceTree = "<group>"; };
+		46C6471D1E8A56D700A3349A /* EmbedTabBarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EmbedTabBarController.h; sourceTree = "<group>"; };
+		46C6471E1E8A56D700A3349A /* EmbedTabBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EmbedTabBarController.m; sourceTree = "<group>"; };
 		46F46DFE1E7AEEB9000C8011 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		46F46E011E7AEEB9000C8011 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		46F46E041E7AEEB9000C8011 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -128,6 +133,8 @@
 				46F46E051E7AEEB9000C8011 /* AppDelegate.m */,
 				460410FB1E82C08F00FC3E2B /* UIColor+EKExtension.h */,
 				460410FC1E82C08F00FC3E2B /* UIColor+EKExtension.m */,
+				46C6471D1E8A56D700A3349A /* EmbedTabBarController.h */,
+				46C6471E1E8A56D700A3349A /* EmbedTabBarController.m */,
 				4625A82F1E8938A60092247A /* Helper.h */,
 				4625A8301E8938A60092247A /* Helper.m */,
 				46F46DFE1E7AEEB9000C8011 /* Assets.xcassets */,
@@ -141,7 +148,6 @@
 		46AFDF9C1E7AF006008288AC /* Sources */ = {
 			isa = PBXGroup;
 			children = (
-				4625A81C1E89068A0092247A /* UIViewController+RRNavigationBar_Internal.h */,
 				460410F21E82BF9200FC3E2B /* UIViewController+RRNavigationBar.h */,
 				460410F31E82BF9200FC3E2B /* UIViewController+RRNavigationBar.m */,
 				465E1C291E8662830082389A /* UINavigationController+RRNavigationBar.h */,
@@ -151,6 +157,8 @@
 				465FE9D51E87E92A000654C1 /* UINavigationBar+RRAddition.m */,
 				4625A8191E88F4B40092247A /* _RRNavigationBar.h */,
 				4625A81A1E88F4B40092247A /* _RRNavigationBar.m */,
+				46C646F61E8A377500A3349A /* _RRWeakAssociatedObjectWrapper.h */,
+				46C646F71E8A377500A3349A /* _RRWeakAssociatedObjectWrapper.m */,
 				465E1C2C1E8662CF0082389A /* RRUtils.h */,
 				465E1C2D1E8662CF0082389A /* RRUtils.m */,
 				4625A81F1E8918070092247A /* RRNavigationBar.h */,
@@ -249,7 +257,9 @@
 				465FE9D61E87E92A000654C1 /* UINavigationBar+RRAddition.m in Sources */,
 				4625A83C1E893F2F0092247A /* OptionsTableViewController.m in Sources */,
 				4625A82A1E8931A00092247A /* ProductViewController.m in Sources */,
+				46C646F81E8A377500A3349A /* _RRWeakAssociatedObjectWrapper.m in Sources */,
 				46F46E0D1E7AEEB9000C8011 /* AppDelegate.m in Sources */,
+				46C6471F1E8A56D700A3349A /* EmbedTabBarController.m in Sources */,
 				4625A83D1E893F2F0092247A /* TableViewController.m in Sources */,
 				465E1C2E1E8662CF0082389A /* RRUtils.m in Sources */,
 			);

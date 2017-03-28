@@ -7,8 +7,7 @@
 //
 
 #import "AppDelegate.h"
-#import "TableViewController.h"
-#import "ProductListViewController.h"
+#import "EmbedTabBarController.h"
 
 @interface AppDelegate ()
 
@@ -22,19 +21,7 @@
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     self.window.backgroundColor = [UIColor whiteColor];
-    
-    UITabBarController *root = [UITabBarController new];
-    UINavigationController *productRoot = [[UINavigationController alloc] initWithRootViewController:[ProductListViewController new]];
-    productRoot.tabBarItem.title = @"Product Example";
-    UINavigationController *exampleRoot = [[UINavigationController alloc] initWithRootViewController:[TableViewController new]];
-    exampleRoot.tabBarItem.title = @"Custom Example";
-//    UINavigationController *exampleRoot = [UINavigationController new];
-//    exampleRoot.viewControllers = @[[TableViewController new], [TableViewController new], [TableViewController new]];
-//    exampleRoot.tabBarItem.title = @"Custom Example";
-
-    root.viewControllers = @[productRoot, exampleRoot];
-    
-    [self.window setRootViewController:root];
+    [self.window setRootViewController:[EmbedTabBarController new]];
     [self.window makeKeyAndVisible];
 
     return YES;

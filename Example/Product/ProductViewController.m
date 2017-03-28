@@ -13,6 +13,7 @@
 
 @interface ProductViewController ()
 @property (nonatomic, strong) UIScrollView *scrollView;
+@property (nonatomic, assign) UIStatusBarStyle statusBarStyle;
 @end
 
 @implementation ProductViewController
@@ -21,9 +22,13 @@
     [self.scrollView removeObserver:self forKeyPath:@"contentOffset"];
 }
 
+- (UIStatusBarStyle)preferredStatusBarStyle {
+    return self.statusBarStyle;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+
     [self.rr_navigationBar setBackgroundImage:[UIImage new] forBarMetrics:UIBarMetricsDefault];
     self.rr_navigationBar.shadowImage = [UIImage new];
 
@@ -60,13 +65,15 @@
         @autoreleasepool {
             [self.rr_navigationBar setBackgroundImage:RRUIImageMake([[UIColor whiteColor] colorWithAlphaComponent:ratio]) forBarMetrics:UIBarMetricsDefault];
             self.rr_navigationBar.shadowImage = [UIImage new];
+            self.statusBarStyle = UIBarStyleBlack;
         }
     } else {
         [self.rr_navigationBar setBackgroundImage:nil  forBarMetrics:UIBarMetricsDefault];
         self.rr_navigationBar.shadowImage = nil;
+        self.statusBarStyle = UIBarStyleDefault;
     }
 
-    
+    [self setNeedsStatusBarAppearanceUpdate];
 }
 
 

@@ -123,5 +123,7 @@ UINavigationBar *_Nonnull RRUINavigationBarDuplicate(UINavigationBar *_Nonnull o
     bar.shadowImage =  one.shadowImage;
     [bar setBackgroundImage:[one backgroundImageForBarMetrics:UIBarMetricsDefault] forBarMetrics:UIBarMetricsDefault];
     bar.alpha = one.alpha;
+    bar.backIndicatorImage = one.backIndicatorImage;
+    bar.backIndicatorTransitionMaskImage = one.backIndicatorTransitionMaskImage;
     return bar;
 }

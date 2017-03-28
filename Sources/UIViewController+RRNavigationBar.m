@@ -31,14 +31,6 @@
     [self _rr_addNavigationBarIfNeeded];
 }
 
-- (BOOL)_rr_equalNavigationBarInTransition {
-    return [objc_getAssociatedObject(self, _cmd) boolValue];
-}
-
-- (void)set_rr_equalNavigationBarInTransition:(BOOL)_rr_equalNavigationBarInTransition {
-    objc_setAssociatedObject(self, @selector(_rr_equalNavigationBarInTransition), @(_rr_equalNavigationBarInTransition), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-}
-
 #pragma mark - Public
 
 - (nonnull UINavigationBar *)rr_navigationBar {
@@ -71,7 +63,10 @@
 #pragma mark - Internal
 
 - (void)_rr_addNavigationBarIfNeeded {
-    if (self._rr_equalNavigationBarInTransition) {
+    if (self.rr_navigationBar._rr_equalOtherNavigationBarInTransiting) {
+        return;
+    }
+    if (!self.rr_navigationBar._rr_transiting) {
         return;
     }
     if (!self.isViewLoaded || !self.view.window) {
@@ -93,6 +88,7 @@
     }
     self.rr_navigationBar.hidden = NO;
     [self.rr_navigationBar.superview bringSubviewToFront:self.rr_navigationBar];
+    RRLog(@"--NOT HIDDEN");
 }
 
 @end

@@ -11,5 +11,6 @@
 
 #import "UIViewController+RRNavigationBar.h"
 #import "UINavigationBar+RRAddition.h"
+#import "RRUtils.h"
 
 #endif /* RRNavigationBar_h */

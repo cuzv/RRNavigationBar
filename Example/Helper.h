@@ -8,4 +8,5 @@
 
 #import <UIKit/UIKit.h>
 
+extern UIImage *_Nullable RRUIImageMakeWithSize(UIColor * _Nonnull color, CGSize size);
 extern UIImage *_Nullable RRUIImageMake(UIColor * _Nonnull color);

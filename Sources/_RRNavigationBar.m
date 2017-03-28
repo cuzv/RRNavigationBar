@@ -86,4 +86,22 @@ extern BOOL _RRObjectIsEqual(NSObject *_Nullable one, NSObject *_Nullable other)
     [super setAlpha:alpha];
 }
 
+- (void)setBackIndicatorImage:(UIImage *)backIndicatorImage {
+    if (!_RRObjectIsEqual(self.backIndicatorImage, backIndicatorImage) &&
+        self._holder.isViewLoaded &&
+        self._holder.view.window) {
+        self._holder.navigationController.navigationBar.backIndicatorImage = backIndicatorImage;
+    }
+    [super setBackIndicatorImage:backIndicatorImage];
+}
+
+- (void)setBackIndicatorTransitionMaskImage:(UIImage *)backIndicatorTransitionMaskImage {
+    if (!_RRObjectIsEqual(self.backIndicatorTransitionMaskImage, backIndicatorTransitionMaskImage) &&
+        self._holder.isViewLoaded &&
+        self._holder.view.window) {
+        self._holder.navigationController.navigationBar.backIndicatorTransitionMaskImage = backIndicatorTransitionMaskImage;
+    }
+    [super setBackIndicatorTransitionMaskImage:backIndicatorTransitionMaskImage];
+}
+
 @end
