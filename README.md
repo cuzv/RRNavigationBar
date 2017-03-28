@@ -1,5 +1,5 @@
 [![License](https://img.shields.io/badge/license-MIT-lightgrey.svg)](https://github.com/cuzv/RRNavigationBar/blob/master/LICENSE)
-[![CocoaPods Compatible](https://img.shields.io/badge/CocoaPods-v0.1-green.svg)](https://github.com/CocoaPods/CocoaPods)
+[![CocoaPods Compatible](https://img.shields.io/badge/CocoaPods-v0.1.1-green.svg)](https://github.com/CocoaPods/CocoaPods)
 [![Weibo](https://img.shields.io/badge/Weibo-cuzval-yellowgreen.svg)](http://weibo.com/cuzval/)
 [![Twitter](https://img.shields.io/twitter/url/http/shields.io.svg?style=social)](http://twitter.com/mochxiao)
 
@@ -30,13 +30,13 @@ My working environment is iOS 10.2 + Xcode 8.2.1, the minimum support version is
 
 [CocoaPods](http://cocoapods.org) is a dependency manager for Cocoa projects.
 
-CocoaPods 0.36 adds supports for Swift and embedded frameworks. You can install it with the following command:
+You can install it with the following command:
 
 ```bash
 $ gem install cocoapods
 ```
 
-To integrate Redes into your Xcode project using CocoaPods, specify it in your `Podfile`:
+To integrate RRNavigationBar into your Xcode project using CocoaPods, specify it in your `Podfile`:
 
 ```ruby
 source 'https://github.com/CocoaPods/Specs.git'
@@ -56,7 +56,7 @@ You should open the `{Project}.xcworkspace` instead of the `{Project}.xcodeproj`
 
 ## Usage
 
-In ViewController's `viewDidLoad` method:
+In UIViewController's `viewDidLoad` method:
 
 ```Objec
 self.rr_navigationBar.xxx = newValue;
@@ -86,6 +86,6 @@ Set `hidden`property will have no effect, try use `setBackgroundImage:forBarMetr
 
 `RRNavigationBar` is available under the MIT license. See the LICENSE file for more info.
 
-## Refrence
+## References
 
 - [KMNavigationBarTransition](https://github.com/MoZhouqi/KMNavigationBarTransition)
