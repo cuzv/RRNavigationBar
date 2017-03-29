@@ -19,6 +19,10 @@
 		4625A83D1E893F2F0092247A /* TableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4625A83A1E893F2F0092247A /* TableViewController.m */; };
 		465E1C2B1E8662830082389A /* UINavigationController+RRNavigationBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 465E1C2A1E8662830082389A /* UINavigationController+RRNavigationBar.m */; };
 		465E1C2E1E8662CF0082389A /* RRUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 465E1C2D1E8662CF0082389A /* RRUtils.m */; };
+		465E81311E8B4DC8003AAA55 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 465E81301E8B4DC8003AAA55 /* Localizable.strings */; };
+		465E81401E8B8A4A003AAA55 /* StoryboardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 465E813F1E8B8A4A003AAA55 /* StoryboardViewController.m */; };
+		465E81421E8B8AB5003AAA55 /* Present.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 465E81411E8B8AB5003AAA55 /* Present.storyboard */; };
+		465E81451E8B8F4B003AAA55 /* SBRootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 465E81441E8B8F4B003AAA55 /* SBRootViewController.m */; };
 		465FE9D61E87E92A000654C1 /* UINavigationBar+RRAddition.m in Sources */ = {isa = PBXBuildFile; fileRef = 465FE9D51E87E92A000654C1 /* UINavigationBar+RRAddition.m */; };
 		46C646F81E8A377500A3349A /* _RRWeakAssociatedObjectWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 46C646F71E8A377500A3349A /* _RRWeakAssociatedObjectWrapper.m */; };
 		46C6471F1E8A56D700A3349A /* EmbedTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 46C6471E1E8A56D700A3349A /* EmbedTabBarController.m */; };
@@ -55,6 +59,12 @@
 		465E1C2A1E8662830082389A /* UINavigationController+RRNavigationBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UINavigationController+RRNavigationBar.m"; sourceTree = "<group>"; };
 		465E1C2C1E8662CF0082389A /* RRUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RRUtils.h; sourceTree = "<group>"; };
 		465E1C2D1E8662CF0082389A /* RRUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RRUtils.m; sourceTree = "<group>"; };
+		465E81301E8B4DC8003AAA55 /* Localizable.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
+		465E813E1E8B8A4A003AAA55 /* StoryboardViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StoryboardViewController.h; sourceTree = "<group>"; };
+		465E813F1E8B8A4A003AAA55 /* StoryboardViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StoryboardViewController.m; sourceTree = "<group>"; };
+		465E81411E8B8AB5003AAA55 /* Present.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Present.storyboard; sourceTree = "<group>"; };
+		465E81431E8B8F4B003AAA55 /* SBRootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBRootViewController.h; sourceTree = "<group>"; };
+		465E81441E8B8F4B003AAA55 /* SBRootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBRootViewController.m; sourceTree = "<group>"; };
 		465FE9D41E87E92A000654C1 /* UINavigationBar+RRAddition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UINavigationBar+RRAddition.h"; sourceTree = "<group>"; };
 		465FE9D51E87E92A000654C1 /* UINavigationBar+RRAddition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UINavigationBar+RRAddition.m"; sourceTree = "<group>"; };
 		4692E41A1E7AED4A00C53A89 /* RRNavigationBar.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RRNavigationBar.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -107,6 +117,18 @@
 			path = Custom;
 			sourceTree = "<group>";
 		};
+		465E813D1E8B8A38003AAA55 /* Storyboard */ = {
+			isa = PBXGroup;
+			children = (
+				465E81411E8B8AB5003AAA55 /* Present.storyboard */,
+				465E813E1E8B8A4A003AAA55 /* StoryboardViewController.h */,
+				465E813F1E8B8A4A003AAA55 /* StoryboardViewController.m */,
+				465E81431E8B8F4B003AAA55 /* SBRootViewController.h */,
+				465E81441E8B8F4B003AAA55 /* SBRootViewController.m */,
+			);
+			path = Storyboard;
+			sourceTree = "<group>";
+		};
 		4692E4111E7AED4A00C53A89 = {
 			isa = PBXGroup;
 			children = (
@@ -127,6 +149,7 @@
 		4692E41C1E7AED4A00C53A89 /* Example */ = {
 			isa = PBXGroup;
 			children = (
+				465E813D1E8B8A38003AAA55 /* Storyboard */,
 				4625A8341E893F140092247A /* Custom */,
 				4625A8211E8931670092247A /* Product */,
 				46F46E041E7AEEB9000C8011 /* AppDelegate.h */,
@@ -140,6 +163,7 @@
 				46F46DFE1E7AEEB9000C8011 /* Assets.xcassets */,
 				46F46DFF1E7AEEB9000C8011 /* Base.lproj */,
 				46F46E061E7AEEB9000C8011 /* Info.plist */,
+				465E81301E8B4DC8003AAA55 /* Localizable.strings */,
 				46F46E071E7AEEB9000C8011 /* main.m */,
 			);
 			path = Example;
@@ -234,6 +258,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				46F46E0A1E7AEEB9000C8011 /* Assets.xcassets in Resources */,
+				465E81311E8B4DC8003AAA55 /* Localizable.strings in Resources */,
+				465E81421E8B8AB5003AAA55 /* Present.storyboard in Resources */,
 				46F46E0B1E7AEEB9000C8011 /* LaunchScreen.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -259,7 +285,9 @@
 				4625A82A1E8931A00092247A /* ProductViewController.m in Sources */,
 				46C646F81E8A377500A3349A /* _RRWeakAssociatedObjectWrapper.m in Sources */,
 				46F46E0D1E7AEEB9000C8011 /* AppDelegate.m in Sources */,
+				465E81451E8B8F4B003AAA55 /* SBRootViewController.m in Sources */,
 				46C6471F1E8A56D700A3349A /* EmbedTabBarController.m in Sources */,
+				465E81401E8B8A4A003AAA55 /* StoryboardViewController.m in Sources */,
 				4625A83D1E893F2F0092247A /* TableViewController.m in Sources */,
 				465E1C2E1E8662CF0082389A /* RRUtils.m in Sources */,
 			);

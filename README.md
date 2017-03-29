@@ -1,10 +1,10 @@
 [![License](https://img.shields.io/badge/license-MIT-lightgrey.svg)](https://github.com/cuzv/RRNavigationBar/blob/master/LICENSE)
-[![CocoaPods Compatible](https://img.shields.io/badge/CocoaPods-v0.1.1-green.svg)](https://github.com/CocoaPods/CocoaPods)
+[![CocoaPods Compatible](https://img.shields.io/badge/CocoaPods-v0.2.0-green.svg)](https://github.com/CocoaPods/CocoaPods)
 [![Weibo](https://img.shields.io/badge/Weibo-cuzval-yellowgreen.svg)](http://weibo.com/cuzval/)
 [![Twitter](https://img.shields.io/twitter/url/http/shields.io.svg?style=social)](http://twitter.com/mochxiao)
 
-
 # RRNavigationBar
+
 bring `UINavigationBar` to` UIViewController`.
 
 ## Introduction
@@ -16,8 +16,7 @@ Here is the situation I couldn't doing well by using [KMNavigationBarTransition]
 In a word, what I wanted is change the  `navigationBar`'s appearance only affect current viewController, which is this repo trying to do.
 
 <p align="left">
-<img src="./Preview/1.gif" width=240px">
-<img src="./Preview/2.gif" width=240px">
+<img src="./Preview/1.gif" width=240px"> <img src="./Preview/2.gif" width=240px">
 </p>
 
 ## Requirements
@@ -56,7 +55,7 @@ You should open the `{Project}.xcworkspace` instead of the `{Project}.xcodeproj`
 
 ## Usage
 
-In UIViewController's `viewDidLoad` method:
+In UIViewController subclassess  `viewDidLoad` method:
 
 ```Objec
 self.rr_navigationBar.xxx = newValue;
@@ -64,7 +63,7 @@ self.rr_navigationBar.xxx = newValue;
 
 If the viewController's view is activated, will take effect immediately, otherwise when `viewWillLayoutSubviews` called.
 
-For more information see the demo in project.
+For more information checkout the demo in project.
 
 ## Supported Methods
 
@@ -79,7 +78,6 @@ For more information see the demo in project.
 - `backIndicatorImage`
 - `backIndicatorTransitionMaskImage`
 - `rr_forceShadowImageHidden`
-- `rr_appearanceDeployed`
 
 Try not change `translucent` property, which is may cause navigationBar flash when animation complete with extends container ViewController's view backgroundColor.
 

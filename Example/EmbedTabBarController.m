@@ -10,6 +10,7 @@
 #import "RRNavigationBar.h"
 #import "TableViewController.h"
 #import "ProductListViewController.h"
+#import "StoryboardViewController.h"
 #import "Helper.h"
 
 @interface EmbedTabBarController ()
@@ -30,23 +31,21 @@
 //        UIImage *backIndicator = [RRUIImageMakeWithSize([UIColor yellowColor], CGSizeMake(13, 21)) imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
 //        global.backIndicatorImage = backIndicator;
 //        global.backIndicatorTransitionMaskImage = backIndicator;
-//        global.rr_appearanceDeployed = YES;
 //    }
 
     UINavigationController *productRoot = [[UINavigationController alloc] initWithRootViewController:[ProductListViewController new]];
     productRoot.tabBarItem.title = @"Product Example";
-    productRoot.rr_navigationBar.tintColor = [UIColor redColor];
-
-//    UIImage *backIndicator = [RRUIImageMakeWithSize([UIColor yellowColor], CGSizeMake(13, 21)) imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-//    productRoot.rr_navigationBar.backIndicatorImage = backIndicator;
-//    productRoot.rr_navigationBar.backIndicatorTransitionMaskImage = backIndicator;
+    productRoot.navigationBar.tintColor = [UIColor redColor];
     
 //    UINavigationController *exampleRoot = [UINavigationController new];
 //    exampleRoot.viewControllers = @[[TableViewController new], [TableViewController new], [TableViewController new]];
     UINavigationController *exampleRoot = [[UINavigationController alloc] initWithRootViewController:[TableViewController new]];
     exampleRoot.tabBarItem.title = @"Custom Example";
+    
+    UINavigationController *storyboardRoot = [[UINavigationController alloc] initWithRootViewController:[StoryboardViewController new]];
+    storyboardRoot.tabBarItem.title = @"Storyboard Example";
 
-    self.viewControllers = @[productRoot, exampleRoot];
+    self.viewControllers = @[productRoot, exampleRoot, storyboardRoot];
 }
 
 

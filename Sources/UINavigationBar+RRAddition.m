@@ -80,12 +80,4 @@
     }
 }
 
-- (BOOL)rr_appearanceDeployed {
-    return [objc_getAssociatedObject(self, _cmd) boolValue];
-}
-
-- (void)setRr_appearanceDeployed:(BOOL)rr_appearanceDeployed {
-    objc_setAssociatedObject(self, @selector(rr_appearanceDeployed), @(rr_appearanceDeployed), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-}
-
 @end

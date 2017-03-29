@@ -16,4 +16,7 @@
 /// If current ViewController isn't in `UINvaigationController`'s `viewControllers` stack, will return nil.
 @property (nonatomic, strong, nonnull) UINavigationBar *rr_navigationBar;
 
+/// Disable pop interactive animation, default value is `NO`.
+@property (nonatomic, assign) BOOL rr_interactivePopGestureRecognizerDisabled;
+
 @end

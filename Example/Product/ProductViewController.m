@@ -11,6 +11,7 @@
 #import "ProductMoreViewController.h"
 #import "Helper.h"
 
+
 @interface ProductViewController ()
 @property (nonatomic, strong) UIScrollView *scrollView;
 @property (nonatomic, assign) UIStatusBarStyle statusBarStyle;
@@ -28,6 +29,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+//    self.navigationItem.title = @"Product Detail";
 
     [self.rr_navigationBar setBackgroundImage:[UIImage new] forBarMetrics:UIBarMetricsDefault];
     self.rr_navigationBar.shadowImage = [UIImage new];
@@ -36,8 +39,9 @@
     
     [self.view addSubview:self.scrollView];
     self.scrollView.frame = self.view.bounds;
-    self.scrollView.contentSize = CGSizeMake(CGRectGetWidth(self.view.bounds), 2000);
     [self.scrollView addObserver:self forKeyPath:@"contentOffset" options:NSKeyValueObservingOptionNew context:nil];
+    
+    self.automaticallyAdjustsScrollViewInsets = NO;
 }
 
 - (void)handleClickMore:(UIBarButtonItem *)sender {
@@ -61,27 +65,34 @@
         ratio = 1;
     }
     
-    if (ratio < 1) {
-        @autoreleasepool {
+    // Warning: CGContextDrawImage: invalid context 0x0. If you want to see the backtrace, please set CG_CONTEXT_SHOW_BACKTRACE environmental variable.
+    // seemed to be a bug, see http://stackoverflow.com/questions/31872650/how-can-i-set-cg-context-show-backtrace-environmental-variable https://forums.developer.apple.com/thread/13683
+    @autoreleasepool {
+        if (ratio < 1) {
             [self.rr_navigationBar setBackgroundImage:RRUIImageMake([[UIColor whiteColor] colorWithAlphaComponent:ratio]) forBarMetrics:UIBarMetricsDefault];
             self.rr_navigationBar.shadowImage = [UIImage new];
             self.statusBarStyle = UIBarStyleBlack;
+        } else {
+            [self.rr_navigationBar setBackgroundImage:nil  forBarMetrics:UIBarMetricsDefault];
+            self.rr_navigationBar.shadowImage = nil;
+            self.statusBarStyle = UIBarStyleDefault;
         }
-    } else {
-        [self.rr_navigationBar setBackgroundImage:nil  forBarMetrics:UIBarMetricsDefault];
-        self.rr_navigationBar.shadowImage = nil;
-        self.statusBarStyle = UIBarStyleDefault;
     }
 
     [self setNeedsStatusBarAppearanceUpdate];
 }
 
-
 - (UIScrollView *)scrollView {
     if (!_scrollView) {
-        _scrollView = [UIScrollView new];
-        _scrollView.alwaysBounceVertical = YES;
-        _scrollView.backgroundColor = [UIColor cyanColor];
+        UITextView *textView = [UITextView new];
+        _scrollView = textView;
+        textView.alwaysBounceVertical = YES;
+        textView.backgroundColor = [UIColor lightGrayColor];
+        textView.editable = NO;
+        textView.text = NSLocalizedString(@"content", nil);
+        textView.textColor = [UIColor brownColor];
+        textView.font = [UIFont systemFontOfSize:17];
+        _scrollView = textView;
     }
     return _scrollView;
 }

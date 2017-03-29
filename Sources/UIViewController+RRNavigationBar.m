@@ -7,9 +7,7 @@
 //
 
 #import "UIViewController+RRNavigationBar.h"
-#import <objc/runtime.h>
 #import "RRUtils.h"
-#import "UINavigationBar+RRAddition.h"
 #import "UINavigationBar+RRAddition_Internal.h"
 #import <objc/runtime.h>
 
@@ -39,8 +37,17 @@
         return bar;
     }
 
-    UINavigationBar *navigationBar = self.navigationController.rr_navigationBar;
-    if (navigationBar) {
+    UINavigationController *nvc = self.navigationController;
+    if (nvc) {
+        UINavigationBar *navigationBar = nvc.rr_navigationBar;
+        if (!navigationBar) {
+            navigationBar = nvc.navigationBar;
+
+            // When load navigationController's rootViewController from nib,
+            // rootViewController's viewDidLoad called before navigationController's viewWillLayoutSubviews method.
+            nvc.rr_navigationBar = RRUINavigationBarDuplicate(navigationBar);
+            [nvc setValue:@(YES) forKey:@"_navigationBarInitialized"];
+        }
         bar = RRUINavigationBarDuplicate(navigationBar);
         self.rr_navigationBar = bar;
     }
@@ -52,15 +59,15 @@
     rr_navigationBar._holder = self;
 }
 
-- (BOOL)rr_popActionDisabled {
+- (BOOL)rr_interactivePopGestureRecognizerDisabled {
     return [objc_getAssociatedObject(self, _cmd) boolValue];
 }
 
-- (void)setRr_popActionDisabled:(BOOL)rr_popActionDisabled {
-    objc_setAssociatedObject(self, @selector(rr_popActionDisabled), @(rr_popActionDisabled), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+- (void)setRr_interactivePopGestureRecognizerDisabled:(BOOL)rr_interactivePopGestureRecognizerDisabled {
+    objc_setAssociatedObject(self, @selector(rr_interactivePopGestureRecognizerDisabled), @(rr_interactivePopGestureRecognizerDisabled), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
-#pragma mark - Internal
+#pragma mark - Private
 
 - (void)_rr_addNavigationBarIfNeeded {
     if (self.rr_navigationBar._rr_equalOtherNavigationBarInTransiting) {

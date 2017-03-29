@@ -10,11 +10,10 @@
 #import "UIViewController+RRNavigationBar.h"
 #import "RRUtils.h"
 #import <objc/runtime.h>
-#import "UINavigationBar+RRAddition.h"
 #import "UINavigationBar+RRAddition_Internal.h"
 #import "_RRWeakAssociatedObjectWrapper.h"
 
-@interface UINavigationController ()<UINavigationControllerDelegate>
+@interface UINavigationController ()<UINavigationControllerDelegate, UIGestureRecognizerDelegate>
 @property (nonatomic, weak, nullable) UIViewController *_visibleTopViewController;
 @property (nonatomic, assign) BOOL _navigationBarInitialized;
 @end
@@ -25,11 +24,35 @@
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         if (self.class == UINavigationController.class) {
-            RRSwizzleInstanceMethod(self.class, @selector(viewDidLoad), @selector(_rr_viewDidLoad));
+            RRSwizzleInstanceMethod(self.class, @selector(viewDidLoad), @selector(_rr_nvc_viewDidLoad));
             RRSwizzleInstanceMethod(self.class, @selector(viewWillLayoutSubviews), @selector(_rr_nvc_viewWillLayoutSubviews));
-            RRSwizzleInstanceMethod(self.class, @selector(preferredStatusBarStyle), @selector(_rr_preferredStatusBarStyle));
+            RRSwizzleInstanceMethod(self.class, @selector(preferredStatusBarStyle), @selector(_rr_nvc_preferredStatusBarStyle));
         }
     });
+}
+
+#pragma mark - Swizzle
+
+- (void)_rr_nvc_viewDidLoad {
+    [self _rr_nvc_viewDidLoad];
+    self.delegate = self;
+    self.interactivePopGestureRecognizer.delegate = self;
+}
+
+- (void)_rr_nvc_viewWillLayoutSubviews {
+    [self _rr_nvc_viewWillLayoutSubviews];
+    if (!self._navigationBarInitialized) {
+        self.rr_navigationBar = RRUINavigationBarDuplicate(self.navigationBar);
+        [self.rr_navigationBar _apply];
+        self._navigationBarInitialized = YES;
+    }
+}
+
+- (UIStatusBarStyle)_rr_nvc_preferredStatusBarStyle {
+    if (self.topViewController) {
+        return self.topViewController.preferredStatusBarStyle;
+    }
+    return self._rr_nvc_preferredStatusBarStyle;
 }
 
 #pragma mark - Private
@@ -55,41 +78,27 @@
     [[self.navigationBar valueForKey:@"_backgroundView"] setHidden:!visible];
 }
 
-#pragma mark - Swizzle
-
-BOOL _rr_appearanceDeployed = NO;
-
-- (void)_rr_viewDidLoad {
-    [self _rr_viewDidLoad];
-    self.delegate = self;
-    _rr_appearanceDeployed = UINavigationBar.appearance.rr_appearanceDeployed;
-    if (!_rr_appearanceDeployed && !self._navigationBarInitialized) {
-        self.rr_navigationBar = RRUINavigationBarDuplicate(self.navigationBar);
-        self._navigationBarInitialized = YES;
-    }
-}
-
-- (void)_rr_nvc_viewWillLayoutSubviews {
-    [self _rr_nvc_viewWillLayoutSubviews];
-    if (_rr_appearanceDeployed && !self._navigationBarInitialized) {
-        self.rr_navigationBar = RRUINavigationBarDuplicate(self.navigationBar);
-        [self.rr_navigationBar _apply];
-        self._navigationBarInitialized = YES;
-    }
-}
-
-- (UIStatusBarStyle)_rr_preferredStatusBarStyle {
-    if (self.topViewController) {
-        return self.topViewController.preferredStatusBarStyle;
-    }
-    return self._rr_preferredStatusBarStyle;
+- (void)_handleDidShowViewController:(UIViewController *)viewController {
+    [viewController.rr_navigationBar _apply];
+    [self _makeNavigationBarVisible:YES];
+    
+    viewController.rr_navigationBar._rr_transiting = NO;
+    viewController.rr_navigationBar._rr_equalOtherNavigationBarInTransiting = NO;
+    viewController.rr_navigationBar.hidden = YES;
+    viewController.view.clipsToBounds = YES;
+    self._visibleTopViewController.rr_navigationBar._rr_transiting = NO;
+    self._visibleTopViewController.rr_navigationBar._rr_equalOtherNavigationBarInTransiting = NO;
+    self._visibleTopViewController.rr_navigationBar.hidden = YES;
+    self._visibleTopViewController.view.clipsToBounds = YES;
+    
+    self._visibleTopViewController = viewController;
 }
 
 #pragma mark - UINavigationControllerDelegate
 
 - (void)navigationController:(UINavigationController *)navigationController willShowViewController:(UIViewController *)viewController animated:(BOOL)animated {
     RRLog(@"WILL SHOW VC %@", viewController.navigationItem.title);
-
+    
     // If these two navigationBar `equal`, use system transition behavior.
     if (RRIsUINavigationBarEqual(viewController.rr_navigationBar, self._visibleTopViewController.rr_navigationBar)) {
         viewController.rr_navigationBar._rr_transiting = YES;
@@ -115,14 +124,15 @@ BOOL _rr_appearanceDeployed = NO;
 
     viewController.rr_navigationBar._rr_transiting = YES;
     viewController.rr_navigationBar._rr_equalOtherNavigationBarInTransiting = NO;
+    viewController.rr_navigationBar.hidden = NO;
+    viewController.view.clipsToBounds = NO;
     self._visibleTopViewController.rr_navigationBar._rr_transiting = YES;
     self._visibleTopViewController.rr_navigationBar._rr_equalOtherNavigationBarInTransiting = NO;
-
+    self._visibleTopViewController.rr_navigationBar.hidden = NO;
     self._visibleTopViewController.view.clipsToBounds = NO;
-    viewController.view.clipsToBounds = NO;
-    
-    [self._visibleTopViewController viewWillLayoutSubviews];
+
     [viewController viewWillLayoutSubviews];
+    [self._visibleTopViewController viewWillLayoutSubviews];
     
     if (!viewController.view.backgroundColor) {
         viewController.view.backgroundColor = self._visibleTopViewController.view.backgroundColor;
@@ -132,6 +142,9 @@ BOOL _rr_appearanceDeployed = NO;
     
 #if DEBUG
     NSUInteger currentIndex = [navigationController.viewControllers indexOfObject:self._visibleTopViewController];
+    if (!self._visibleTopViewController) {
+        currentIndex = 0;
+    }
     NSUInteger toIndex = [navigationController.viewControllers indexOfObject:viewController];
     if (currentIndex > toIndex) {
         RRLog(@"POPING TO VC %@", viewController.navigationItem.title);
@@ -146,22 +159,19 @@ BOOL _rr_appearanceDeployed = NO;
     RRLog(@"DID SHOW VC %@", viewController.navigationItem.title);
 }
 
-- (void)_handleDidShowViewController:(UIViewController *)viewController {
-    [viewController.rr_navigationBar _apply];
-    [self _makeNavigationBarVisible:YES];
+#pragma mark - UIGestureRecognizerDelegate
 
-    viewController.rr_navigationBar._rr_transiting = NO;
-    viewController.rr_navigationBar._rr_equalOtherNavigationBarInTransiting = NO;
-    self._visibleTopViewController.rr_navigationBar._rr_transiting = NO;
-    self._visibleTopViewController.rr_navigationBar._rr_equalOtherNavigationBarInTransiting = NO;
-    
-    viewController.view.clipsToBounds = YES;
-    self._visibleTopViewController.view.clipsToBounds = YES;
-    
-    viewController.rr_navigationBar.hidden = YES;
-    self._visibleTopViewController.rr_navigationBar.hidden = YES;
-
-    self._visibleTopViewController = viewController;
+- (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer {
+    if ([[self valueForKey:@"_isTransitioning"] boolValue]) {
+        return NO;
+    }
+    if (self.viewControllers.count <= 1) {
+        return NO;
+    }
+    if (self.topViewController.rr_interactivePopGestureRecognizerDisabled) {
+        return NO;
+    }
+    return YES;
 }
 
 @end

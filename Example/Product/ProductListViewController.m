@@ -21,18 +21,12 @@
     
     self.view.backgroundColor = [UIColor whiteColor];
     self.navigationItem.title = @"Product List";
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Next" style:UIBarButtonItemStylePlain target:self action:@selector(handleClickNext:)];
 
-//    {
-//        [self.rr_navigationBar setBackgroundImage:[UIImage new] forBarMetrics:UIBarMetricsDefault];
-//        self.rr_navigationBar.shadowImage = [UIImage new];
-//    }
+//    NSLog(@"%@", self.rr_navigationBar);
+    
+//    [self.rr_navigationBar setBackgroundImage:[UIImage new] forBarMetrics:UIBarMetricsDefault];
+//    self.rr_navigationBar.shadowImage = [UIImage new];
 }
-
-- (void)handleClickNext:(UIBarButtonItem *)sender {
-    [self.navigationController pushViewController:[ProductViewController new] animated:YES];
-}
-
 
 #pragma mark - Table view data source
 
@@ -54,7 +48,7 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    [self handleClickNext:nil];
+    [self.navigationController pushViewController:[ProductViewController new] animated:YES];
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
