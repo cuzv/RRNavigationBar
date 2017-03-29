@@ -40,16 +40,21 @@
     UINavigationController *nvc = self.navigationController;
     if (nvc) {
         UINavigationBar *navigationBar = nvc.rr_navigationBar;
+        BOOL flag = NO;
         if (!navigationBar) {
+            // prevent return nil when present nvc.
+            // See UINavigationController+RRNavigationBar.m `_rr_nvc_viewWillLayoutSubviews` for less part logic.
             navigationBar = nvc.navigationBar;
-
-            // When load navigationController's rootViewController from nib,
-            // rootViewController's viewDidLoad called before navigationController's viewWillLayoutSubviews method.
-            nvc.rr_navigationBar = RRUINavigationBarDuplicate(navigationBar);
-            [nvc setValue:@(YES) forKey:@"_navigationBarInitialized"];
+            // mark as temp, will replace after nvc's rr_navigationBar initialized.
+            flag = YES;
         }
-        bar = RRUINavigationBarDuplicate(navigationBar);
-        self.rr_navigationBar = bar;
+        if (navigationBar) {
+            bar = RRUINavigationBarDuplicate(navigationBar);
+            self.rr_navigationBar = bar;
+        }
+        if (flag) {
+            self.rr_navigationBar._tmpInfo = [@{} mutableCopy];
+        }
     }
     return bar;
 }

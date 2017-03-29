@@ -22,16 +22,12 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-//    {
-//        UINavigationBar *global = [UINavigationBar appearance];
-//        global.tintColor = [UIColor magentaColor];
-//        global.barStyle = UIBarMetricsDefault;
-//        global.translucent = YES;
-//        [global setBackgroundImage:RRUIImageMake([UIColor cyanColor]) forBarMetrics:UIBarMetricsDefault];
-//        UIImage *backIndicator = [RRUIImageMakeWithSize([UIColor yellowColor], CGSizeMake(13, 21)) imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-//        global.backIndicatorImage = backIndicator;
-//        global.backIndicatorTransitionMaskImage = backIndicator;
-//    }
+    {
+        UINavigationBar *global = [UINavigationBar appearance];
+        global.tintColor = [UIColor magentaColor];
+        global.barStyle = UIBarMetricsDefault;
+        global.translucent = YES;
+    }
 
     UINavigationController *productRoot = [[UINavigationController alloc] initWithRootViewController:[ProductListViewController new]];
     productRoot.tabBarItem.title = @"Product Example";

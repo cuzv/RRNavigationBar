@@ -13,3 +13,7 @@
 
 - Update rr_forceShadowImageHidden impl;
 - Update demo;
+
+### 0.2.1
+
+- Workaround for present nvc, fixed global appearance not working when setup in viewDidLoad;

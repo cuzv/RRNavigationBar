@@ -78,6 +78,17 @@
         self._holder.view.window) {
         self._holder.navigationController.navigationBar.rr_forceShadowImageHidden = rr_forceShadowImageHidden;
     }
+    if (self._tmpInfo) {
+        self._tmpInfo[@"rr_forceShadowImageHidden"] = @(rr_forceShadowImageHidden);
+    }
+}
+
+- (nullable NSMutableDictionary<NSString *, id> *)_tmpInfo {
+    return objc_getAssociatedObject(self, _cmd);
+}
+
+- (void)set_tmpInfo:(nullable NSMutableDictionary<NSString *, id> *)_tmpInfo {
+    objc_setAssociatedObject(self, @selector(_tmpInfo), _tmpInfo, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
 @end
