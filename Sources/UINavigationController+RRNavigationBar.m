@@ -54,10 +54,10 @@
     // when present a nvc, vc:viewDidLoad -> nvc:viewWillLayoutSubviews.
     // So, in vc:viewDidLoad vc.rr_navigationBar isn't the correct styles,
     // therefore recored setups, recover when nvc.rr_navigationBar initialized.
-    NSDictionary *info = self.topViewController.rr_navigationBar._tmpInfo;
-    if (info) {
-        UINavigationBar *this = self.rr_navigationBar;
-        UINavigationBar *bar = self.topViewController.rr_navigationBar;
+    UINavigationBar *this = self.rr_navigationBar;
+    UINavigationBar *bar = self.topViewController.rr_navigationBar;
+    NSDictionary *info = bar._tmpInfo;
+    if (this && info) {
         if (info[@"barStyle"]) {
             bar.barStyle = [info[@"barStyle"] integerValue];
         } else {
@@ -113,7 +113,7 @@
         } else {
             bar.rr_forceShadowImageHidden = this.rr_forceShadowImageHidden;
         }
-        self.topViewController.rr_navigationBar._tmpInfo = nil;
+        bar._tmpInfo = nil;
     }
 }
 
