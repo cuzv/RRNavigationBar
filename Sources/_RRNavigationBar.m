@@ -21,6 +21,9 @@ extern BOOL _RRObjectIsEqual(NSObject *_Nullable one, NSObject *_Nullable other)
         self._holder.navigationController.navigationBar.barStyle = barStyle;
     }
     [super setBarStyle:barStyle];
+    if (self._tmpInfo) {
+        self._tmpInfo[@"barStyle"] = @(barStyle);
+    }
 }
 
 - (void)setTranslucent:(BOOL)translucent {
@@ -30,6 +33,9 @@ extern BOOL _RRObjectIsEqual(NSObject *_Nullable one, NSObject *_Nullable other)
         self._holder.navigationController.navigationBar.translucent = translucent;
     }
     [super setTranslucent:translucent];
+    if (self._tmpInfo) {
+        self._tmpInfo[@"translucent"] = @(translucent);
+    }
 }
 
 - (void)setTintColor:(UIColor *)tintColor {
@@ -39,6 +45,9 @@ extern BOOL _RRObjectIsEqual(NSObject *_Nullable one, NSObject *_Nullable other)
         self._holder.navigationController.navigationBar.tintColor = tintColor;
     }
     [super setTintColor:tintColor];
+    if (self._tmpInfo) {
+        self._tmpInfo[@"tintColor"] = tintColor;
+    }
 }
 
 - (void)setBarTintColor:(UIColor *)barTintColor {
@@ -48,6 +57,9 @@ extern BOOL _RRObjectIsEqual(NSObject *_Nullable one, NSObject *_Nullable other)
         self._holder.navigationController.navigationBar.barTintColor = barTintColor;
     }
     [super setBarTintColor:barTintColor];
+    if (self._tmpInfo) {
+        self._tmpInfo[@"barTintColor"] = barTintColor;
+    }
 }
 
 - (void)setBackgroundColor:(UIColor *)backgroundColor {
@@ -57,6 +69,9 @@ extern BOOL _RRObjectIsEqual(NSObject *_Nullable one, NSObject *_Nullable other)
         self._holder.navigationController.navigationBar.backgroundColor = backgroundColor;
     }
     [super setBackgroundColor:backgroundColor];
+    if (self._tmpInfo) {
+        self._tmpInfo[@"backgroundColor"] = backgroundColor;
+    }
 }
 
 - (void)setShadowImage:(UIImage *)shadowImage {
@@ -66,6 +81,9 @@ extern BOOL _RRObjectIsEqual(NSObject *_Nullable one, NSObject *_Nullable other)
         self._holder.navigationController.navigationBar.shadowImage = shadowImage;
     }
     [super setShadowImage:shadowImage];
+    if (self._tmpInfo) {
+        self._tmpInfo[@"shadowImage"] = shadowImage;
+    }
 }
 
 - (void)setBackgroundImage:(UIImage *)backgroundImage forBarMetrics:(UIBarMetrics)barMetrics {
@@ -75,6 +93,9 @@ extern BOOL _RRObjectIsEqual(NSObject *_Nullable one, NSObject *_Nullable other)
         [self._holder.navigationController.navigationBar setBackgroundImage:backgroundImage forBarMetrics:barMetrics];
     }
     [super setBackgroundImage:backgroundImage forBarMetrics:barMetrics];
+    if (self._tmpInfo) {
+        self._tmpInfo[@"backgroundImage"] = backgroundImage;
+    }
 }
 
 - (void)setAlpha:(CGFloat)alpha {
@@ -84,6 +105,9 @@ extern BOOL _RRObjectIsEqual(NSObject *_Nullable one, NSObject *_Nullable other)
         self._holder.navigationController.navigationBar.alpha = alpha;
     }
     [super setAlpha:alpha];
+    if (self._tmpInfo) {
+        self._tmpInfo[@"alpha"] = @(alpha);
+    }
 }
 
 - (void)setBackIndicatorImage:(UIImage *)backIndicatorImage {
@@ -93,6 +117,9 @@ extern BOOL _RRObjectIsEqual(NSObject *_Nullable one, NSObject *_Nullable other)
         self._holder.navigationController.navigationBar.backIndicatorImage = backIndicatorImage;
     }
     [super setBackIndicatorImage:backIndicatorImage];
+    if (self._tmpInfo) {
+        self._tmpInfo[@"backIndicatorImage"] = backIndicatorImage;
+    }
 }
 
 - (void)setBackIndicatorTransitionMaskImage:(UIImage *)backIndicatorTransitionMaskImage {
@@ -102,6 +129,9 @@ extern BOOL _RRObjectIsEqual(NSObject *_Nullable one, NSObject *_Nullable other)
         self._holder.navigationController.navigationBar.backIndicatorTransitionMaskImage = backIndicatorTransitionMaskImage;
     }
     [super setBackIndicatorTransitionMaskImage:backIndicatorTransitionMaskImage];
+    if (self._tmpInfo) {
+        self._tmpInfo[@"backIndicatorTransitionMaskImage"] = backIndicatorTransitionMaskImage;
+    }
 }
 
 @end

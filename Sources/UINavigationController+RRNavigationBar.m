@@ -12,6 +12,7 @@
 #import <objc/runtime.h>
 #import "UINavigationBar+RRAddition_Internal.h"
 #import "_RRWeakAssociatedObjectWrapper.h"
+#import "UINavigationBar+RRAddition.h"
 
 @interface UINavigationController ()<UINavigationControllerDelegate, UIGestureRecognizerDelegate>
 @property (nonatomic, weak, nullable) UIViewController *_visibleTopViewController;
@@ -41,10 +42,78 @@
 
 - (void)_rr_nvc_viewWillLayoutSubviews {
     [self _rr_nvc_viewWillLayoutSubviews];
-    if (!self._navigationBarInitialized) {
+    if (!self._navigationBarInitialized && self.navigationBar) {
         self.rr_navigationBar = RRUINavigationBarDuplicate(self.navigationBar);
         [self.rr_navigationBar _apply];
         self._navigationBarInitialized = YES;
+        RRLog(@"nvc's rr_navigationBar initialized");
+    }
+    
+    // Workaround for present nvc.
+    // Normally call order nvc:viewWillLayoutSubviews -> vc:viewDidLoad,
+    // when present a nvc, vc:viewDidLoad -> nvc:viewWillLayoutSubviews.
+    // So, in vc:viewDidLoad vc.rr_navigationBar isn't the correct styles,
+    // therefore recored setups, recover when nvc.rr_navigationBar initialized.
+    NSDictionary *info = self.topViewController.rr_navigationBar._tmpInfo;
+    if (info) {
+        UINavigationBar *this = self.rr_navigationBar;
+        UINavigationBar *bar = self.topViewController.rr_navigationBar;
+        if (info[@"barStyle"]) {
+            bar.barStyle = [info[@"barStyle"] integerValue];
+        } else {
+            bar.barStyle = this.barStyle;
+        }
+        if (info[@"translucent"]) {
+            bar.barStyle = [info[@"translucent"] boolValue];
+        } else {
+            bar.translucent = this.translucent;
+        }
+        if (info[@"tintColor"]) {
+            bar.tintColor = info[@"tintColor"];
+        } else {
+            bar.tintColor = this.tintColor;
+        }
+        if (info[@"barTintColor"]) {
+            bar.barTintColor = info[@"barTintColor"];
+        } else {
+            bar.barTintColor = this.barTintColor;
+        }
+        if (info[@"backgroundColor"]) {
+            bar.backgroundColor = info[@"backgroundColor"];
+        } else {
+            bar.backgroundColor = this.backgroundColor;
+        }
+        if (info[@"shadowImage"]) {
+            bar.shadowImage = info[@"shadowImage"];
+        } else {
+            bar.shadowImage = this.shadowImage;
+        }
+        if (info[@"backgroundImage"]) {
+            [bar setBackgroundImage:info[@"backgroundImage"] forBarMetrics:UIBarMetricsDefault];
+        } else {
+            [bar setBackgroundImage:[this backgroundImageForBarMetrics:UIBarMetricsDefault] forBarMetrics:UIBarMetricsDefault];
+        }
+        if (info[@"alpha"]) {
+            bar.alpha = [info[@"alpha"] doubleValue];
+        } else {
+            bar.alpha = this.alpha;
+        }
+        if (info[@"backIndicatorImage"]) {
+            bar.backIndicatorImage = info[@"backIndicatorImage"];
+        } else {
+            bar.backIndicatorImage = this.backIndicatorImage;
+        }
+        if (info[@"backIndicatorTransitionMaskImage"]) {
+            bar.backIndicatorTransitionMaskImage = info[@"backIndicatorTransitionMaskImage"];
+        } else {
+            bar.backIndicatorTransitionMaskImage = this.backIndicatorTransitionMaskImage;
+        }
+        if (info[@"rr_forceShadowImageHidden"]) {
+            bar.rr_forceShadowImageHidden = [info[@"rr_forceShadowImageHidden"] boolValue];
+        } else {
+            bar.rr_forceShadowImageHidden = this.rr_forceShadowImageHidden;
+        }
+        self.topViewController.rr_navigationBar._tmpInfo = nil;
     }
 }
 

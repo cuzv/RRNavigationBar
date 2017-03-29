@@ -22,7 +22,7 @@
     self.view.backgroundColor = [UIColor whiteColor];
     self.navigationItem.title = @"Product List";
 
-//    NSLog(@"%@", self.rr_navigationBar);
+    NSLog(@"ProductListViewController viewDidLoad rr_navigationBar: %@", self.rr_navigationBar);
     
 //    [self.rr_navigationBar setBackgroundImage:[UIImage new] forBarMetrics:UIBarMetricsDefault];
 //    self.rr_navigationBar.shadowImage = [UIImage new];

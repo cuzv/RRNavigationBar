@@ -18,8 +18,14 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    NSLog(@"SBRootViewController viewDidLoad rr_navigationBar: %@", self.rr_navigationBar);
     [self.rr_navigationBar setBackgroundImage:[UIImage new] forBarMetrics:UIBarMetricsDefault];
     self.rr_navigationBar.shadowImage = [UIImage new];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    NSLog(@"SBRootViewController viewWillAppear rr_navigationBar: %@", self.rr_navigationBar);
 }
 
 - (IBAction)handleClickDimsiss:(UIBarButtonItem *)sender {

@@ -12,5 +12,6 @@
 @property (nonatomic, assign) BOOL _rr_transiting;
 @property (nonatomic, weak, nullable) UIViewController *_holder;
 - (void)_apply;
+@property (nonatomic, retain, nullable) NSMutableDictionary<NSString *, id> *_tmpInfo;
 
 @end
