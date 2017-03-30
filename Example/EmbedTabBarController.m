@@ -27,6 +27,9 @@
         global.tintColor = [UIColor magentaColor];
         global.barStyle = UIBarMetricsDefault;
         global.translucent = YES;
+//        UIImage *indicatorImage = RRUIImageMakeWithSize([UIColor orangeColor], CGSizeMake(13, 21));
+//        global.backIndicatorImage = indicatorImage;
+//        global.backIndicatorTransitionMaskImage = indicatorImage;
     }
 
     UINavigationController *productRoot = [[UINavigationController alloc] initWithRootViewController:[ProductListViewController new]];

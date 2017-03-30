@@ -33,6 +33,7 @@
 #ifndef RRExcludeImagePicker
 #   define RRExcludeImagePicker(instance) if ([instance isKindOfClass:UIImagePickerController.class]) { return; }
 #endif
+
 @interface UINavigationController ()<UINavigationControllerDelegate, UIGestureRecognizerDelegate>
 @property (nonatomic, weak, nullable) UIViewController *_visibleTopViewController;
 @property (nonatomic, assign) BOOL _navigationBarInitialized;
