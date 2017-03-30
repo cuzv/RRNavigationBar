@@ -217,9 +217,6 @@
           return NO;
         }
     );
-    if ([[self valueForKey:@"_isTransitioning"] boolValue]) {
-        return NO;
-    }
     if (self.viewControllers.count <= 1) {
         return NO;
     }
