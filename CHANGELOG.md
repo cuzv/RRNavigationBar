@@ -17,3 +17,8 @@
 ### 0.2.1
 
 - Workaround for present nvc, fixed global appearance not working when setup in viewDidLoad;
+
+### 0.2.2
+
+- Fixed typo;
+- Use macro;

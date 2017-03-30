@@ -14,6 +14,22 @@
 #import "_RRWeakAssociatedObjectWrapper.h"
 #import "UINavigationBar+RRAddition.h"
 
+#ifndef RRRecoverObject
+#   define RRRecoverObject(this, bar, info, property) (bar.property = info[@#property] ?: this.property)
+#endif
+
+#ifndef RRRecoverBoolean
+#   define RRRecoverBoolean(this, bar, info, property) (bar.property = info[@#property] ? [info[@#property] boolValue] : this.property)
+#endif
+
+#ifndef RRRecoverInteger
+#   define RRRecoverInteger(this, bar, info, property) (bar.property = info[@#property] ? [info[@#property] integerValue] : this.property)
+#endif
+
+#ifndef RRRecoverDobule
+#   define RRRecoverDobule(this, bar, info, property) (bar.property = info[@#property] ? [info[@#property] doubleValue] : this.property)
+#endif
+
 @interface UINavigationController ()<UINavigationControllerDelegate, UIGestureRecognizerDelegate>
 @property (nonatomic, weak, nullable) UIViewController *_visibleTopViewController;
 @property (nonatomic, assign) BOOL _navigationBarInitialized;
@@ -58,61 +74,17 @@
     UINavigationBar *bar = self.topViewController.rr_navigationBar;
     NSDictionary *info = bar._tmpInfo;
     if (this && info) {
-        if (info[@"barStyle"]) {
-            bar.barStyle = [info[@"barStyle"] integerValue];
-        } else {
-            bar.barStyle = this.barStyle;
-        }
-        if (info[@"translucent"]) {
-            bar.barStyle = [info[@"translucent"] boolValue];
-        } else {
-            bar.translucent = this.translucent;
-        }
-        if (info[@"tintColor"]) {
-            bar.tintColor = info[@"tintColor"];
-        } else {
-            bar.tintColor = this.tintColor;
-        }
-        if (info[@"barTintColor"]) {
-            bar.barTintColor = info[@"barTintColor"];
-        } else {
-            bar.barTintColor = this.barTintColor;
-        }
-        if (info[@"backgroundColor"]) {
-            bar.backgroundColor = info[@"backgroundColor"];
-        } else {
-            bar.backgroundColor = this.backgroundColor;
-        }
-        if (info[@"shadowImage"]) {
-            bar.shadowImage = info[@"shadowImage"];
-        } else {
-            bar.shadowImage = this.shadowImage;
-        }
-        if (info[@"backgroundImage"]) {
-            [bar setBackgroundImage:info[@"backgroundImage"] forBarMetrics:UIBarMetricsDefault];
-        } else {
-            [bar setBackgroundImage:[this backgroundImageForBarMetrics:UIBarMetricsDefault] forBarMetrics:UIBarMetricsDefault];
-        }
-        if (info[@"alpha"]) {
-            bar.alpha = [info[@"alpha"] doubleValue];
-        } else {
-            bar.alpha = this.alpha;
-        }
-        if (info[@"backIndicatorImage"]) {
-            bar.backIndicatorImage = info[@"backIndicatorImage"];
-        } else {
-            bar.backIndicatorImage = this.backIndicatorImage;
-        }
-        if (info[@"backIndicatorTransitionMaskImage"]) {
-            bar.backIndicatorTransitionMaskImage = info[@"backIndicatorTransitionMaskImage"];
-        } else {
-            bar.backIndicatorTransitionMaskImage = this.backIndicatorTransitionMaskImage;
-        }
-        if (info[@"rr_forceShadowImageHidden"]) {
-            bar.rr_forceShadowImageHidden = [info[@"rr_forceShadowImageHidden"] boolValue];
-        } else {
-            bar.rr_forceShadowImageHidden = this.rr_forceShadowImageHidden;
-        }
+        RRRecoverInteger(this, bar, info, barStyle);
+        RRRecoverBoolean(this, bar, info, translucent);
+        RRRecoverDobule(this, bar, info, alpha);
+        RRRecoverObject(this, bar, info, tintColor);
+        RRRecoverObject(this, bar, info, barTintColor);
+        RRRecoverObject(this, bar, info, backgroundColor);
+        RRRecoverObject(this, bar, info, shadowImage);
+        [bar setBackgroundImage:info[@"backgroundImage"] ?: [this backgroundImageForBarMetrics:UIBarMetricsDefault] forBarMetrics:UIBarMetricsDefault];
+        RRRecoverObject(this, bar, info, backIndicatorImage);
+        RRRecoverObject(this, bar, info, backIndicatorTransitionMaskImage);
+        RRRecoverBoolean(this, bar, info, rr_forceShadowImageHidden);
         bar._tmpInfo = nil;
     }
 }
@@ -144,7 +116,7 @@
 }
 
 - (void)_makeNavigationBarVisible:(BOOL)visible {
-    [[self.navigationBar valueForKey:@"_backgroundView"] setHidden:!visible];
+    RRTRY([[self.navigationBar valueForKey:@"_backgroundView"] setHidden:!visible]);
 }
 
 - (void)_handleDidShowViewController:(UIViewController *)viewController {
@@ -209,7 +181,7 @@
 
     [self _makeNavigationBarVisible:NO];
     
-#if DEBUG
+#if INRR
     NSUInteger currentIndex = [navigationController.viewControllers indexOfObject:self._visibleTopViewController];
     if (!self._visibleTopViewController) {
         currentIndex = 0;
@@ -231,6 +203,11 @@
 #pragma mark - UIGestureRecognizerDelegate
 
 - (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer {
+    RRTRY(
+        if ([[self valueForKey:@"_isTransitioning"] boolValue]) {
+          return NO;
+        }
+    );
     if ([[self valueForKey:@"_isTransitioning"] boolValue]) {
         return NO;
     }

@@ -47,12 +47,12 @@
     }
     navigationBar.barStyle = self.barStyle;
     navigationBar.translucent = self.translucent;
+    navigationBar.alpha = self.alpha;
     navigationBar.tintColor = self.tintColor;
     navigationBar.barTintColor = self.barTintColor;
     navigationBar.backgroundColor = self.backgroundColor;
     navigationBar.shadowImage = self.shadowImage;
     [navigationBar setBackgroundImage:[self backgroundImageForBarMetrics:UIBarMetricsDefault] forBarMetrics:UIBarMetricsDefault];
-    navigationBar.alpha = self.alpha;
     navigationBar.backIndicatorImage = self.backIndicatorImage;
     navigationBar.backIndicatorTransitionMaskImage = self.backIndicatorTransitionMaskImage;
     navigationBar.rr_forceShadowImageHidden = self.rr_forceShadowImageHidden;
@@ -68,12 +68,8 @@
     }
     objc_setAssociatedObject(self, @selector(rr_forceShadowImageHidden), @(rr_forceShadowImageHidden), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 
-    @try {
-        [[[self valueForKey:@"_backgroundView"] valueForKey:@"_shadowView"] setHidden:rr_forceShadowImageHidden];
-    } @catch (NSException *exception) {
-        RRLog(@"NSException happend: %@", exception);
-    }
-
+    RRTRY([[[self valueForKey:@"_backgroundView"] valueForKey:@"_shadowView"] setHidden:rr_forceShadowImageHidden]);
+    
     if (self._holder.isViewLoaded &&
         self._holder.view.window) {
         self._holder.navigationController.navigationBar.rr_forceShadowImageHidden = rr_forceShadowImageHidden;

@@ -15,17 +15,26 @@ extern UINavigationBar *_Nonnull RRUINavigationBarDuplicate(UINavigationBar *_No
 #pragma mark - Debug
 
 #ifndef RRLog
-    #if DEBUG
-        #define RRLog(FORMAT, ...)    \
-        do {    \
-            fprintf(stderr,"<%s> %s %s [%d] %s\n",    \
-            (NSThread.isMainThread ? "UI" : "BG"),    \
-            (sel_getName(_cmd)),\
-            [[[NSString stringWithUTF8String:__FILE__] lastPathComponent] UTF8String],    \
-            __LINE__,    \
-            [[NSString stringWithFormat:FORMAT, ##__VA_ARGS__] UTF8String]);    \
-        } while(0)
+#    if INRR
+#       define RRLog(FORMAT, ...)    \
+            do {    \
+                fprintf(stderr,"<%s> %s %s [%d] %s\n",    \
+                (NSThread.isMainThread ? "UI" : "BG"),    \
+                (sel_getName(_cmd)),\
+                [[[NSString stringWithUTF8String:__FILE__] lastPathComponent] UTF8String],    \
+                __LINE__,    \
+                [[NSString stringWithFormat:FORMAT, ##__VA_ARGS__] UTF8String]);    \
+            } while(0)
 #else
-        #define RRLog(FORMAT, ...)
-    #endif
+#        define RRLog(FORMAT, ...)
+#   endif
+#endif
+
+#ifndef RRTRY
+#   define RRTRY(...) \
+        @try { \
+            __VA_ARGS__; \
+        } @catch (NSException *exception) { \
+            NSLog(@"NSException happend: %@", exception); \
+        }
 #endif
