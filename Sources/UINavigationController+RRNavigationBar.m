@@ -30,6 +30,9 @@
 #   define RRRecoverDobule(this, bar, info, property) (bar.property = info[@#property] ? [info[@#property] doubleValue] : this.property)
 #endif
 
+#ifndef RRExcludeImagePicker
+#   define RRExcludeImagePicker(instance) if ([instance isKindOfClass:UIImagePickerController.class]) { return; }
+#endif
 @interface UINavigationController ()<UINavigationControllerDelegate, UIGestureRecognizerDelegate>
 @property (nonatomic, weak, nullable) UIViewController *_visibleTopViewController;
 @property (nonatomic, assign) BOOL _navigationBarInitialized;
@@ -52,12 +55,14 @@
 
 - (void)_rr_nvc_viewDidLoad {
     [self _rr_nvc_viewDidLoad];
+    RRExcludeImagePicker(self);
     self.delegate = self;
     self.interactivePopGestureRecognizer.delegate = self;
 }
 
 - (void)_rr_nvc_viewWillLayoutSubviews {
     [self _rr_nvc_viewWillLayoutSubviews];
+    RRExcludeImagePicker(self);
     if (!self._navigationBarInitialized && self.navigationBar) {
         self.rr_navigationBar = RRUINavigationBarDuplicate(self.navigationBar);
         [self.rr_navigationBar _apply];
@@ -140,6 +145,8 @@
 - (void)navigationController:(UINavigationController *)navigationController willShowViewController:(UIViewController *)viewController animated:(BOOL)animated {
     RRLog(@"WILL SHOW VC %@", viewController.navigationItem.title);
     
+    RRExcludeImagePicker(navigationController);
+    
     // If these two navigationBar `equal`, use system transition behavior.
     if (RRIsUINavigationBarEqual(viewController.rr_navigationBar, self._visibleTopViewController.rr_navigationBar)) {
         viewController.rr_navigationBar._rr_transiting = YES;
@@ -196,6 +203,7 @@
 }
 
 - (void)navigationController:(UINavigationController *)navigationController didShowViewController:(UIViewController *)viewController animated:(BOOL)animated {
+    RRExcludeImagePicker(navigationController);
     [self _handleDidShowViewController:viewController];
     RRLog(@"DID SHOW VC %@", viewController.navigationItem.title);
 }

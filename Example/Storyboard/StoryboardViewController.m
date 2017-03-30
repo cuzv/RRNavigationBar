@@ -9,8 +9,9 @@
 #import "StoryboardViewController.h"
 #import "SBRootViewController.h"
 
-@interface StoryboardViewController ()
+#pragma mark -
 
+@interface StoryboardViewController () <UINavigationControllerDelegate, UIImagePickerControllerDelegate>
 @end
 
 @implementation StoryboardViewController
@@ -19,6 +20,7 @@
     [super viewDidLoad];
     self.navigationItem.title = @"Storyboard";
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Present" style:UIBarButtonItemStylePlain target:self action:@selector(present:)];
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Picker" style:UIBarButtonItemStylePlain target:self action:@selector(pick:)];
 }
 
 - (void)present:(UIBarButtonItem *)sender {
@@ -28,4 +30,14 @@
     }
 }
 
+- (void)pick:(UIBarButtonItem *)sender {
+    UIImagePickerController *controller = [UIImagePickerController new];
+    controller.delegate = self;
+    if (controller) {
+        [self presentViewController:controller animated:YES completion:nil];
+    }
+}
+
 @end
+
+
