@@ -22,3 +22,9 @@
 
 - Fixed typo;
 - Use macro;
+
+### 0.2.3
+
+- Fix available issue for iOS10 lower versions.
+
+  ​

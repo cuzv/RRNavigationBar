@@ -161,16 +161,29 @@
     }
     
     // If cancel pop, needs recover.
-    __weak typeof(self) weak_self = self;
+    static dispatch_once_t onceToken;
+    static BOOL iOSVersionGreaterThanOrEqualTo10 = NO;
+    dispatch_once(&onceToken, ^{
+        iOSVersionGreaterThanOrEqualTo10 = UIDevice.currentDevice.systemVersion.floatValue >= 10;
+    });
     id <UIViewControllerTransitionCoordinator> transitionCoordinator = self._visibleTopViewController.transitionCoordinator;
-    [transitionCoordinator notifyWhenInteractionChangesUsingBlock:^(id<UIViewControllerTransitionCoordinatorContext>  _Nonnull context) {
+    __weak typeof(self) weak_self = self;
+    void (^handleCancel)(id<UIViewControllerTransitionCoordinatorContext>  _Nonnull context) = ^(id<UIViewControllerTransitionCoordinatorContext>  _Nonnull context) {
         if (context.isCancelled) {
             RRLog(@"Canceled");
             __strong typeof(weak_self) strong_self = weak_self;
             [strong_self _handleDidShowViewController:strong_self._visibleTopViewController];
         }
-    }];
-
+    };
+    if (iOSVersionGreaterThanOrEqualTo10) {
+        [transitionCoordinator notifyWhenInteractionChangesUsingBlock:handleCancel];
+    } else {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+        [transitionCoordinator notifyWhenInteractionEndsUsingBlock:handleCancel];
+#pragma clang diagnostic pop
+    }
+    
     viewController.rr_navigationBar._rr_transiting = YES;
     viewController.rr_navigationBar._rr_equalOtherNavigationBarInTransiting = NO;
     viewController.rr_navigationBar.hidden = NO;
