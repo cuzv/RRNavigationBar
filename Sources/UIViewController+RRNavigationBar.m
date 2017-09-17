@@ -16,9 +16,7 @@
 + (void)load {
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        if (self.class == UIViewController.class) {
-            RRSwizzleInstanceMethod(self.class, @selector(viewWillLayoutSubviews), @selector(_rr_viewWillLayoutSubviews));
-        }
+        RRSwizzleInstanceMethod(self.class, @selector(viewWillLayoutSubviews), @selector(_rr_viewWillLayoutSubviews));
     });
 }
 

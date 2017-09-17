@@ -15,15 +15,13 @@
 + (void)load {
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        id cls = NSClassFromString(@"_UIBarBackground");
-        if (cls) {
-            RRSwizzleInstanceMethod(cls, @selector(setHidden:), @selector(_rr_setHidden:));
-        }
+        RRSwizzleInstanceMethod(self.class, @selector(setHidden:), @selector(_rr_setHidden:));
     });
 }
 
 - (void)_rr_setHidden:(BOOL)hidden {
-    if (self._rr_ignoreSetHiddenMessage) {
+    id clazz = NSClassFromString(@"_UIBarBackground");
+    if (clazz && [self isKindOfClass:clazz] && self._rr_ignoreSetHiddenMessage) {
         return;
     }
     [self _rr_setHidden:hidden];
