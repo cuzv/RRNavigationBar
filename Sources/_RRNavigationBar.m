@@ -9,6 +9,7 @@
 #import "_RRNavigationBar.h"
 #import "UINavigationBar+RRAddition.h"
 #import "UINavigationBar+RRAddition_Internal.h"
+#import "RRUtils.h"
 
 #ifndef RRSetterNumber
 #   define RRSetterNumber(value) \
@@ -111,6 +112,12 @@ extern BOOL _RRObjectIsEqual(NSObject *_Nullable one, NSObject *_Nullable other)
 - (void)setBackIndicatorTransitionMaskImage:(UIImage *)backIndicatorTransitionMaskImage {
     RRSetterImage(backIndicatorTransitionMaskImage);
     RRAssignObject(backIndicatorTransitionMaskImage);
+}
+
+- (void)layoutSubviews {
+    [super layoutSubviews];
+    // force navigation bar's background image container view equal height with navigation bar.
+    RRTRY([[self valueForKey:@"_backgroundView"] setFrame:self.bounds]);
 }
 
 @end

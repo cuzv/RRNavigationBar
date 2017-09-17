@@ -14,4 +14,8 @@
 - (void)_apply;
 @property (nonatomic, retain, nullable) NSMutableDictionary<NSString *, id> *_tmpInfo;
 
+#pragma mark -
+
+- (void)_rr_setAsInvisible:(BOOL)invisible;
+
 @end

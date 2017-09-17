@@ -42,6 +42,7 @@
     [self.scrollView addObserver:self forKeyPath:@"contentOffset" options:NSKeyValueObservingOptionNew context:nil];
     
     self.automaticallyAdjustsScrollViewInsets = NO;
+//    self.scrollView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
 }
 
 - (void)handleClickMore:(UIBarButtonItem *)sender {

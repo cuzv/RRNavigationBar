@@ -6,13 +6,14 @@
 //  Copyright © 2017 RedRain. All rights reserved.
 //
 
+#import <objc/runtime.h>
 #import "UINavigationController+RRNavigationBar.h"
 #import "UIViewController+RRNavigationBar.h"
 #import "RRUtils.h"
-#import <objc/runtime.h>
 #import "UINavigationBar+RRAddition_Internal.h"
-#import "_RRWeakAssociatedObjectWrapper.h"
 #import "UINavigationBar+RRAddition.h"
+#import "_RRWeakAssociatedObjectWrapper.h"
+
 
 #ifndef RRRecoverObject
 #   define RRRecoverObject(this, bar, info, property) (bar.property = info[@#property] ?: this.property)
@@ -59,6 +60,17 @@
     RRExcludeImagePicker(self);
     self.delegate = self;
     self.interactivePopGestureRecognizer.delegate = self;
+    
+    
+    [self addObserver:self forKeyPath:@"self.navigationBar._backgroundView.hidden" options:NSKeyValueObservingOptionPrior context:nil];
+//    [self addObserver:self forKeyPath:@"self.navigationBar._backgroundView._backgroundImageView.hidden" options:NSKeyValueObservingOptionNew context:nil];
+    
+//    [self addObserver:self forKeyPath:@"self.navigationBar._backgroundView._backgroundImageView.frame" options:NSKeyValueObservingOptionNew context:nil];
+
+}
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSKeyValueChangeKey,id> *)change context:(void *)context {
+    NSLog(@"keyPath: %@, value: %@", keyPath, change[NSKeyValueChangeNotificationIsPriorKey]);
 }
 
 - (void)_rr_nvc_viewWillLayoutSubviews {
@@ -121,13 +133,9 @@
     objc_setAssociatedObject(self, @selector(_navigationBarInitialized), @(_navigationBarInitialized), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
-- (void)_makeNavigationBarVisible:(BOOL)visible {
-    RRTRY([[self.navigationBar valueForKey:@"_backgroundView"] setHidden:!visible]);
-}
-
 - (void)_handleDidShowViewController:(UIViewController *)viewController {
     [viewController.rr_navigationBar _apply];
-    [self _makeNavigationBarVisible:YES];
+    [self.navigationBar _rr_setAsInvisible:NO];
     
     viewController.rr_navigationBar._rr_transiting = NO;
     viewController.rr_navigationBar._rr_equalOtherNavigationBarInTransiting = NO;
@@ -200,7 +208,7 @@
         viewController.view.backgroundColor = self._visibleTopViewController.view.backgroundColor;
     }
 
-    [self _makeNavigationBarVisible:NO];
+    [self.navigationBar _rr_setAsInvisible:YES];
     
 #if INRR
     NSUInteger currentIndex = [navigationController.viewControllers indexOfObject:self._visibleTopViewController];

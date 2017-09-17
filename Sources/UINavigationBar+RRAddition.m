@@ -8,8 +8,8 @@
 
 #import "UINavigationBar+RRAddition.h"
 #import "UINavigationBar+RRAddition_Internal.h"
-#import <objc/runtime.h>
 #import "UIViewController+RRNavigationBar.h"
+#import <objc/runtime.h>
 #import "_RRWeakAssociatedObjectWrapper.h"
 #import "RRUtils.h"
 
@@ -68,7 +68,7 @@
     }
     objc_setAssociatedObject(self, @selector(rr_forceShadowImageHidden), @(rr_forceShadowImageHidden), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 
-    RRTRY([[[self valueForKey:@"_backgroundView"] valueForKey:@"_shadowView"] setHidden:rr_forceShadowImageHidden]);
+    RRTRY([[self valueForKeyPath:@"_backgroundView._shadowView"] setHidden:rr_forceShadowImageHidden])
     
     if (self._holder.isViewLoaded &&
         self._holder.view.window) {
@@ -85,6 +85,11 @@
 
 - (void)set_tmpInfo:(nullable NSMutableDictionary<NSString *, id> *)_tmpInfo {
     objc_setAssociatedObject(self, @selector(_tmpInfo), _tmpInfo, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+
+- (void)_rr_setAsInvisible:(BOOL)invisible {
+//    RRTRY([[self valueForKeyPath:@"_backgroundView._backgroundImageView"] setHidden:hidden])
+    RRTRY([[self valueForKey:@"_backgroundView"] setHidden:invisible])
 }
 
 @end

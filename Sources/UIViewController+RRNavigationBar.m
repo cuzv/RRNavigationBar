@@ -100,6 +100,8 @@
     }
     self.rr_navigationBar.hidden = NO;
     [self.rr_navigationBar.superview bringSubviewToFront:self.rr_navigationBar];
+    [self.navigationController.navigationBar _rr_setAsInvisible:YES];
+    NSLog(@"_rr_addNavigationBarIfNeeded");
 }
 
 @end
