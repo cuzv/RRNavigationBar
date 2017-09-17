@@ -7,9 +7,7 @@
 //
 
 #import "_RRNavigationBar.h"
-#import "UINavigationBar+RRAddition.h"
 #import "UINavigationBar+RRAddition_Internal.h"
-#import "RRUtils.h"
 
 #ifndef RRSetterNumber
 #   define RRSetterNumber(value) \
@@ -116,8 +114,9 @@ extern BOOL _RRObjectIsEqual(NSObject *_Nullable one, NSObject *_Nullable other)
 
 - (void)layoutSubviews {
     [super layoutSubviews];
-    // force navigation bar's background image container view equal height with navigation bar.
-    RRTRY([[self valueForKey:@"_backgroundView"] setFrame:self.bounds]);
+    // force navigation bar's background image container view's height equal to navigation bar.
+    // iOS 11 will needs this hack.
+    self._rr_backgroundView.frame = self.bounds;
 }
 
 @end

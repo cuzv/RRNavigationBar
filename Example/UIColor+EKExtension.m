@@ -37,7 +37,6 @@ NSInteger EKRandomIn(EKRange range) {
     return arc4random_uniform((u_int32_t)(range.end - range.start)) + range.start;
 }
 
-
 @implementation UIColor (EKExtension)
 
 + (nullable instancetype)ek_random {

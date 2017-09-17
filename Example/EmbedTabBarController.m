@@ -45,6 +45,7 @@
     storyboardRoot.tabBarItem.title = @"Storyboard Example";
 
     self.viewControllers = @[productRoot, exampleRoot, storyboardRoot];
+    self.selectedIndex = 1;
 }
 
 

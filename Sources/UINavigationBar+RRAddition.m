@@ -7,11 +7,10 @@
 //
 
 #import "UINavigationBar+RRAddition.h"
-#import "UINavigationBar+RRAddition_Internal.h"
-#import "UIViewController+RRNavigationBar.h"
 #import <objc/runtime.h>
 #import "_RRWeakAssociatedObjectWrapper.h"
 #import "RRUtils.h"
+#import "UIView+RRNavigationBar_internal.h"
 
 @implementation UINavigationBar (RRAddition)
 
@@ -68,7 +67,7 @@
     }
     objc_setAssociatedObject(self, @selector(rr_forceShadowImageHidden), @(rr_forceShadowImageHidden), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 
-    RRTRY([[self valueForKeyPath:@"_backgroundView._shadowView"] setHidden:rr_forceShadowImageHidden])
+    self._rr_shadowView.hidden = rr_forceShadowImageHidden;
     
     if (self._holder.isViewLoaded &&
         self._holder.view.window) {
@@ -88,8 +87,48 @@
 }
 
 - (void)_rr_setAsInvisible:(BOOL)invisible {
-//    RRTRY([[self valueForKeyPath:@"_backgroundView._backgroundImageView"] setHidden:hidden])
-    RRTRY([[self valueForKey:@"_backgroundView"] setHidden:invisible])
+    UIView *_backgroundView = self._rr_backgroundView;
+    
+    // iOS 11, system will change _backgroundView's hidden property several times.
+    // But we do not want its changed during animating, while animation ended, system will change back to not hidden,
+    // before that, we will set back this policy make system call valid.
+    if ([UIDevice.currentDevice.systemVersion componentsSeparatedByString:@"."].firstObject.integerValue >= 11) {
+        if (invisible) {
+            _backgroundView.hidden = invisible;
+            _backgroundView._rr_ignoreSetHiddenMessage = invisible;
+        } else {
+            _backgroundView._rr_ignoreSetHiddenMessage = invisible;
+            _backgroundView.hidden = invisible;
+        }
+    } else {
+        _backgroundView.hidden = invisible;
+    }
+}
+
+- (UIView *)_rr_backgroundView {
+    UIView *_backgroundView;
+    RRTRY(_backgroundView = [self valueForKey:@"_backgroundView"])
+    return _backgroundView;
+}
+
+- (UIView *)_rr_backgroundImageView {
+    UIView *_backgroundView = self._rr_backgroundView;
+    if (_backgroundView) {
+        UIView *_backgroundImageView;
+        RRTRY(_backgroundImageView = [self._rr_backgroundView valueForKey:@"_backgroundImageView"])
+        return _backgroundImageView;
+    }
+    return nil;
+}
+
+- (UIView *)_rr_shadowView {
+    UIView *_backgroundView = self._rr_backgroundView;
+    if (_backgroundView) {
+        UIView *_rr_shadowView;
+        RRTRY(_rr_shadowView = [self._rr_backgroundView valueForKey:@"_shadowView"])
+        return _rr_shadowView;
+    }
+    return nil;
 }
 
 @end

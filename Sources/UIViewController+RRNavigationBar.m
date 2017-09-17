@@ -85,10 +85,11 @@
         return;
     }
     
-    UIView *backgroundView = [self.navigationController.navigationBar valueForKey:@"_backgroundView"];
+    UIView *backgroundView = self.navigationController.navigationBar._rr_backgroundView;
     if (!backgroundView) {
         return;
     }
+    
     CGRect rect = [backgroundView.superview convertRect:backgroundView.frame toView:self.view];
     if (rect.origin.x != 0) {
         return;
@@ -98,10 +99,9 @@
     if (!self.rr_navigationBar.superview) {
         [self.view addSubview:self.rr_navigationBar];
     }
+    
     self.rr_navigationBar.hidden = NO;
     [self.rr_navigationBar.superview bringSubviewToFront:self.rr_navigationBar];
-    [self.navigationController.navigationBar _rr_setAsInvisible:YES];
-    NSLog(@"_rr_addNavigationBarIfNeeded");
 }
 
 @end
