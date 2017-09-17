@@ -87,20 +87,15 @@
 }
 
 - (void)_rr_setAsInvisible:(BOOL)invisible {
-    UIView *_backgroundView = self._rr_backgroundView;
-    
-    // iOS 11, system will change _backgroundView's hidden property several times.
+    // iOS 11, system will change _backgroundView's hidden property several times. (iOS11- will not)
     // But we do not want its changed during animating, while animation ended, system will change back to not hidden,
     // before that, we will set back this policy make system call valid.
-    if ([UIDevice.currentDevice.systemVersion componentsSeparatedByString:@"."].firstObject.integerValue >= 11) {
-        if (invisible) {
-            _backgroundView.hidden = invisible;
-            _backgroundView._rr_ignoreSetHiddenMessage = invisible;
-        } else {
-            _backgroundView._rr_ignoreSetHiddenMessage = invisible;
-            _backgroundView.hidden = invisible;
-        }
+    UIView *_backgroundView = self._rr_backgroundView;
+    if (invisible) {
+        _backgroundView.hidden = invisible;
+        _backgroundView._rr_ignoreSetHiddenMessage = invisible;
     } else {
+        _backgroundView._rr_ignoreSetHiddenMessage = invisible;
         _backgroundView.hidden = invisible;
     }
 }
