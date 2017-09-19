@@ -52,14 +52,13 @@
 #pragma mark - Swizzle
 
 - (void)_rr_nvc_viewDidLoad {
-    [self _rr_nvc_viewDidLoad];
     RRExcludeImagePicker(self);
     self.delegate = self;
     self.interactivePopGestureRecognizer.delegate = self;
+    [self _rr_nvc_viewDidLoad];
 }
 
 - (void)_rr_nvc_viewWillLayoutSubviews {
-    [self _rr_nvc_viewWillLayoutSubviews];
     RRExcludeImagePicker(self);
     if (!self._navigationBarInitialized && self.navigationBar) {
         self.rr_navigationBar = RRUINavigationBarDuplicate(self.navigationBar);
@@ -90,6 +89,8 @@
         RRRecoverBoolean(this, bar, info, rr_forceShadowImageHidden);
         bar._tmpInfo = nil;
     }
+    
+    [self _rr_nvc_viewWillLayoutSubviews];
 }
 
 - (UIStatusBarStyle)_rr_nvc_preferredStatusBarStyle {
@@ -129,6 +130,9 @@
         self._visibleTopViewController.rr_navigationBar._rr_equalOtherNavigationBarInTransiting = YES;
         if (!viewController.view.backgroundColor) {
             viewController.view.backgroundColor = self._visibleTopViewController.view.backgroundColor;
+            if ([viewController.view.backgroundColor isEqual:UIColor.clearColor]) {
+                viewController.view.backgroundColor = UIColor.whiteColor;
+            }
         }
         return;
     }
@@ -166,30 +170,32 @@
     self._visibleTopViewController.rr_navigationBar.hidden = NO;
     self._visibleTopViewController.view.clipsToBounds = NO;
     
-    [viewController viewWillLayoutSubviews];
     [self._visibleTopViewController viewWillLayoutSubviews];
-    
     if (!viewController.view.backgroundColor) {
         viewController.view.backgroundColor = self._visibleTopViewController.view.backgroundColor;
+        if ([viewController.view.backgroundColor isEqual:UIColor.clearColor]) {
+            viewController.view.backgroundColor = UIColor.whiteColor;
+        }
     }
     
     [self.navigationBar _rr_setAsInvisible:YES];
     
-#if INRR
-    NSUInteger currentIndex = [viewController.navigationController.viewControllers indexOfObject:self._visibleTopViewController];
-    if (!self._visibleTopViewController) {
-        currentIndex = 0;
-    }
-    NSUInteger toIndex = [viewController.navigationController.viewControllers indexOfObject:viewController];
-    if (currentIndex > toIndex) {
-        RRLog(@"poping to vc: %@", viewController.navigationItem.title);
-    } else {
-        RRLog(@"pushing to vc: %@", viewController.navigationItem.title);
-    }
-#endif
+//#if INRR
+//    NSUInteger currentIndex = [viewController.navigationController.viewControllers indexOfObject:self._visibleTopViewController];
+//    if (!self._visibleTopViewController) {
+//        currentIndex = 0;
+//    }
+//    NSUInteger toIndex = [viewController.navigationController.viewControllers indexOfObject:viewController];
+//    if (currentIndex > toIndex) {
+//        RRLog(@"poping to vc: %@", viewController.navigationItem.title);
+//    } else {
+//        RRLog(@"pushing to vc: %@", viewController.navigationItem.title);
+//    }
+//#endif
 }
 
 - (void)_handleDidShowViewController:(UIViewController *)viewController {
+//    return;
     [viewController.rr_navigationBar _apply];
     
     [self.navigationBar _rr_setAsInvisible:NO];
@@ -210,14 +216,14 @@
 
 - (void)navigationController:(UINavigationController *)navigationController willShowViewController:(UIViewController *)viewController animated:(BOOL)animated {
     RRExcludeImagePicker(navigationController);
-    RRLog(@"Will show vc %@.", viewController.navigationItem.title);
+//    RRLog(@"Will show vc %@.", viewController.navigationItem.title);
     [self _handleWillShowViewController:viewController];
 }
 
 - (void)navigationController:(UINavigationController *)navigationController didShowViewController:(UIViewController *)viewController animated:(BOOL)animated {
     RRExcludeImagePicker(navigationController);
     [self _handleDidShowViewController:viewController];
-    RRLog(@"Did show vc %@.", viewController.navigationItem.title);
+//    RRLog(@"Did show vc %@.", viewController.navigationItem.title);
 }
 
 #pragma mark - UIGestureRecognizerDelegate

@@ -23,8 +23,33 @@
 #pragma mark - Swizzle
 
 - (void)_rr_viewWillLayoutSubviews {
+    if (self.rr_navigationBar._rr_equalOtherNavigationBarInTransiting) {
+        return;
+    }
+    if (!self.rr_navigationBar._rr_transiting) {
+        return;
+    }
+    if (!self.isViewLoaded || !self.view.window) {
+        return;
+    }
+    
+    UIView *_backgroundView = self.navigationController.navigationBar._rr_backgroundView;
+    if (!_backgroundView) {
+        return;
+    }
+    
+    CGRect relativeRect = [_backgroundView.superview convertRect:_backgroundView.frame toView:self.view];
+    if (relativeRect.origin.x != 0) {
+        return;
+    }
+    
+    self.rr_navigationBar.frame = relativeRect;
+    self.rr_navigationBar.hidden = NO;
+    if (!self.rr_navigationBar.superview) {
+        [self.view addSubview:self.rr_navigationBar];
+    }
+
     [self _rr_viewWillLayoutSubviews];
-    [self _rr_addNavigationBarIfNeeded];
 }
 
 #pragma mark - Public
@@ -68,38 +93,6 @@
 
 - (void)setRr_interactivePopGestureRecognizerDisabled:(BOOL)rr_interactivePopGestureRecognizerDisabled {
     objc_setAssociatedObject(self, @selector(rr_interactivePopGestureRecognizerDisabled), @(rr_interactivePopGestureRecognizerDisabled), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-}
-
-#pragma mark - Private
-
-- (void)_rr_addNavigationBarIfNeeded {
-    if (self.rr_navigationBar._rr_equalOtherNavigationBarInTransiting) {
-        return;
-    }
-    if (!self.rr_navigationBar._rr_transiting) {
-        return;
-    }
-    if (!self.isViewLoaded || !self.view.window) {
-        return;
-    }
-    
-    UIView *backgroundView = self.navigationController.navigationBar._rr_backgroundView;
-    if (!backgroundView) {
-        return;
-    }
-    
-    CGRect rect = [backgroundView.superview convertRect:backgroundView.frame toView:self.view];
-    if (rect.origin.x != 0) {
-        return;
-    }
-    
-    self.rr_navigationBar.frame = rect;
-    if (!self.rr_navigationBar.superview) {
-        [self.view addSubview:self.rr_navigationBar];
-    }
-    
-    self.rr_navigationBar.hidden = NO;
-    [self.rr_navigationBar.superview bringSubviewToFront:self.rr_navigationBar];
 }
 
 @end
