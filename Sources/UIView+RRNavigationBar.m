@@ -24,9 +24,11 @@
 #endif
 
 - (void)_rr_setHidden:(BOOL)hidden {
-    id clazz = NSClassFromString(@"_UIBarBackground");
-    if (clazz && [self isKindOfClass:clazz] && self._rr_ignoreSetHiddenMessage) {
-        return;
+    if (@available(iOS 11.0, *)) {
+        id clazz = NSClassFromString(@"_UIBarBackground");
+        if (clazz && [self isKindOfClass:clazz] && self._rr_ignoreSetHiddenMessage) {
+            return;
+        }
     }
     [self _rr_setHidden:hidden];
 }
@@ -38,5 +40,6 @@
 - (void)set_rr_ignoreSetHiddenMessage:(BOOL)_rr_ignoreSetHiddenMessage {
     objc_setAssociatedObject(self, @selector(_rr_ignoreSetHiddenMessage), @(_rr_ignoreSetHiddenMessage), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
+
 
 @end

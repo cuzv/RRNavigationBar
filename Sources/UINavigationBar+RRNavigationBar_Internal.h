@@ -10,17 +10,17 @@
 
 /// Following methods used in library, you should not use any directly.
 /// If this bar equal to other bar in transiting, inner used.
-@property (nonatomic, assign) BOOL _rr_equalOtherNavigationBarInTransiting;
+@property (nonatomic, assign) BOOL _rr_equalOtherNavigationBarInTransiting NS_AVAILABLE_IOS(7_0);
 /// Record if this bar is in transiting, inner used.
-@property (nonatomic, assign) BOOL _rr_transiting;
+@property (nonatomic, assign) BOOL _rr_transiting NS_AVAILABLE_IOS(7_0);
 /// The bar's holder, inner used.
-@property (nonatomic, weak, nullable) UIViewController *_holder;
+@property (nonatomic, weak, nullable) UIViewController *_holder NS_AVAILABLE_IOS(7_0);
 /// Apply this bar's appearance to system's navigationBar, inner used.
-- (void)_apply;
+- (void)_apply NS_AVAILABLE_IOS(7_0);
 /// Record the bar's information used lately, inner used.
-@property (nonatomic, retain, nullable) NSMutableDictionary<NSString *, id> *_tmpInfo;
+@property (nonatomic, retain, nullable) NSMutableDictionary<NSString *, id> *_tmpInfo NS_AVAILABLE_IOS(7_0);
 /// Tell system if navigationBar should be invisible, inner used.
-- (void)_rr_setAsInvisible:(BOOL)invisible;
+- (void)_rr_setAsInvisible:(BOOL)invisible NS_AVAILABLE_IOS(7_0);
 
 /// Try not use following methods if it's unnecessary.
 /// UINavigationBar's ivars
@@ -28,10 +28,10 @@
 ///     |- _backgroundImageView [ UIImageView ]
 ///     |- _shadowView [ UIImageView ]
 /// The view maintains navigationBar's backgroundImage & shadowImage.
-@property (nonatomic, weak, readonly, nullable) UIView *_rr_backgroundView;
+@property (nonatomic, weak, readonly, nullable) UIView *_rr_backgroundView NS_AVAILABLE_IOS(7_0);
 /// The view for represent this image when you set in `setBackgroundImage:forBarMetrics:`.
-@property (nonatomic, weak, readonly, nullable) UIView *_rr_backgroundImageView;
+@property (nonatomic, weak, readonly, nullable) UIView *_rr_backgroundImageView NS_AVAILABLE_IOS(7_0);
 /// The view for represent this image when you set in `setShadowImage:`.
-@property (nonatomic, weak, readonly, nullable) UIView *_rr_shadowView;
+@property (nonatomic, weak, readonly, nullable) UIView *_rr_shadowView NS_AVAILABLE_IOS(7_0);
 
 @end

@@ -118,9 +118,7 @@ extern BOOL _RRObjectIsEqual(NSObject *_Nullable one, NSObject *_Nullable other)
     // force navigation bar's background image container view's height equal to navigation bar.
     // iOS 11 will needs this hack.
     if (@available(iOS 11.0, *)) {
-        CGRect newFrame = self._rr_backgroundView.frame;
-        newFrame.size.height = CGRectGetHeight(self.frame) + fabs(self.frame.origin.y);
-        self._rr_backgroundView.frame = newFrame;
+        self._rr_backgroundView.frame = self.bounds;
     }
 }
 #endif

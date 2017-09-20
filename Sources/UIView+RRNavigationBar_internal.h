@@ -13,6 +13,6 @@
 
 /// Tell ObjC ignore `setHidden:` invoke.
 /// iOS 11+ use.
-@property (nonatomic, assign) BOOL _rr_ignoreSetHiddenMessage;
+@property (nonatomic, assign) BOOL _rr_ignoreSetHiddenMessage NS_AVAILABLE_IOS(11_0);
 
 @end

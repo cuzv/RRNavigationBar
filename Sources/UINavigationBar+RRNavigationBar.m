@@ -91,11 +91,15 @@
     // But we do not want its changed during animating, while animation ended, system will change back to not hidden,
     // before that, we will set back this policy make system call valid.
     UIView *_backgroundView = self._rr_backgroundView;
-    if (invisible) {
-        _backgroundView.hidden = invisible;
-        _backgroundView._rr_ignoreSetHiddenMessage = invisible;
+    if (@available(iOS 11.0, *)) {
+        if (invisible) {
+            _backgroundView.hidden = invisible;
+            _backgroundView._rr_ignoreSetHiddenMessage = invisible;
+        } else {
+            _backgroundView._rr_ignoreSetHiddenMessage = invisible;
+            _backgroundView.hidden = invisible;
+        }
     } else {
-        _backgroundView._rr_ignoreSetHiddenMessage = invisible;
         _backgroundView.hidden = invisible;
     }
 }
