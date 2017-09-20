@@ -1,12 +1,12 @@
 //
-//  UINavigationBar+RRAddition_Internal.h
+//  UINavigationBar+RRNavigationBar_Internal.h
 //  RRNavigationBar
 //
 //  Created by Moch Xiao on 3/27/17.
 //  Copyright © 2017 RedRain. All rights reserved.
 //
 
-@interface UINavigationBar (RRAddition_Internal)
+@interface UINavigationBar (RRNavigationBar_Internal)
 
 /// Following methods used in library, you should not use any directly.
 /// If this bar equal to other bar in transiting, inner used.

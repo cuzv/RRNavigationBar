@@ -1,18 +1,18 @@
 //
-//  UINavigationBar+_RRAddition.m
+//  UINavigationBar+RRNavigationBar.m
 //  RRNavigationBar
 //
 //  Created by Moch Xiao on 3/26/17.
 //  Copyright © 2017 RedRain. All rights reserved.
 //
 
-#import "UINavigationBar+RRAddition.h"
+#import "UINavigationBar+RRNavigationBar.h"
 #import <objc/runtime.h>
 #import "_RRWeakAssociatedObjectWrapper.h"
 #import "RRUtils.h"
 #import "UIView+RRNavigationBar_internal.h"
 
-@implementation UINavigationBar (RRAddition)
+@implementation UINavigationBar (RRNavigationBar)
 
 - (BOOL)_rr_equalOtherNavigationBarInTransiting {
     return [objc_getAssociatedObject(self, _cmd) boolValue];

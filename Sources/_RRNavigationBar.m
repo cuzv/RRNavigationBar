@@ -7,7 +7,7 @@
 //
 
 #import "_RRNavigationBar.h"
-#import "UINavigationBar+RRAddition_Internal.h"
+#import "UINavigationBar+RRNavigationBar_Internal.h"
 
 #ifndef RRSetterNumber
 #   define RRSetterNumber(value) \
@@ -112,11 +112,17 @@ extern BOOL _RRObjectIsEqual(NSObject *_Nullable one, NSObject *_Nullable other)
     RRAssignObject(backIndicatorTransitionMaskImage);
 }
 
+#ifdef __IPHONE_11_0
 - (void)layoutSubviews {
     [super layoutSubviews];
     // force navigation bar's background image container view's height equal to navigation bar.
     // iOS 11 will needs this hack.
-    self._rr_backgroundView.frame = self.bounds;
+    if (@available(iOS 11.0, *)) {
+        CGRect newFrame = self._rr_backgroundView.frame;
+        newFrame.size.height = CGRectGetHeight(self.frame) + fabs(self.frame.origin.y);
+        self._rr_backgroundView.frame = newFrame;
+    }
 }
+#endif
 
 @end

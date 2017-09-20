@@ -10,7 +10,7 @@
 #define RRNavigationBar_h
 
 #import "UIViewController+RRNavigationBar.h"
-#import "UINavigationBar+RRAddition.h"
+#import "UINavigationBar+RRNavigationBar.h"
 #import "RRUtils.h"
 
 #endif /* RRNavigationBar_h */

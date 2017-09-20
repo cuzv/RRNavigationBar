@@ -7,8 +7,8 @@
 //
 
 #import "UIViewController+RRNavigationBar.h"
+#import "UINavigationBar+RRNavigationBar_Internal.h"
 #import "RRUtils.h"
-#import "UINavigationBar+RRAddition_Internal.h"
 #import <objc/runtime.h>
 
 @implementation UIViewController (RRNavigationBar)

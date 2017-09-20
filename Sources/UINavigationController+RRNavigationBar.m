@@ -9,24 +9,24 @@
 #import <objc/runtime.h>
 #import "UIViewController+RRNavigationBar.h"
 #import "RRUtils.h"
-#import "UINavigationBar+RRAddition_Internal.h"
-#import "UINavigationBar+RRAddition.h"
+#import "UINavigationBar+RRNavigationBar.h"
+#import "UINavigationBar+RRNavigationBar_Internal.h"
 #import "_RRWeakAssociatedObjectWrapper.h"
 
 #ifndef RRRecoverObject
-#   define RRRecoverObject(this, bar, info, property) (bar.property = info[@#property] ?: this.property)
+#   define RRRecoverObject(from, to, info, property) (to.property = info[@#property] ?: from.property)
 #endif
 
 #ifndef RRRecoverBoolean
-#   define RRRecoverBoolean(this, bar, info, property) (bar.property = info[@#property] ? [info[@#property] boolValue] : this.property)
+#   define RRRecoverBoolean(from, to, info, property) (to.property = info[@#property] ? [info[@#property] boolValue] : from.property)
 #endif
 
 #ifndef RRRecoverInteger
-#   define RRRecoverInteger(this, bar, info, property) (bar.property = info[@#property] ? [info[@#property] integerValue] : this.property)
+#   define RRRecoverInteger(from, to, info, property) (to.property = info[@#property] ? [info[@#property] integerValue] : from.property)
 #endif
 
 #ifndef RRRecoverDobule
-#   define RRRecoverDobule(this, bar, info, property) (bar.property = info[@#property] ? [info[@#property] doubleValue] : this.property)
+#   define RRRecoverDobule(from, to, info, property) (to.property = info[@#property] ? [info[@#property] doubleValue] : from.property)
 #endif
 
 #ifndef RRExcludeImagePicker
@@ -53,13 +53,16 @@
 
 - (void)_rr_nvc_viewDidLoad {
     RRExcludeImagePicker(self);
+    
     self.delegate = self;
     self.interactivePopGestureRecognizer.delegate = self;
+    
     [self _rr_nvc_viewDidLoad];
 }
 
 - (void)_rr_nvc_viewWillLayoutSubviews {
     RRExcludeImagePicker(self);
+    
     if (!self._navigationBarInitialized && self.navigationBar) {
         self.rr_navigationBar = RRUINavigationBarDuplicate(self.navigationBar);
         [self.rr_navigationBar _apply];
@@ -72,22 +75,22 @@
     // when present a nvc, vc:viewDidLoad -> nvc:viewWillLayoutSubviews.
     // So, in vc:viewDidLoad vc.rr_navigationBar isn't the correct styles,
     // therefore recored setups, recover when nvc.rr_navigationBar initialized.
-    UINavigationBar *this = self.rr_navigationBar;
-    UINavigationBar *bar = self.topViewController.rr_navigationBar;
-    NSDictionary *info = bar._tmpInfo;
-    if (this && info) {
-        RRRecoverInteger(this, bar, info, barStyle);
-        RRRecoverBoolean(this, bar, info, translucent);
-        RRRecoverDobule(this, bar, info, alpha);
-        RRRecoverObject(this, bar, info, tintColor);
-        RRRecoverObject(this, bar, info, barTintColor);
-        RRRecoverObject(this, bar, info, backgroundColor);
-        RRRecoverObject(this, bar, info, shadowImage);
-        [bar setBackgroundImage:info[@"backgroundImage"] ?: [this backgroundImageForBarMetrics:UIBarMetricsDefault] forBarMetrics:UIBarMetricsDefault];
-        RRRecoverObject(this, bar, info, backIndicatorImage);
-        RRRecoverObject(this, bar, info, backIndicatorTransitionMaskImage);
-        RRRecoverBoolean(this, bar, info, rr_forceShadowImageHidden);
-        bar._tmpInfo = nil;
+    UINavigationBar *fromBar = self.rr_navigationBar;
+    UINavigationBar *toBar = self.topViewController.rr_navigationBar;
+    NSDictionary *info = toBar._tmpInfo;
+    if (fromBar && info) {
+        RRRecoverInteger(fromBar, toBar, info, barStyle);
+        RRRecoverBoolean(fromBar, toBar, info, translucent);
+        RRRecoverDobule(fromBar, toBar, info, alpha);
+        RRRecoverObject(fromBar, toBar, info, tintColor);
+        RRRecoverObject(fromBar, toBar, info, barTintColor);
+        RRRecoverObject(fromBar, toBar, info, backgroundColor);
+        RRRecoverObject(fromBar, toBar, info, shadowImage);
+        [toBar setBackgroundImage:info[@"backgroundImage"] ?: [fromBar backgroundImageForBarMetrics:UIBarMetricsDefault] forBarMetrics:UIBarMetricsDefault];
+        RRRecoverObject(fromBar, toBar, info, backIndicatorImage);
+        RRRecoverObject(fromBar, toBar, info, backIndicatorTransitionMaskImage);
+        RRRecoverBoolean(fromBar, toBar, info, rr_forceShadowImageHidden);
+        toBar._tmpInfo = nil;
     }
     
     [self _rr_nvc_viewWillLayoutSubviews];
@@ -122,37 +125,37 @@
 #pragma mark -
 
 - (void)_handleWillShowViewController:(UIViewController *)viewController {
+    UIViewController *toVC = viewController;
+    UIViewController *fromVC = self._visibleTopViewController;
+    if (!fromVC) { return; }
+    NSArray *transitionVCs = @[toVC, fromVC];
+    
     // If these two navigationBar `equal`, use system transition behavior.
-    if (RRIsUINavigationBarEqual(viewController.rr_navigationBar, self._visibleTopViewController.rr_navigationBar)) {
-        viewController.rr_navigationBar._rr_transiting = YES;
-        viewController.rr_navigationBar._rr_equalOtherNavigationBarInTransiting = YES;
-        self._visibleTopViewController.rr_navigationBar._rr_transiting = YES;
-        self._visibleTopViewController.rr_navigationBar._rr_equalOtherNavigationBarInTransiting = YES;
-        if (!viewController.view.backgroundColor) {
-            viewController.view.backgroundColor = self._visibleTopViewController.view.backgroundColor;
-            if ([viewController.view.backgroundColor isEqual:UIColor.clearColor]) {
-                viewController.view.backgroundColor = UIColor.whiteColor;
+    if (RRIsUINavigationBarEqual(toVC.rr_navigationBar, fromVC.rr_navigationBar)) {
+        for (UIViewController *vc in transitionVCs) {
+            vc.rr_navigationBar._rr_transiting = YES;
+            vc.rr_navigationBar._rr_equalOtherNavigationBarInTransiting = YES;
+        }
+        if (!toVC.view.backgroundColor) {
+            toVC.view.backgroundColor = fromVC.view.backgroundColor;
+            if ([toVC.view.backgroundColor isEqual:UIColor.clearColor]) {
+                toVC.view.backgroundColor = UIColor.whiteColor;
             }
         }
         return;
     }
     
     // If cancel pop, needs recover.
-    static dispatch_once_t onceToken;
-    static BOOL iOSVersionGreaterThanOrEqualTo10 = NO;
-    dispatch_once(&onceToken, ^{
-        iOSVersionGreaterThanOrEqualTo10 = UIDevice.currentDevice.systemVersion.floatValue >= 10;
-    });
-    id <UIViewControllerTransitionCoordinator> transitionCoordinator = self._visibleTopViewController.transitionCoordinator;
-    __weak typeof(self) weak_self = self;
+    id <UIViewControllerTransitionCoordinator> transitionCoordinator = fromVC.transitionCoordinator;
+    __weak typeof(self) weakSelf = self;
     void (^handleCancel)(id<UIViewControllerTransitionCoordinatorContext>  _Nonnull context) = ^(id<UIViewControllerTransitionCoordinatorContext>  _Nonnull context) {
         if (context.isCancelled) {
+            __strong typeof(weakSelf) strongSelf = weakSelf;
+            [strongSelf _handleDidShowViewController:fromVC];
             RRLog(@"Pop canceled.");
-            __strong typeof(weak_self) strong_self = weak_self;
-            [strong_self _handleDidShowViewController:strong_self._visibleTopViewController];
         }
     };
-    if (iOSVersionGreaterThanOrEqualTo10) {
+    if ([transitionCoordinator respondsToSelector:@selector(notifyWhenInteractionChangesUsingBlock:)]) {
         [transitionCoordinator notifyWhenInteractionChangesUsingBlock:handleCancel];
     } else {
 #pragma clang diagnostic push
@@ -160,70 +163,70 @@
         [transitionCoordinator notifyWhenInteractionEndsUsingBlock:handleCancel];
 #pragma clang diagnostic pop
     }
+
+    for (UIViewController *vc in transitionVCs) {
+        vc.rr_navigationBar._rr_transiting = YES;
+        vc.rr_navigationBar._rr_equalOtherNavigationBarInTransiting = NO;
+        vc.rr_navigationBar.hidden = NO;
+        vc.view.clipsToBounds = NO;
+    }
     
-    viewController.rr_navigationBar._rr_transiting = YES;
-    viewController.rr_navigationBar._rr_equalOtherNavigationBarInTransiting = NO;
-    viewController.rr_navigationBar.hidden = NO;
-    viewController.view.clipsToBounds = NO;
-    self._visibleTopViewController.rr_navigationBar._rr_transiting = YES;
-    self._visibleTopViewController.rr_navigationBar._rr_equalOtherNavigationBarInTransiting = NO;
-    self._visibleTopViewController.rr_navigationBar.hidden = NO;
-    self._visibleTopViewController.view.clipsToBounds = NO;
-    
-    [self._visibleTopViewController viewWillLayoutSubviews];
-    if (!viewController.view.backgroundColor) {
-        viewController.view.backgroundColor = self._visibleTopViewController.view.backgroundColor;
-        if ([viewController.view.backgroundColor isEqual:UIColor.clearColor]) {
-            viewController.view.backgroundColor = UIColor.whiteColor;
+    [fromVC viewWillLayoutSubviews];
+    if (!toVC.view.backgroundColor) {
+        toVC.view.backgroundColor = fromVC.view.backgroundColor;
+        if ([toVC.view.backgroundColor isEqual:UIColor.clearColor]) {
+            toVC.view.backgroundColor = UIColor.whiteColor;
         }
     }
     
     [self.navigationBar _rr_setAsInvisible:YES];
     
-//#if INRR
-//    NSUInteger currentIndex = [viewController.navigationController.viewControllers indexOfObject:self._visibleTopViewController];
-//    if (!self._visibleTopViewController) {
-//        currentIndex = 0;
-//    }
-//    NSUInteger toIndex = [viewController.navigationController.viewControllers indexOfObject:viewController];
-//    if (currentIndex > toIndex) {
-//        RRLog(@"poping to vc: %@", viewController.navigationItem.title);
-//    } else {
-//        RRLog(@"pushing to vc: %@", viewController.navigationItem.title);
-//    }
-//#endif
+#if INRR
+    NSUInteger currentIndex = [toVC.navigationController.viewControllers indexOfObject:fromVC];
+    NSUInteger toIndex = [toVC.navigationController.viewControllers indexOfObject:toVC];
+    if (!fromVC) { currentIndex = 0; }
+    if (currentIndex > toIndex) {
+        RRLog(@"will pop to vc with title: %@", toVC.navigationItem.title);
+    } else {
+        RRLog(@"will push to vc with title: %@", toVC.navigationItem.title);
+    }
+#endif
 }
 
 - (void)_handleDidShowViewController:(UIViewController *)viewController {
-//    return;
-    [viewController.rr_navigationBar _apply];
+    UIViewController *toVC = viewController;
+    UIViewController *fromVC = self._visibleTopViewController;
+    if (!fromVC) {
+        self._visibleTopViewController = toVC;
+        return;
+    }
+    
+    NSArray *transitionVCs = @[toVC, fromVC];
+
+    [toVC.rr_navigationBar _apply];
     
     [self.navigationBar _rr_setAsInvisible:NO];
     
-    viewController.rr_navigationBar._rr_transiting = NO;
-    viewController.rr_navigationBar._rr_equalOtherNavigationBarInTransiting = NO;
-    viewController.rr_navigationBar.hidden = YES;
-    viewController.view.clipsToBounds = YES;
-    self._visibleTopViewController.rr_navigationBar._rr_transiting = NO;
-    self._visibleTopViewController.rr_navigationBar._rr_equalOtherNavigationBarInTransiting = NO;
-    self._visibleTopViewController.rr_navigationBar.hidden = YES;
-    self._visibleTopViewController.view.clipsToBounds = YES;
+    for (UIViewController *vc in transitionVCs) {
+        vc.rr_navigationBar._rr_transiting = NO;
+        vc.rr_navigationBar._rr_equalOtherNavigationBarInTransiting = NO;
+        vc.rr_navigationBar.hidden = YES;
+        vc.view.clipsToBounds = YES;
+    }
     
-    self._visibleTopViewController = viewController;
+    self._visibleTopViewController = toVC;
 }
 
 #pragma mark - UINavigationControllerDelegate
 
 - (void)navigationController:(UINavigationController *)navigationController willShowViewController:(UIViewController *)viewController animated:(BOOL)animated {
     RRExcludeImagePicker(navigationController);
-//    RRLog(@"Will show vc %@.", viewController.navigationItem.title);
     [self _handleWillShowViewController:viewController];
 }
 
 - (void)navigationController:(UINavigationController *)navigationController didShowViewController:(UIViewController *)viewController animated:(BOOL)animated {
     RRExcludeImagePicker(navigationController);
     [self _handleDidShowViewController:viewController];
-//    RRLog(@"Did show vc %@.", viewController.navigationItem.title);
 }
 
 #pragma mark - UIGestureRecognizerDelegate

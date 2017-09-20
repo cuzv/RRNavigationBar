@@ -1,5 +1,5 @@
 //
-//  UINavigationBar+RRAddition.h
+//  UINavigationBar+RRNavigationBar.h
 //  RRNavigationBar
 //
 //  Created by Moch Xiao on 3/26/17.

@@ -12,6 +12,7 @@
 @interface UIView (RRNavigationBar_internal)
 
 /// Tell ObjC ignore `setHidden:` invoke.
+/// iOS 11+ use.
 @property (nonatomic, assign) BOOL _rr_ignoreSetHiddenMessage;
 
 @end

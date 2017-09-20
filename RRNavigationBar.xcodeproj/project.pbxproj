@@ -23,7 +23,7 @@
 		465E81401E8B8A4A003AAA55 /* StoryboardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 465E813F1E8B8A4A003AAA55 /* StoryboardViewController.m */; };
 		465E81421E8B8AB5003AAA55 /* Present.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 465E81411E8B8AB5003AAA55 /* Present.storyboard */; };
 		465E81451E8B8F4B003AAA55 /* SBRootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 465E81441E8B8F4B003AAA55 /* SBRootViewController.m */; };
-		465FE9D61E87E92A000654C1 /* UINavigationBar+RRAddition.m in Sources */ = {isa = PBXBuildFile; fileRef = 465FE9D51E87E92A000654C1 /* UINavigationBar+RRAddition.m */; };
+		465FE9D61E87E92A000654C1 /* UINavigationBar+RRNavigationBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 465FE9D51E87E92A000654C1 /* UINavigationBar+RRNavigationBar.m */; };
 		46C3CF1E1F6E870200FF682B /* UIView+RRNavigationBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 46C3CF1D1F6E870200FF682B /* UIView+RRNavigationBar.m */; };
 		46C646F81E8A377500A3349A /* _RRWeakAssociatedObjectWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 46C646F71E8A377500A3349A /* _RRWeakAssociatedObjectWrapper.m */; };
 		46C6471F1E8A56D700A3349A /* EmbedTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 46C6471E1E8A56D700A3349A /* EmbedTabBarController.m */; };
@@ -40,7 +40,7 @@
 		460410FC1E82C08F00FC3E2B /* UIColor+EKExtension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+EKExtension.m"; sourceTree = "<group>"; };
 		4625A8191E88F4B40092247A /* _RRNavigationBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _RRNavigationBar.h; sourceTree = "<group>"; };
 		4625A81A1E88F4B40092247A /* _RRNavigationBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _RRNavigationBar.m; sourceTree = "<group>"; };
-		4625A81E1E8917C20092247A /* UINavigationBar+RRAddition_Internal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UINavigationBar+RRAddition_Internal.h"; sourceTree = "<group>"; };
+		4625A81E1E8917C20092247A /* UINavigationBar+RRNavigationBar_Internal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UINavigationBar+RRNavigationBar_Internal.h"; sourceTree = "<group>"; };
 		4625A81F1E8918070092247A /* RRNavigationBar.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RRNavigationBar.h; sourceTree = "<group>"; };
 		4625A8251E8931940092247A /* ProductListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProductListViewController.h; sourceTree = "<group>"; };
 		4625A8261E8931940092247A /* ProductListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProductListViewController.m; sourceTree = "<group>"; };
@@ -66,8 +66,8 @@
 		465E81411E8B8AB5003AAA55 /* Present.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Present.storyboard; sourceTree = "<group>"; };
 		465E81431E8B8F4B003AAA55 /* SBRootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBRootViewController.h; sourceTree = "<group>"; };
 		465E81441E8B8F4B003AAA55 /* SBRootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBRootViewController.m; sourceTree = "<group>"; };
-		465FE9D41E87E92A000654C1 /* UINavigationBar+RRAddition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UINavigationBar+RRAddition.h"; sourceTree = "<group>"; };
-		465FE9D51E87E92A000654C1 /* UINavigationBar+RRAddition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UINavigationBar+RRAddition.m"; sourceTree = "<group>"; };
+		465FE9D41E87E92A000654C1 /* UINavigationBar+RRNavigationBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UINavigationBar+RRNavigationBar.h"; sourceTree = "<group>"; };
+		465FE9D51E87E92A000654C1 /* UINavigationBar+RRNavigationBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UINavigationBar+RRNavigationBar.m"; sourceTree = "<group>"; };
 		4692E41A1E7AED4A00C53A89 /* RRNavigationBar.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RRNavigationBar.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		46C3CF1D1F6E870200FF682B /* UIView+RRNavigationBar.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIView+RRNavigationBar.m"; sourceTree = "<group>"; };
 		46C3CF1F1F6E884100FF682B /* UIView+RRNavigationBar_internal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIView+RRNavigationBar_internal.h"; sourceTree = "<group>"; };
@@ -181,9 +181,9 @@
 				460410F31E82BF9200FC3E2B /* UIViewController+RRNavigationBar.m */,
 				465E1C291E8662830082389A /* UINavigationController+RRNavigationBar.h */,
 				465E1C2A1E8662830082389A /* UINavigationController+RRNavigationBar.m */,
-				4625A81E1E8917C20092247A /* UINavigationBar+RRAddition_Internal.h */,
-				465FE9D41E87E92A000654C1 /* UINavigationBar+RRAddition.h */,
-				465FE9D51E87E92A000654C1 /* UINavigationBar+RRAddition.m */,
+				4625A81E1E8917C20092247A /* UINavigationBar+RRNavigationBar_Internal.h */,
+				465FE9D41E87E92A000654C1 /* UINavigationBar+RRNavigationBar.h */,
+				465FE9D51E87E92A000654C1 /* UINavigationBar+RRNavigationBar.m */,
 				4625A8191E88F4B40092247A /* _RRNavigationBar.h */,
 				4625A81A1E88F4B40092247A /* _RRNavigationBar.m */,
 				46C646F61E8A377500A3349A /* _RRWeakAssociatedObjectWrapper.h */,
@@ -288,7 +288,7 @@
 				460410F41E82BF9200FC3E2B /* UIViewController+RRNavigationBar.m in Sources */,
 				4625A8271E8931940092247A /* ProductListViewController.m in Sources */,
 				460411001E82C08F00FC3E2B /* UIColor+EKExtension.m in Sources */,
-				465FE9D61E87E92A000654C1 /* UINavigationBar+RRAddition.m in Sources */,
+				465FE9D61E87E92A000654C1 /* UINavigationBar+RRNavigationBar.m in Sources */,
 				4625A83C1E893F2F0092247A /* OptionsTableViewController.m in Sources */,
 				4625A82A1E8931A00092247A /* ProductViewController.m in Sources */,
 				46C646F81E8A377500A3349A /* _RRWeakAssociatedObjectWrapper.m in Sources */,
