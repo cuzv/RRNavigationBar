@@ -29,9 +29,32 @@
 #   define RRRecoverDobule(from, to, info, property) (to.property = info[@#property] ? [info[@#property] doubleValue] : from.property)
 #endif
 
-#ifndef RRExcludeImagePicker
-#   define RRExcludeImagePicker(instance) if ([instance isKindOfClass:UIImagePickerController.class]) { return; }
+#ifndef RRExcludeImpactBehaviorFor
+#   define RRExcludeImpactBehaviorFor(instance) \
+        for (Class clazz in _excludeNVCClassess) { \
+            if ([instance isKindOfClass:clazz]) { return; } \
+        } \
+        for (UINavigationController *nvc in _excludeNVCInstance) { \
+            if ([instance isEqual:nvc]) { return; } \
+        }
 #endif
+
+static NSMutableSet *_excludeNVCClassess;
+static NSMutableSet *_excludeNVCInstance;
+
+void RRNavigationBarExcludeImpactBehaviorForClass(Class _Nonnull nvcClass) {
+    if (![nvcClass isSubclassOfClass:UINavigationController.class]) {
+        return;
+    }
+    [_excludeNVCClassess addObject:nvcClass];
+    assert(_excludeNVCClassess);
+}
+
+void RRNavigationBarExcludeImpactBehaviorForInstance(__kindof UINavigationController *_Nonnull nvc) {
+    if (![nvc isKindOfClass:UINavigationController.class]) {
+        return;
+    }
+}
 
 @interface UINavigationController ()<UINavigationControllerDelegate, UIGestureRecognizerDelegate>
 @property (nonatomic, weak, nullable) UIViewController *_visibleTopViewController;
@@ -52,16 +75,24 @@
 #pragma mark - Swizzle
 
 - (void)_rr_nvc_viewDidLoad {
-    RRExcludeImagePicker(self);
+    [self _rr_nvc_viewDidLoad];
+    
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        _excludeNVCClassess = [NSMutableSet setWithObject:UIImagePickerController.class];
+        _excludeNVCInstance = [NSMutableSet new];
+    });
+    
+    RRExcludeImpactBehaviorFor(self);
     
     self.delegate = self;
     self.interactivePopGestureRecognizer.delegate = self;
-    
-    [self _rr_nvc_viewDidLoad];
 }
 
 - (void)_rr_nvc_viewWillLayoutSubviews {
-    RRExcludeImagePicker(self);
+    [self _rr_nvc_viewWillLayoutSubviews];
+
+    RRExcludeImpactBehaviorFor(self);
     
     if (!self._navigationBarInitialized && self.navigationBar) {
         self.rr_navigationBar = RRUINavigationBarDuplicate(self.navigationBar);
@@ -92,8 +123,6 @@
         RRRecoverBoolean(fromBar, toBar, info, rr_forceShadowImageHidden);
         toBar._tmpInfo = nil;
     }
-    
-    [self _rr_nvc_viewWillLayoutSubviews];
 }
 
 - (UIStatusBarStyle)_rr_nvc_preferredStatusBarStyle {
@@ -220,12 +249,12 @@
 #pragma mark - UINavigationControllerDelegate
 
 - (void)navigationController:(UINavigationController *)navigationController willShowViewController:(UIViewController *)viewController animated:(BOOL)animated {
-    RRExcludeImagePicker(navigationController);
+    RRExcludeImpactBehaviorFor(navigationController);
     [self _handleWillShowViewController:viewController];
 }
 
 - (void)navigationController:(UINavigationController *)navigationController didShowViewController:(UIViewController *)viewController animated:(BOOL)animated {
-    RRExcludeImagePicker(navigationController);
+    RRExcludeImpactBehaviorFor(navigationController);
     [self _handleDidShowViewController:viewController];
 }
 

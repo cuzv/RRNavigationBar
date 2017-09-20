@@ -23,6 +23,8 @@
 #pragma mark - Swizzle
 
 - (void)_rr_viewWillLayoutSubviews {
+    [self _rr_viewWillLayoutSubviews];
+    
     if (self.rr_navigationBar._rr_equalOtherNavigationBarInTransiting) {
         return;
     }
@@ -48,8 +50,6 @@
     if (!self.rr_navigationBar.superview) {
         [self.view addSubview:self.rr_navigationBar];
     }
-
-    [self _rr_viewWillLayoutSubviews];
 }
 
 #pragma mark - Public
