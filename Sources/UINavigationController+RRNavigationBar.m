@@ -12,6 +12,7 @@
 #import "UINavigationBar+RRNavigationBar.h"
 #import "UINavigationBar+RRNavigationBar_Internal.h"
 #import "_RRWeakAssociatedObjectWrapper.h"
+#import "UIView+RRNavigationBar_internal.h"
 
 #ifndef RRRecoverObject
 #   define RRRecoverObject(from, to, info, property) (to.property = info[@#property] ?: from.property)
@@ -198,13 +199,22 @@ void RRNavigationBarExcludeImpactBehaviorForInstance(__kindof UINavigationContro
         vc.rr_navigationBar._rr_equalOtherNavigationBarInTransiting = NO;
         vc.rr_navigationBar.hidden = NO;
         vc.view.clipsToBounds = NO;
-        
-        if (@available(iOS 11.0, *)) {
-            if (!vc.rr_navigationBar.translucent && [vc.view isKindOfClass:UIScrollView.class]) {
-                ((UIScrollView *)vc.view).contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
+    }
+#ifdef __IPHONE_11_0
+    if (@available(iOS 11.0, *)) {
+        if (!fromVC.rr_navigationBar.translucent ||
+            !toVC.rr_navigationBar.translucent) {
+            for (UIViewController *vc in transitionVCs) {
+                // Save current contentInsetAdjustmentBehavior
+                if ([vc.view isKindOfClass:UIScrollView.class]) {
+                    UIScrollView *scrollView = ((UIScrollView *)vc.view);
+                    scrollView._rr_contentInsetAdjustmentBehavior = scrollView.contentInsetAdjustmentBehavior;
+                    scrollView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
+                }
             }
         }
     }
+#endif
     
     [fromVC viewWillLayoutSubviews];
     
@@ -251,6 +261,22 @@ void RRNavigationBarExcludeImpactBehaviorForInstance(__kindof UINavigationContro
     }
     
     self._visibleTopViewController = toVC;
+    
+#ifdef __IPHONE_11_0
+    if (@available(iOS 11.0, *)) {
+        if (!fromVC.rr_navigationBar.translucent ||
+            !toVC.rr_navigationBar.translucent) {
+            for (UIViewController *vc in transitionVCs) {
+                // Restore before contentInsetAdjustmentBehavior
+                if ([vc.view isKindOfClass:UIScrollView.class]) {
+                    UIScrollView *scrollView = ((UIScrollView *)vc.view);
+                    scrollView.contentInsetAdjustmentBehavior = scrollView._rr_contentInsetAdjustmentBehavior;
+                    [vc viewWillLayoutSubviews];
+                }
+            }
+        }
+    }
+#endif
     
     RRLog(@"did show vc with title: %@", toVC.navigationItem.title);
 }
