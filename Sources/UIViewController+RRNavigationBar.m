@@ -50,6 +50,7 @@
     if (!self.rr_navigationBar.superview) {
         [self.view addSubview:self.rr_navigationBar];
     }
+    [self.rr_navigationBar.superview bringSubviewToFront:self.rr_navigationBar];
     
     RRLog(@"rr_navigationBar prepared for vc with title: %@", self.navigationItem.title);
 }
