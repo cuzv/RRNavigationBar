@@ -28,7 +28,7 @@
         UINavigationBar *global = [UINavigationBar appearance];
         global.tintColor = [UIColor magentaColor];
         global.barStyle = UIBarMetricsDefault;
-        global.translucent = NO;
+        global.translucent = YES;
 //        UIImage *indicatorImage = RRUIImageMakeWithSize([UIColor orangeColor], CGSizeMake(13, 21));
 //        global.backIndicatorImage = indicatorImage;
 //        global.backIndicatorTransitionMaskImage = indicatorImage;

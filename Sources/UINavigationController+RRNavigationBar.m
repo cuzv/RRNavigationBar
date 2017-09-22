@@ -198,9 +198,16 @@ void RRNavigationBarExcludeImpactBehaviorForInstance(__kindof UINavigationContro
         vc.rr_navigationBar._rr_equalOtherNavigationBarInTransiting = NO;
         vc.rr_navigationBar.hidden = NO;
         vc.view.clipsToBounds = NO;
+        
+        if (@available(iOS 11.0, *)) {
+            if (!vc.rr_navigationBar.translucent && [vc.view isKindOfClass:UIScrollView.class]) {
+                ((UIScrollView *)vc.view).contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
+            }
+        }
     }
     
     [fromVC viewWillLayoutSubviews];
+    
     if (!toVC.view.backgroundColor) {
         toVC.view.backgroundColor = fromVC.view.backgroundColor;
         if ([toVC.view.backgroundColor isEqual:UIColor.clearColor]) {
@@ -244,6 +251,8 @@ void RRNavigationBarExcludeImpactBehaviorForInstance(__kindof UINavigationContro
     }
     
     self._visibleTopViewController = toVC;
+    
+    RRLog(@"did show vc with title: %@", toVC.navigationItem.title);
 }
 
 #pragma mark - UINavigationControllerDelegate

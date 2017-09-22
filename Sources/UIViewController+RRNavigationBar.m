@@ -25,13 +25,13 @@
 - (void)_rr_viewWillLayoutSubviews {
     [self _rr_viewWillLayoutSubviews];
     
-    if (self.rr_navigationBar._rr_equalOtherNavigationBarInTransiting) {
-        return;
-    }
-    if (!self.rr_navigationBar._rr_transiting) {
-        return;
-    }
-    if (!self.isViewLoaded || !self.view.window) {
+    if ([self isKindOfClass:UINavigationController.class] ||
+        !self.navigationController ||
+        self.rr_navigationBar._rr_equalOtherNavigationBarInTransiting ||
+        !self.rr_navigationBar._rr_transiting ||
+        !self.isViewLoaded ||
+        !self.view.window)
+    {
         return;
     }
     
@@ -50,6 +50,8 @@
     if (!self.rr_navigationBar.superview) {
         [self.view addSubview:self.rr_navigationBar];
     }
+    
+    RRLog(@"rr_navigationBar prepared for vc with title: %@", self.navigationItem.title);
 }
 
 #pragma mark - Public

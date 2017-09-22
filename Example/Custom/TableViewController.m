@@ -44,7 +44,7 @@
         ConfigItem *barTintColor = [[ConfigItem alloc] initWithType:ConfigTypeBarTintColor value:ConfigValueColorNone];
         ConfigItem *backgroundImageColor = [[ConfigItem alloc] initWithType:ConfigTypeBackgroundImageColor value:ConfigValueColorNone];
         ConfigItem *shadowImage = [[ConfigItem alloc] initWithType:ConfigTypeShadowImage value:ConfigValueTrue];
-        ConfigItem *translucent = [[ConfigItem alloc] initWithType:ConfigTypeTranslucent value:ConfigValueTrue];
+        ConfigItem *translucent = [[ConfigItem alloc] initWithType:ConfigTypeTranslucent value:ConfigValueFalse];
         ConfigItem *barStyle = [[ConfigItem alloc] initWithType:ConfigTypeBarStyle value:ConfigValueTrue];
         _nextVCData = [@[tintColor, barTintColor, backgroundImageColor, shadowImage, translucent, barStyle] mutableCopy];
     }
@@ -59,11 +59,7 @@
     self.tableView = tableView;
     self.navigationItem.title = [@(self.navigationController.viewControllers.count) stringValue];
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Next" style:UIBarButtonItemStylePlain target:self action:@selector(handleClickNext:)];
-//    self.tableView.backgroundColor = [UIColor ek_random];
-//    if (@available(iOS 11.0, *)) {
-//        self.tableView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
-//    }
-        
+    
     for (ConfigItem *item in self.currentData) {
         id value = RRConfigureValueWrap(item.value);
         switch (item.type) {
@@ -95,6 +91,14 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+}
+
+- (void)viewWillLayoutSubviews {
+    [super viewWillLayoutSubviews];
+}
+
+- (void)viewDidLayoutSubviews {
+    [super viewDidLayoutSubviews];
 }
 
 - (void)viewDidAppear:(BOOL)animated {

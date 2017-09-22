@@ -31,7 +31,7 @@
     [view.widthAnchor constraintEqualToConstant:200].active = YES;
     [view.heightAnchor constraintEqualToConstant:60].active = YES;
     
-    self.rr_navigationBar.translucent = YES;
+    self.rr_navigationBar.translucent = NO;
 }
 
 

@@ -8,6 +8,7 @@
 
 #import "OptionsTableViewController.h"
 #import "UIColor+EKExtension.h"
+#import "RRNavigationBar.h"
 
 @interface OptionsTableViewController ()
 @property (nonatomic, strong) ConfigItem *item;
@@ -43,7 +44,6 @@
         self.navigationItem.rightBarButtonItems = @[root];
     }
     
-    
     ConfigType type = self.item.type;
     switch (type) {
         case ConfigTypeTintColor:
@@ -68,6 +68,12 @@
         [newArr addObject:@(ConfigValueColorInvisible)];
         _data = newArr;
     }
+    
+    self.rr_navigationBar.translucent = self.navigationController.navigationBar.translucent;
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super  viewWillAppear:animated];
 }
 
 - (void)handleClickPopToRoot:(UIBarButtonItem *)sender {
@@ -78,7 +84,6 @@
 - (void)handleClickPopToSecond:(UIBarButtonItem *)sender {
     [self.navigationController popToViewController:self.navigationController.viewControllers[1] animated:YES];
 }
-
 
 
 #pragma mark - Table view data source
