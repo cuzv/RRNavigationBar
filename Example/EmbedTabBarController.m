@@ -11,7 +11,9 @@
 #import "TableViewController.h"
 #import "ProductListViewController.h"
 #import "StoryboardViewController.h"
+#import "NoneTranslucentViewController.h"
 #import "Helper.h"
+#import "UIColor+EKExtension.h"
 
 @interface EmbedTabBarController ()
 
@@ -26,25 +28,31 @@
         UINavigationBar *global = [UINavigationBar appearance];
         global.tintColor = [UIColor magentaColor];
         global.barStyle = UIBarMetricsDefault;
-        global.translucent = YES;
+        global.translucent = NO;
 //        UIImage *indicatorImage = RRUIImageMakeWithSize([UIColor orangeColor], CGSizeMake(13, 21));
 //        global.backIndicatorImage = indicatorImage;
 //        global.backIndicatorTransitionMaskImage = indicatorImage;
     }
 
     UINavigationController *productRoot = [[UINavigationController alloc] initWithRootViewController:[ProductListViewController new]];
-    productRoot.tabBarItem.title = @"Product Example";
+    productRoot.tabBarItem.title = @"Product";
     productRoot.navigationBar.tintColor = [UIColor redColor];
     
 //    UINavigationController *exampleRoot = [UINavigationController new];
 //    exampleRoot.viewControllers = @[[TableViewController new], [TableViewController new], [TableViewController new]];
     UINavigationController *exampleRoot = [[UINavigationController alloc] initWithRootViewController:[TableViewController new]];
-    exampleRoot.tabBarItem.title = @"Custom Example";
+    exampleRoot.tabBarItem.title = @"Custom";
     
     UINavigationController *storyboardRoot = [[UINavigationController alloc] initWithRootViewController:[StoryboardViewController new]];
-    storyboardRoot.tabBarItem.title = @"Storyboard Example";
+    storyboardRoot.tabBarItem.title = @"Storyboard";
 
-    self.viewControllers = @[productRoot, exampleRoot, storyboardRoot];
+    UINavigationController *noneTranslucentRoot = [[UINavigationController alloc] initWithRootViewController:[NoneTranslucentViewController new]];
+    noneTranslucentRoot.tabBarItem.title = @"NoneTranslucent";
+    noneTranslucentRoot.navigationBar.translucent = NO;
+    noneTranslucentRoot.navigationItem.title = @"NoneTranslucent";
+    [noneTranslucentRoot.navigationBar setBackgroundImage:RRUIImageMake(UIColor.ek_random) forBarMetrics:UIBarMetricsDefault];
+    
+    self.viewControllers = @[productRoot, exampleRoot, storyboardRoot, noneTranslucentRoot];
     self.selectedIndex = 1;
 }
 

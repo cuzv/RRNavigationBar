@@ -29,10 +29,7 @@ BOOL _RRObjectIsEqual(NSObject *_Nullable one, NSObject *_Nullable other) {
     if (one == other) {
         return YES;
     }
-    if (one && !other) {
-        return NO;
-    }
-    if (!one && other) {
+    if ((one && !other) || (!one && other)) {
         return NO;
     }
     if (one && other) {

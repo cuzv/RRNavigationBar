@@ -60,7 +60,9 @@
     self.navigationItem.title = [@(self.navigationController.viewControllers.count) stringValue];
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Next" style:UIBarButtonItemStylePlain target:self action:@selector(handleClickNext:)];
 //    self.tableView.backgroundColor = [UIColor ek_random];
-
+//    if (@available(iOS 11.0, *)) {
+//        self.tableView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
+//    }
         
     for (ConfigItem *item in self.currentData) {
         id value = RRConfigureValueWrap(item.value);

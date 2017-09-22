@@ -24,6 +24,8 @@
 		465E81421E8B8AB5003AAA55 /* Present.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 465E81411E8B8AB5003AAA55 /* Present.storyboard */; };
 		465E81451E8B8F4B003AAA55 /* SBRootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 465E81441E8B8F4B003AAA55 /* SBRootViewController.m */; };
 		465FE9D61E87E92A000654C1 /* UINavigationBar+RRNavigationBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 465FE9D51E87E92A000654C1 /* UINavigationBar+RRNavigationBar.m */; };
+		466E980C1F7542CA00B9BD91 /* NoneTranslucentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 466E980B1F7542CA00B9BD91 /* NoneTranslucentViewController.m */; };
+		466E980F1F7543F900B9BD91 /* NoneTranslucentNextViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 466E980E1F7543F900B9BD91 /* NoneTranslucentNextViewController.m */; };
 		46C3CF1E1F6E870200FF682B /* UIView+RRNavigationBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 46C3CF1D1F6E870200FF682B /* UIView+RRNavigationBar.m */; };
 		46C646F81E8A377500A3349A /* _RRWeakAssociatedObjectWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 46C646F71E8A377500A3349A /* _RRWeakAssociatedObjectWrapper.m */; };
 		46C6471F1E8A56D700A3349A /* EmbedTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 46C6471E1E8A56D700A3349A /* EmbedTabBarController.m */; };
@@ -68,6 +70,10 @@
 		465E81441E8B8F4B003AAA55 /* SBRootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBRootViewController.m; sourceTree = "<group>"; };
 		465FE9D41E87E92A000654C1 /* UINavigationBar+RRNavigationBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UINavigationBar+RRNavigationBar.h"; sourceTree = "<group>"; };
 		465FE9D51E87E92A000654C1 /* UINavigationBar+RRNavigationBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UINavigationBar+RRNavigationBar.m"; sourceTree = "<group>"; };
+		466E980A1F7542CA00B9BD91 /* NoneTranslucentViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NoneTranslucentViewController.h; sourceTree = "<group>"; };
+		466E980B1F7542CA00B9BD91 /* NoneTranslucentViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NoneTranslucentViewController.m; sourceTree = "<group>"; };
+		466E980D1F7543F900B9BD91 /* NoneTranslucentNextViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NoneTranslucentNextViewController.h; sourceTree = "<group>"; };
+		466E980E1F7543F900B9BD91 /* NoneTranslucentNextViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NoneTranslucentNextViewController.m; sourceTree = "<group>"; };
 		4692E41A1E7AED4A00C53A89 /* RRNavigationBar.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RRNavigationBar.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		46C3CF1D1F6E870200FF682B /* UIView+RRNavigationBar.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIView+RRNavigationBar.m"; sourceTree = "<group>"; };
 		46C3CF1F1F6E884100FF682B /* UIView+RRNavigationBar_internal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIView+RRNavigationBar_internal.h"; sourceTree = "<group>"; };
@@ -133,6 +139,17 @@
 			path = Storyboard;
 			sourceTree = "<group>";
 		};
+		466E98091F7542B800B9BD91 /* NoneTranslucent */ = {
+			isa = PBXGroup;
+			children = (
+				466E980A1F7542CA00B9BD91 /* NoneTranslucentViewController.h */,
+				466E980B1F7542CA00B9BD91 /* NoneTranslucentViewController.m */,
+				466E980D1F7543F900B9BD91 /* NoneTranslucentNextViewController.h */,
+				466E980E1F7543F900B9BD91 /* NoneTranslucentNextViewController.m */,
+			);
+			path = NoneTranslucent;
+			sourceTree = "<group>";
+		};
 		4692E4111E7AED4A00C53A89 = {
 			isa = PBXGroup;
 			children = (
@@ -153,6 +170,7 @@
 		4692E41C1E7AED4A00C53A89 /* Example */ = {
 			isa = PBXGroup;
 			children = (
+				466E98091F7542B800B9BD91 /* NoneTranslucent */,
 				465E813D1E8B8A38003AAA55 /* Storyboard */,
 				4625A8341E893F140092247A /* Custom */,
 				4625A8211E8931670092247A /* Product */,
@@ -283,7 +301,9 @@
 				465E1C2B1E8662830082389A /* UINavigationController+RRNavigationBar.m in Sources */,
 				4625A8311E8938A60092247A /* Helper.m in Sources */,
 				46C3CF1E1F6E870200FF682B /* UIView+RRNavigationBar.m in Sources */,
+				466E980F1F7543F900B9BD91 /* NoneTranslucentNextViewController.m in Sources */,
 				4625A81B1E88F4B40092247A /* _RRNavigationBar.m in Sources */,
+				466E980C1F7542CA00B9BD91 /* NoneTranslucentViewController.m in Sources */,
 				4625A83B1E893F2F0092247A /* ConfigItem.m in Sources */,
 				460410F41E82BF9200FC3E2B /* UIViewController+RRNavigationBar.m in Sources */,
 				4625A8271E8931940092247A /* ProductListViewController.m in Sources */,
