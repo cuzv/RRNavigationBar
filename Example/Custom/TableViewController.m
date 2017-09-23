@@ -44,7 +44,7 @@
         ConfigItem *barTintColor = [[ConfigItem alloc] initWithType:ConfigTypeBarTintColor value:ConfigValueColorNone];
         ConfigItem *backgroundImageColor = [[ConfigItem alloc] initWithType:ConfigTypeBackgroundImageColor value:ConfigValueColorNone];
         ConfigItem *shadowImage = [[ConfigItem alloc] initWithType:ConfigTypeShadowImage value:ConfigValueTrue];
-        ConfigItem *translucent = [[ConfigItem alloc] initWithType:ConfigTypeTranslucent value:ConfigValueFalse];
+        ConfigItem *translucent = [[ConfigItem alloc] initWithType:ConfigTypeTranslucent value:ConfigValueTrue];
         ConfigItem *barStyle = [[ConfigItem alloc] initWithType:ConfigTypeBarStyle value:ConfigValueTrue];
         _nextVCData = [@[tintColor, barTintColor, backgroundImageColor, shadowImage, translucent, barStyle] mutableCopy];
     }

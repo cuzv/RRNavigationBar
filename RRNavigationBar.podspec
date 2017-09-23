@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = "RRNavigationBar"
-  s.version      = "0.2.2"
+  s.version      = "0.3.0"
   s.summary      = "bring `UINavigationBar` to` UIViewController`"
 
   s.homepage     = "https://github.com/cuzv/RRNavigationBar.git"

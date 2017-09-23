@@ -202,17 +202,11 @@ void RRNavigationBarExcludeImpactBehaviorForInstance(__kindof UINavigationContro
     }
     
 #ifdef __IPHONE_11_0
-    if (@available(iOS 11.0, *)) {
-        if (!fromVC.rr_navigationBar.translucent ||
-            !toVC.rr_navigationBar.translucent) {
-            for (UIViewController *vc in transitionVCs) {
-                // Save current contentInsetAdjustmentBehavior
-                if ([vc.view isKindOfClass:UIScrollView.class]) {
-                    UIScrollView *scrollView = ((UIScrollView *)vc.view);
-                    scrollView._rr_contentInsetAdjustmentBehavior = scrollView.contentInsetAdjustmentBehavior;
-                    scrollView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
-                }
-            }
+    if (!fromVC.rr_navigationBar.translucent ||
+        !toVC.rr_navigationBar.translucent) {
+        for (UIViewController *vc in transitionVCs) {
+            // Save current contentInsetAdjustmentBehavior & change to UIScrollViewContentInsetAdjustmentNever
+            [self _rr_modifyContentInsetAdjustmentBehaviorIfNeededForViewController:vc];
         }
     }
 #endif
@@ -244,6 +238,7 @@ void RRNavigationBarExcludeImpactBehaviorForInstance(__kindof UINavigationContro
     UIViewController *toVC = viewController;
     UIViewController *fromVC = self._visibleTopViewController;
     if (!fromVC) {
+        [toVC.rr_navigationBar _rr_apply];
         self._visibleTopViewController = toVC;
         return;
     }
@@ -264,23 +259,53 @@ void RRNavigationBarExcludeImpactBehaviorForInstance(__kindof UINavigationContro
     self._visibleTopViewController = toVC;
     
 #ifdef __IPHONE_11_0
-    if (@available(iOS 11.0, *)) {
-        if (!fromVC.rr_navigationBar.translucent ||
-            !toVC.rr_navigationBar.translucent) {
-            for (UIViewController *vc in transitionVCs) {
-                // Restore before contentInsetAdjustmentBehavior
-                if ([vc.view isKindOfClass:UIScrollView.class]) {
-                    UIScrollView *scrollView = ((UIScrollView *)vc.view);
-                    scrollView.contentInsetAdjustmentBehavior = scrollView._rr_contentInsetAdjustmentBehavior;
-                    [vc viewWillLayoutSubviews];
-                }
-            }
+    if (!fromVC.rr_navigationBar.translucent ||
+        !toVC.rr_navigationBar.translucent) {
+        for (UIViewController *vc in transitionVCs) {
+            // Restore before contentInsetAdjustmentBehavior
+            [self _rr_restoreContentInsetAdjustmentBehaviorIfNeededForViewController:vc];
         }
     }
 #endif
     
     RRLog(@"did show vc with title: %@", toVC.navigationItem.title);
 }
+
+#ifdef __IPHONE_11_0
+
+- (void)_rr_modifyContentInsetAdjustmentBehaviorIfNeededForViewController:(UIViewController *)vc {
+    if (@available(iOS 11.0, *)) {
+        if ([vc.view isKindOfClass:UIScrollView.class]) {
+            UIScrollView *scrollView = ((UIScrollView *)vc.view);
+            scrollView._rr_contentInsetAdjustmentBehavior = scrollView.contentInsetAdjustmentBehavior;
+            scrollView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
+        }
+        for (UIView *view in vc.view.subviews) {
+            if ([view isKindOfClass:UIScrollView.class]) {
+                UIScrollView *scrollView = ((UIScrollView *)view);
+                scrollView._rr_contentInsetAdjustmentBehavior = scrollView.contentInsetAdjustmentBehavior;
+                scrollView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
+            }
+        }
+    }
+}
+
+- (void)_rr_restoreContentInsetAdjustmentBehaviorIfNeededForViewController:(UIViewController *)vc {
+    if (@available(iOS 11.0, *)) {
+        if ([vc.view isKindOfClass:UIScrollView.class]) {
+            UIScrollView *scrollView = ((UIScrollView *)vc.view);
+            scrollView.contentInsetAdjustmentBehavior = scrollView._rr_contentInsetAdjustmentBehavior;
+        }
+        for (UIView *view in vc.view.subviews) {
+            if ([view isKindOfClass:UIScrollView.class]) {
+                UIScrollView *scrollView = ((UIScrollView *)view);
+                scrollView.contentInsetAdjustmentBehavior = scrollView._rr_contentInsetAdjustmentBehavior;
+            }
+        }
+    }
+}
+
+#endif
 
 #pragma mark - UINavigationControllerDelegate
 

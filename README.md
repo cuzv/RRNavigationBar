@@ -1,5 +1,5 @@
 [![License](https://img.shields.io/badge/license-MIT-lightgrey.svg)](https://github.com/cuzv/RRNavigationBar/blob/master/LICENSE)
-[![CocoaPods Compatible](https://img.shields.io/badge/CocoaPods-v0.2.3-green.svg)](https://github.com/CocoaPods/CocoaPods)
+[![CocoaPods Compatible](https://img.shields.io/badge/CocoaPods-v0.3.0-green.svg)](https://github.com/CocoaPods/CocoaPods)
 [![Weibo](https://img.shields.io/badge/Weibo-cuzval-yellowgreen.svg)](http://weibo.com/cuzval/)
 [![Twitter](https://img.shields.io/twitter/url/http/shields.io.svg?style=social)](http://twitter.com/mochxiao)
 
@@ -23,7 +23,7 @@ In a word, what I wanted is **change the  `navigationBar`'s appearance only affe
 
 - iOS 7.0+
 
-My working environment is iOS 10.2 + Xcode 8.2.1, the minimum support version is iOS7 in theory, but without test passed.
+My working environment is iOS 11.0 & Xcode 9, the minimum support version is iOS7 in theory, without test passed confirmed.
 
 ## CocoaPods
 
@@ -39,7 +39,7 @@ To integrate RRNavigationBar into your Xcode project using CocoaPods, specify it
 
 ```ruby
 source 'https://github.com/CocoaPods/Specs.git'
-platform :ios, '7.0'
+platform :ios, '8.0'
 use_frameworks!
 
 pod 'RRNavigationBar'
@@ -79,9 +79,16 @@ For more information checkout the demo in project.
 - `backIndicatorTransitionMaskImage`
 - `rr_forceShadowImageHidden`
 
-Try not change `translucent` property, which is may cause navigationBar flash when animation complete with extends container ViewController's view backgroundColor. Especially in iOS 11, it will cause navigationBar corruption during push animation.
+**Try not change `translucent` property once you setup**, which is may cause navigationBar flash when animation complete with extends container ViewController's view backgroundColor. 
+
+Especially in iOS 11, it will cause navigationBar corruption during (push) animation & ViewController's contentView(UIScrollView) jump.
 
 Set `hidden`property will have no effect, try use `setBackgroundImage:forBarMetrics:` & `shadowImage` make navigationBar invisible.
+
+If you don't want to be impacted for specific `UINavigationController`, use those methods execude it.
+
+- `RRNavigationBarExcludeImpactBehaviorForClass`
+- `RRNavigationBarExcludeImpactBehaviorForInstance`
 
 ## License
 
