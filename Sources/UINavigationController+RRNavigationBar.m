@@ -97,7 +97,7 @@ void RRNavigationBarExcludeImpactBehaviorForInstance(__kindof UINavigationContro
     
     if (!self._navigationBarInitialized && self.navigationBar) {
         self.rr_navigationBar = RRUINavigationBarDuplicate(self.navigationBar);
-        [self.rr_navigationBar _apply];
+        [self.rr_navigationBar _rr_apply];
         self._navigationBarInitialized = YES;
         RRLog(@"nvc's rr_navigationBar initialized.");
     }
@@ -109,7 +109,7 @@ void RRNavigationBarExcludeImpactBehaviorForInstance(__kindof UINavigationContro
     // therefore recored setups, recover when nvc.rr_navigationBar initialized.
     UINavigationBar *fromBar = self.rr_navigationBar;
     UINavigationBar *toBar = self.topViewController.rr_navigationBar;
-    NSDictionary *info = toBar._tmpInfo;
+    NSDictionary *info = toBar._rr_tmpInfo;
     if (fromBar && info) {
         RRRecoverInteger(fromBar, toBar, info, barStyle);
         RRRecoverBoolean(fromBar, toBar, info, translucent);
@@ -122,7 +122,7 @@ void RRNavigationBarExcludeImpactBehaviorForInstance(__kindof UINavigationContro
         RRRecoverObject(fromBar, toBar, info, backIndicatorImage);
         RRRecoverObject(fromBar, toBar, info, backIndicatorTransitionMaskImage);
         RRRecoverBoolean(fromBar, toBar, info, rr_forceShadowImageHidden);
-        toBar._tmpInfo = nil;
+        toBar._rr_tmpInfo = nil;
     }
 }
 
@@ -200,6 +200,7 @@ void RRNavigationBarExcludeImpactBehaviorForInstance(__kindof UINavigationContro
         vc.rr_navigationBar.hidden = NO;
         vc.view.clipsToBounds = NO;
     }
+    
 #ifdef __IPHONE_11_0
     if (@available(iOS 11.0, *)) {
         if (!fromVC.rr_navigationBar.translucent ||
@@ -249,7 +250,7 @@ void RRNavigationBarExcludeImpactBehaviorForInstance(__kindof UINavigationContro
     
     NSArray *transitionVCs = @[toVC, fromVC];
 
-    [toVC.rr_navigationBar _apply];
+    [toVC.rr_navigationBar _rr_apply];
     
     [self.navigationBar _rr_setAsInvisible:NO];
     

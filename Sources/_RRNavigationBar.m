@@ -41,15 +41,15 @@
 
 #ifndef RRAssignObject
 #   define RRAssignObject(obj) \
-        if (self._tmpInfo) { \
-            self._tmpInfo[@#obj] = obj; \
+        if (self._rr_tmpInfo) { \
+            self._rr_tmpInfo[@#obj] = obj; \
         }
 #endif
 
 #ifndef RRAssignNumber
 #   define RRAssignNumber(value) \
-        if (self._tmpInfo) { \
-            self._tmpInfo[@#value] = @(value); \
+        if (self._rr_tmpInfo) { \
+            self._rr_tmpInfo[@#value] = @(value); \
         }
 #endif
 

@@ -79,7 +79,7 @@
             self.rr_navigationBar = bar;
         }
         if (flag) {
-            self.rr_navigationBar._tmpInfo = [@{} mutableCopy];
+            self.rr_navigationBar._rr_tmpInfo = [@{} mutableCopy];
         }
     }
     return bar;

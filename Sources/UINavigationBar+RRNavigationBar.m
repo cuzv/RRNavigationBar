@@ -39,7 +39,7 @@
     objc_setAssociatedObject(self, @selector(_holder), wrapper, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
-- (void)_apply {
+- (void)_rr_apply {
     UINavigationBar *navigationBar = self._holder.navigationController.navigationBar;
     if (!navigationBar) {
         return;
@@ -73,17 +73,17 @@
         self._holder.view.window) {
         self._holder.navigationController.navigationBar.rr_forceShadowImageHidden = rr_forceShadowImageHidden;
     }
-    if (self._tmpInfo) {
-        self._tmpInfo[@"rr_forceShadowImageHidden"] = @(rr_forceShadowImageHidden);
+    if (self._rr_tmpInfo) {
+        self._rr_tmpInfo[@"rr_forceShadowImageHidden"] = @(rr_forceShadowImageHidden);
     }
 }
 
-- (nullable NSMutableDictionary<NSString *, id> *)_tmpInfo {
+- (nullable NSMutableDictionary<NSString *, id> *)_rr_tmpInfo {
     return objc_getAssociatedObject(self, _cmd);
 }
 
-- (void)set_tmpInfo:(nullable NSMutableDictionary<NSString *, id> *)_tmpInfo {
-    objc_setAssociatedObject(self, @selector(_tmpInfo), _tmpInfo, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+- (void)set_tmpInfo:(nullable NSMutableDictionary<NSString *, id> *)_rr_tmpInfo {
+    objc_setAssociatedObject(self, @selector(_rr_tmpInfo), _rr_tmpInfo, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
 - (void)_rr_setAsInvisible:(BOOL)invisible {

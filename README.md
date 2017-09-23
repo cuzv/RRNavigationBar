@@ -79,7 +79,7 @@ For more information checkout the demo in project.
 - `backIndicatorTransitionMaskImage`
 - `rr_forceShadowImageHidden`
 
-Try not change `translucent` property, which is may cause navigationBar flash when animation complete with extends container ViewController's view backgroundColor. Especially in iOS11, it will cause navigationBar corruption during push animation.
+Try not change `translucent` property, which is may cause navigationBar flash when animation complete with extends container ViewController's view backgroundColor. Especially in iOS 11, it will cause navigationBar corruption during push animation.
 
 Set `hidden`property will have no effect, try use `setBackgroundImage:forBarMetrics:` & `shadowImage` make navigationBar invisible.
 

@@ -29,4 +29,4 @@
 
 ### 0.3.0
 
-- Support iOS11 & Xcode 9
+- Supports iOS11 & Xcode 9

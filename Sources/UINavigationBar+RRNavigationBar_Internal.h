@@ -16,13 +16,13 @@
 /// The bar's holder, inner used.
 @property (nonatomic, weak, nullable) UIViewController *_holder NS_AVAILABLE_IOS(7_0);
 /// Apply this bar's appearance to system's navigationBar, inner used.
-- (void)_apply NS_AVAILABLE_IOS(7_0);
+- (void)_rr_apply NS_AVAILABLE_IOS(7_0);
 /// Record the bar's information used lately, inner used.
-@property (nonatomic, retain, nullable) NSMutableDictionary<NSString *, id> *_tmpInfo NS_AVAILABLE_IOS(7_0);
+@property (nonatomic, retain, nullable) NSMutableDictionary<NSString *, id> *_rr_tmpInfo NS_AVAILABLE_IOS(7_0);
 /// Tell system if navigationBar should be invisible, inner used.
 - (void)_rr_setAsInvisible:(BOOL)invisible NS_AVAILABLE_IOS(7_0);
 
-/// Try not use following methods if it's unnecessary.
+/// Try not use following methods unless it's unavoidable.
 /// UINavigationBar's ivars
 /// |- _backgroundView [ _UIBarBackground ]
 ///     |- _backgroundImageView [ UIImageView ]
