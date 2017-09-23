@@ -6,11 +6,11 @@
 //  Copyright © 2017 RedRain. All rights reserved.
 //
 
+#import "UINavigationBar+RRNavigationBar.h"
+#import "UINavigationBar+RRNavigationBar_Internal.h"
 #import <objc/runtime.h>
 #import "UIViewController+RRNavigationBar.h"
 #import "RRUtils.h"
-#import "UINavigationBar+RRNavigationBar.h"
-#import "UINavigationBar+RRNavigationBar_Internal.h"
 #import "_RRWeakAssociatedObjectWrapper.h"
 #import "UIView+RRNavigationBar_internal.h"
 
@@ -47,14 +47,16 @@ void RRNavigationBarExcludeImpactBehaviorForClass(Class _Nonnull nvcClass) {
     if (![nvcClass isSubclassOfClass:UINavigationController.class]) {
         return;
     }
-    [_excludeNVCClassess addObject:nvcClass];
     assert(_excludeNVCClassess);
+    [_excludeNVCClassess addObject:nvcClass];
 }
 
 void RRNavigationBarExcludeImpactBehaviorForInstance(__kindof UINavigationController *_Nonnull nvc) {
     if (![nvc isKindOfClass:UINavigationController.class]) {
         return;
     }
+    assert(_excludeNVCInstance);
+    [_excludeNVCInstance addObject:nvc];
 }
 
 @interface UINavigationController ()<UINavigationControllerDelegate, UIGestureRecognizerDelegate>

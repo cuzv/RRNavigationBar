@@ -7,6 +7,7 @@
 //
 
 #import "UINavigationBar+RRNavigationBar.h"
+#import "UINavigationBar+RRNavigationBar_Internal.h"
 #import <objc/runtime.h>
 #import "_RRWeakAssociatedObjectWrapper.h"
 #import "RRUtils.h"
@@ -30,17 +31,17 @@
     objc_setAssociatedObject(self, @selector(_rr_transiting), @(_rr_transiting), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
-- (nullable UIViewController *)_holder {
+- (nullable UIViewController *)_rr_holder {
     return ((_RRWeakAssociatedObjectWrapper *)objc_getAssociatedObject(self, _cmd)).object;
 }
 
-- (void)set_holder:(nullable UIViewController *)_holder {
-    _RRWeakAssociatedObjectWrapper *wrapper = [[_RRWeakAssociatedObjectWrapper alloc] initWithObject:_holder];
-    objc_setAssociatedObject(self, @selector(_holder), wrapper, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+- (void)set_rr_holder:(UIViewController *)_rr_holder {
+    _RRWeakAssociatedObjectWrapper *wrapper = [[_RRWeakAssociatedObjectWrapper alloc] initWithObject:_rr_holder];
+    objc_setAssociatedObject(self, @selector(_rr_holder), wrapper, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
 - (void)_rr_apply {
-    UINavigationBar *navigationBar = self._holder.navigationController.navigationBar;
+    UINavigationBar *navigationBar = self._rr_holder.navigationController.navigationBar;
     if (!navigationBar) {
         return;
     }
@@ -69,9 +70,9 @@
 
     self._rr_shadowView.hidden = rr_forceShadowImageHidden;
     
-    if (self._holder.isViewLoaded &&
-        self._holder.view.window) {
-        self._holder.navigationController.navigationBar.rr_forceShadowImageHidden = rr_forceShadowImageHidden;
+    if (self._rr_holder.isViewLoaded &&
+        self._rr_holder.view.window) {
+        self._rr_holder.navigationController.navigationBar.rr_forceShadowImageHidden = rr_forceShadowImageHidden;
     }
     if (self._rr_tmpInfo) {
         self._rr_tmpInfo[@"rr_forceShadowImageHidden"] = @(rr_forceShadowImageHidden);
@@ -82,7 +83,7 @@
     return objc_getAssociatedObject(self, _cmd);
 }
 
-- (void)set_tmpInfo:(nullable NSMutableDictionary<NSString *, id> *)_rr_tmpInfo {
+- (void)set_rr_tmpInfo:(NSMutableDictionary<NSString *,id> *)_rr_tmpInfo {
     objc_setAssociatedObject(self, @selector(_rr_tmpInfo), _rr_tmpInfo, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 

@@ -6,6 +6,7 @@
 //  Copyright © 2017 RedRain. All rights reserved.
 //
 
+#import "UIView+RRNavigationBar.h"
 #import "UIView+RRNavigationBar_internal.h"
 #import "RRUtils.h"
 #import <objc/runtime.h>

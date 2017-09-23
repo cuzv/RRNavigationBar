@@ -90,6 +90,8 @@ If you don't want to be impacted for specific `UINavigationController`, use thos
 - `RRNavigationBarExcludeImpactBehaviorForClass`
 - `RRNavigationBarExcludeImpactBehaviorForInstance`
 
+Also, you can disable/enable pop interactive animation by manipulate ViewController's property: `rr_interactivePopGestureRecognizerDisabled`.
+
 ## License
 
 `RRNavigationBar` is available under the MIT license. See the LICENSE file for more info.

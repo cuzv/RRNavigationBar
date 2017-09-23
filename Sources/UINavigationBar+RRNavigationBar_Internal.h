@@ -14,7 +14,7 @@
 /// Record if this bar is in transiting, inner used.
 @property (nonatomic, assign) BOOL _rr_transiting NS_AVAILABLE_IOS(7_0);
 /// The bar's holder, inner used.
-@property (nonatomic, weak, nullable) UIViewController *_holder NS_AVAILABLE_IOS(7_0);
+@property (nonatomic, weak, nullable) UIViewController *_rr_holder NS_AVAILABLE_IOS(7_0);
 /// Apply this bar's appearance to system's navigationBar, inner used.
 - (void)_rr_apply NS_AVAILABLE_IOS(7_0);
 /// Record the bar's information used lately, inner used.

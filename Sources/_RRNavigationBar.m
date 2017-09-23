@@ -12,9 +12,9 @@
 #ifndef RRSetterNumber
 #   define RRSetterNumber(value) \
         if (self.value != value && \
-            self._holder.isViewLoaded && \
-            self._holder.view.window) { \
-                self._holder.navigationController.navigationBar.value = value; \
+            self._rr_holder.isViewLoaded && \
+            self._rr_holder.view.window) { \
+                self._rr_holder.navigationController.navigationBar.value = value; \
         } \
         super.value = value;
 #endif
@@ -22,9 +22,9 @@
 #ifndef RRSetterObject
 #   define RRSetterObject(obj) \
         if (![self.obj isEqual:obj] && \
-            self._holder.isViewLoaded && \
-            self._holder.view.window) { \
-            self._holder.navigationController.navigationBar.obj = obj; \
+            self._rr_holder.isViewLoaded && \
+            self._rr_holder.view.window) { \
+            self._rr_holder.navigationController.navigationBar.obj = obj; \
         } \
         super.obj = obj;
 #endif
@@ -32,9 +32,9 @@
 #ifndef RRSetterImage
 #   define RRSetterImage(image) \
         if (!_RRObjectIsEqual(self.image, image) && \
-            self._holder.isViewLoaded && \
-            self._holder.view.window) { \
-            self._holder.navigationController.navigationBar.image = image; \
+            self._rr_holder.isViewLoaded && \
+            self._rr_holder.view.window) { \
+            self._rr_holder.navigationController.navigationBar.image = image; \
         } \
         super.image = image;
 #endif
@@ -94,9 +94,9 @@ extern BOOL _RRObjectIsEqual(NSObject *_Nullable one, NSObject *_Nullable other)
 
 - (void)setBackgroundImage:(UIImage *)backgroundImage forBarMetrics:(UIBarMetrics)barMetrics {
     if (!_RRObjectIsEqual([self backgroundImageForBarMetrics:barMetrics], backgroundImage) &&
-        self._holder.isViewLoaded &&
-        self._holder.view.window) {
-        [self._holder.navigationController.navigationBar setBackgroundImage:backgroundImage forBarMetrics:barMetrics];
+        self._rr_holder.isViewLoaded &&
+        self._rr_holder.view.window) {
+        [self._rr_holder.navigationController.navigationBar setBackgroundImage:backgroundImage forBarMetrics:barMetrics];
     }
     [super setBackgroundImage:backgroundImage forBarMetrics:barMetrics];
     RRAssignObject(backgroundImage);
