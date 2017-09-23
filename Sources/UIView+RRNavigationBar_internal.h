@@ -21,7 +21,6 @@
 
 @interface UIScrollView (RRNavigationBar_internal)
 
-/// Tell ObjC ignore `setHidden:` invoke.
 /// iOS 11+ use.
 @property (nonatomic, assign) UIScrollViewContentInsetAdjustmentBehavior _rr_contentInsetAdjustmentBehavior NS_AVAILABLE_IOS(11_0);
 
