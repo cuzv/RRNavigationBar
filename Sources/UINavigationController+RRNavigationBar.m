@@ -157,10 +157,11 @@ void RRNavigationBarExcludeImpactBehaviorForInstance(__kindof UINavigationContro
 #pragma mark -
 
 - (void)_handleWillShowViewController:(UIViewController *)viewController {
-    UIViewController *toVC = viewController;
     UIViewController *fromVC = self._visibleTopViewController;
-    if (!fromVC) { return; }
-    NSArray *transitionVCs = @[toVC, fromVC];
+    UIViewController *toVC = viewController;
+    NSMutableArray *transitionVCs = [@[] mutableCopy];
+    if (fromVC) { [transitionVCs addObject:fromVC]; }
+    if (toVC) { [transitionVCs addObject:toVC]; }
     
     // If these two navigationBar `equal`, use system transition behavior.
     if (RRIsUINavigationBarEqual(toVC.rr_navigationBar, fromVC.rr_navigationBar)) {
@@ -237,15 +238,11 @@ void RRNavigationBarExcludeImpactBehaviorForInstance(__kindof UINavigationContro
 }
 
 - (void)_handleDidShowViewController:(UIViewController *)viewController {
-    UIViewController *toVC = viewController;
     UIViewController *fromVC = self._visibleTopViewController;
-    if (!fromVC) {
-        [toVC.rr_navigationBar _rr_apply];
-        self._visibleTopViewController = toVC;
-        return;
-    }
-    
-    NSArray *transitionVCs = @[toVC, fromVC];
+    UIViewController *toVC = viewController;
+    NSMutableArray *transitionVCs = [@[] mutableCopy];
+    if (fromVC) { [transitionVCs addObject:fromVC]; }
+    if (toVC) { [transitionVCs addObject:toVC]; }
 
     [toVC.rr_navigationBar _rr_apply];
     
