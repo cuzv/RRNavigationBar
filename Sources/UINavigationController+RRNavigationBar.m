@@ -201,6 +201,7 @@ void RRNavigationBarExcludeImpactBehaviorForInstance(__kindof UINavigationContro
         vc.rr_navigationBar._rr_transiting = YES;
         vc.rr_navigationBar._rr_equalOtherNavigationBarInTransiting = NO;
         vc.rr_navigationBar.hidden = NO;
+        vc.view._rr_clipsToBounds = vc.view.clipsToBounds;
         vc.view.clipsToBounds = NO;
     }
     
@@ -252,7 +253,7 @@ void RRNavigationBarExcludeImpactBehaviorForInstance(__kindof UINavigationContro
         vc.rr_navigationBar._rr_transiting = NO;
         vc.rr_navigationBar._rr_equalOtherNavigationBarInTransiting = NO;
         vc.rr_navigationBar.hidden = YES;
-        vc.view.clipsToBounds = YES;
+        vc.view.clipsToBounds = vc.view._rr_clipsToBounds;
     }
     
     self._visibleTopViewController = toVC;

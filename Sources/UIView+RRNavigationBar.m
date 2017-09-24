@@ -14,6 +14,7 @@
 @implementation UIView (RRNavigationBar)
 
 #ifdef __IPHONE_11_0
+
 + (void)load {
     if (@available(iOS 11.0, *)) {
         static dispatch_once_t onceToken;
@@ -22,9 +23,7 @@
         });
     }
 }
-#endif
 
-#ifdef __IPHONE_11_0
 - (void)_rr_setHidden:(BOOL)hidden {
     if (@available(iOS 11.0, *)) {
         id clazz = NSClassFromString(@"_UIBarBackground");
@@ -34,14 +33,23 @@
     }
     [self _rr_setHidden:hidden];
 }
-#endif
 
 - (BOOL)_rr_ignoreSetHiddenMessage {
-    return [objc_getAssociatedObject(self, @selector(_rr_ignoreSetHiddenMessage)) boolValue];
+    return [objc_getAssociatedObject(self, _cmd) boolValue];
 }
 
 - (void)set_rr_ignoreSetHiddenMessage:(BOOL)_rr_ignoreSetHiddenMessage {
     objc_setAssociatedObject(self, @selector(_rr_ignoreSetHiddenMessage), @(_rr_ignoreSetHiddenMessage), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+
+#endif
+
+- (BOOL)_rr_clipsToBounds {
+    return [objc_getAssociatedObject(self, _cmd) boolValue];
+}
+
+- (void)set_rr_clipsToBounds:(BOOL)_rr_clipsToBounds {
+    objc_setAssociatedObject(self, @selector(_rr_clipsToBounds), @(_rr_clipsToBounds), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
 @end
@@ -52,7 +60,7 @@
 @implementation UIScrollView (RRNavigationBar_internal)
 
 - (UIScrollViewContentInsetAdjustmentBehavior)_rr_contentInsetAdjustmentBehavior {
-    return [objc_getAssociatedObject(self, @selector(_rr_contentInsetAdjustmentBehavior)) integerValue];
+    return [objc_getAssociatedObject(self, _cmd) integerValue];
 }
 
 - (void)set_rr_contentInsetAdjustmentBehavior:(UIScrollViewContentInsetAdjustmentBehavior)_rr_contentInsetAdjustmentBehavior {
