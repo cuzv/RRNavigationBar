@@ -27,6 +27,6 @@
 
 - Fix available issue for iOS10 lower versions.
 
-### 0.3.0
+### 0.3.0/0.3.1/0.3.2
 
 - Supports iOS11 & Xcode 9
