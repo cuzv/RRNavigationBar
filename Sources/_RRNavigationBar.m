@@ -112,6 +112,11 @@ extern BOOL _RRObjectIsEqual(NSObject *_Nullable one, NSObject *_Nullable other)
     RRAssignObject(backIndicatorTransitionMaskImage);
 }
 
+- (void)setTitleTextAttributes:(NSDictionary<NSAttributedStringKey,id> *)titleTextAttributes {
+    RRSetterObject(titleTextAttributes);
+    RRAssignObject(titleTextAttributes);
+}
+
 #ifdef __IPHONE_11_0
 - (void)layoutSubviews {
     [super layoutSubviews];

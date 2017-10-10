@@ -123,6 +123,7 @@ void RRNavigationBarExcludeImpactBehaviorForInstance(__kindof UINavigationContro
         [toBar setBackgroundImage:info[@"backgroundImage"] ?: [fromBar backgroundImageForBarMetrics:UIBarMetricsDefault] forBarMetrics:UIBarMetricsDefault];
         RRRecoverObject(fromBar, toBar, info, backIndicatorImage);
         RRRecoverObject(fromBar, toBar, info, backIndicatorTransitionMaskImage);
+        RRRecoverObject(fromBar, toBar, info, titleTextAttributes);
         RRRecoverBoolean(fromBar, toBar, info, rr_forceShadowImageHidden);
         toBar._rr_tmpInfo = nil;
     }

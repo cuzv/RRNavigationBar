@@ -82,5 +82,6 @@ UINavigationBar *_Nonnull RRUINavigationBarDuplicate(UINavigationBar *_Nonnull o
     bar.alpha = one.alpha;
     bar.backIndicatorImage = one.backIndicatorImage;
     bar.backIndicatorTransitionMaskImage = one.backIndicatorTransitionMaskImage;
+    bar.titleTextAttributes = one.titleTextAttributes;
     return bar;
 }

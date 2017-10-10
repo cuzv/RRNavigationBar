@@ -55,6 +55,7 @@
     [navigationBar setBackgroundImage:[self backgroundImageForBarMetrics:UIBarMetricsDefault] forBarMetrics:UIBarMetricsDefault];
     navigationBar.backIndicatorImage = self.backIndicatorImage;
     navigationBar.backIndicatorTransitionMaskImage = self.backIndicatorTransitionMaskImage;
+    navigationBar.titleTextAttributes = self.titleTextAttributes;
     navigationBar.rr_forceShadowImageHidden = self.rr_forceShadowImageHidden;
 }
 
