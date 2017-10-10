@@ -1,5 +1,5 @@
 [![License](https://img.shields.io/badge/license-MIT-lightgrey.svg)](https://github.com/cuzv/RRNavigationBar/blob/master/LICENSE)
-[![CocoaPods Compatible](https://img.shields.io/badge/CocoaPods-v0.3.2-green.svg)](https://github.com/CocoaPods/CocoaPods)
+[![CocoaPods Compatible](https://img.shields.io/badge/CocoaPods-v0.3.3-green.svg)](https://github.com/CocoaPods/CocoaPods)
 [![Weibo](https://img.shields.io/badge/Weibo-cuzval-yellowgreen.svg)](http://weibo.com/cuzval/)
 [![Twitter](https://img.shields.io/twitter/url/http/shields.io.svg?style=social)](http://twitter.com/mochxiao)
 
@@ -77,6 +77,7 @@ For more information checkout the demo in project.
 - `alpha`
 - `backIndicatorImage`
 - `backIndicatorTransitionMaskImage`
+- `titleTextAttributes` 
 - `rr_forceShadowImageHidden`
 
 **Try not change `translucent` property once you setup**, which is may cause navigationBar flash when animation complete with extends container ViewController's view backgroundColor. 

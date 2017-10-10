@@ -9,8 +9,8 @@
 #import "_RRNavigationBar.h"
 #import "UINavigationBar+RRNavigationBar_Internal.h"
 
-#ifndef RRSetterNumber
-#   define RRSetterNumber(value) \
+#ifndef RRSetNumber
+#   define RRSetNumber(value) \
         if (self.value != value && \
             self._rr_holder.isViewLoaded && \
             self._rr_holder.view.window) { \
@@ -19,8 +19,8 @@
         super.value = value;
 #endif
 
-#ifndef RRSetterObject
-#   define RRSetterObject(obj) \
+#ifndef RRSetObject
+#   define RRSetObject(obj) \
         if (![self.obj isEqual:obj] && \
             self._rr_holder.isViewLoaded && \
             self._rr_holder.view.window) { \
@@ -29,8 +29,8 @@
         super.obj = obj;
 #endif
 
-#ifndef RRSetterImage
-#   define RRSetterImage(image) \
+#ifndef RRSetImage
+#   define RRSetImage(image) \
         if (!_RRObjectIsEqual(self.image, image) && \
             self._rr_holder.isViewLoaded && \
             self._rr_holder.view.window) { \
@@ -58,37 +58,37 @@ extern BOOL _RRObjectIsEqual(NSObject *_Nullable one, NSObject *_Nullable other)
 @implementation _RRNavigationBar
 
 - (void)setBarStyle:(UIBarStyle)barStyle {
-    RRSetterNumber(barStyle);
+    RRSetNumber(barStyle);
     RRAssignNumber(barStyle);
 }
 
 - (void)setTranslucent:(BOOL)translucent {
-    RRSetterNumber(translucent);
+    RRSetNumber(translucent);
     RRAssignNumber(translucent);
 }
 
 - (void)setAlpha:(CGFloat)alpha {
-    RRSetterNumber(alpha);
+    RRSetNumber(alpha);
     RRAssignNumber(alpha);
 }
 
 - (void)setTintColor:(UIColor *)tintColor {
-    RRSetterObject(tintColor);
+    RRSetObject(tintColor);
     RRAssignObject(tintColor);
 }
 
 - (void)setBarTintColor:(UIColor *)barTintColor {
-    RRSetterObject(barTintColor);
+    RRSetObject(barTintColor);
     RRAssignObject(barTintColor);
 }
 
 - (void)setBackgroundColor:(UIColor *)backgroundColor {
-    RRSetterObject(backgroundColor);
+    RRSetObject(backgroundColor);
     RRAssignObject(backgroundColor);
 }
 
 - (void)setShadowImage:(UIImage *)shadowImage {
-    RRSetterImage(shadowImage);
+    RRSetImage(shadowImage);
     RRAssignObject(shadowImage);
 }
 
@@ -103,17 +103,17 @@ extern BOOL _RRObjectIsEqual(NSObject *_Nullable one, NSObject *_Nullable other)
 }
 
 - (void)setBackIndicatorImage:(UIImage *)backIndicatorImage {
-    RRSetterImage(backIndicatorImage);
+    RRSetImage(backIndicatorImage);
     RRAssignObject(backIndicatorImage);
 }
 
 - (void)setBackIndicatorTransitionMaskImage:(UIImage *)backIndicatorTransitionMaskImage {
-    RRSetterImage(backIndicatorTransitionMaskImage);
+    RRSetImage(backIndicatorTransitionMaskImage);
     RRAssignObject(backIndicatorTransitionMaskImage);
 }
 
 - (void)setTitleTextAttributes:(NSDictionary<NSAttributedStringKey,id> *)titleTextAttributes {
-    RRSetterObject(titleTextAttributes);
+    RRSetObject(titleTextAttributes);
     RRAssignObject(titleTextAttributes);
 }
 
