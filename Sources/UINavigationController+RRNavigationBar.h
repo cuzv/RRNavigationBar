@@ -2,7 +2,7 @@
 //  UINavigationController+RRNavigationBar.h
 //  RRNavigationBar
 //
-//  Created by Moch Xiao on 3/25/17.
+//  Created by Roy Shaw on 3/25/17.
 //  Copyright © 2017 RedRain. All rights reserved.
 //
 

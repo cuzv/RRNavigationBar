@@ -2,7 +2,7 @@
 //  EmbedTabBarController.m
 //  RRNavigationBar
 //
-//  Created by Moch Xiao on 3/28/17.
+//  Created by Roy Shaw on 3/28/17.
 //  Copyright © 2017 RedRain. All rights reserved.
 //
 

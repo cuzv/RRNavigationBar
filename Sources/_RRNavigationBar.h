@@ -2,7 +2,7 @@
 //  _RRNavigationBar.h
 //  RRNavigationBar
 //
-//  Created by Moch Xiao on 3/27/17.
+//  Created by Roy Shaw on 3/27/17.
 //  Copyright © 2017 RedRain. All rights reserved.
 //
 
