@@ -88,6 +88,7 @@
 		46F46E051E7AEEB9000C8011 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		46F46E061E7AEEB9000C8011 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		46F46E071E7AEEB9000C8011 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		B40F69961FFE2E98007C1237 /* RRNavigationControllerDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RRNavigationControllerDelegate.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -211,6 +212,7 @@
 				46C3CF1F1F6E884100FF682B /* UIView+RRNavigationBar_internal.h */,
 				46C3CF201F6E925E00FF682B /* UIView+RRNavigationBar.h */,
 				46C3CF1D1F6E870200FF682B /* UIView+RRNavigationBar.m */,
+				B40F69961FFE2E98007C1237 /* RRNavigationControllerDelegate.h */,
 			);
 			path = Sources;
 			sourceTree = "<group>";

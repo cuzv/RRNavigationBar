@@ -8,5 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
+@protocol RRNavigationControllerDelegate;
+
 @interface UINavigationController (RRNavigationBar)
+
+@property(nullable, nonatomic, weak) id<RRNavigationControllerDelegate> rr_delegate;
+
 @end

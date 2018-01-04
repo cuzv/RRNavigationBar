@@ -34,3 +34,7 @@
 ### 0.3.3
 
 - Supports `titleTextAttributes`.
+
+### 0.4.0
+
+- `RRNavigationControllerDelegate`

@@ -13,6 +13,7 @@
 #import "RRUtils.h"
 #import "_RRWeakAssociatedObjectWrapper.h"
 #import "UIView+RRNavigationBar_internal.h"
+#import "RRNavigationControllerDelegate.h"
 
 #ifndef RRRecoverObject
 #   define RRRecoverObject(from, to, info, property) (to.property = info[@#property] ?: from.property)
@@ -310,14 +311,65 @@ void RRNavigationBarExcludeImpactBehaviorForInstance(__kindof UINavigationContro
 
 #pragma mark - UINavigationControllerDelegate
 
+- (nullable id <RRNavigationControllerDelegate>)rr_delegate {
+    return ((_RRWeakAssociatedObjectWrapper *)objc_getAssociatedObject(self, _cmd)).object;
+}
+
+- (void)setRr_delegate:(id <RRNavigationControllerDelegate>)rr_delegate {
+    _RRWeakAssociatedObjectWrapper *wrapper = [[_RRWeakAssociatedObjectWrapper alloc] initWithObject:rr_delegate];
+    objc_setAssociatedObject(self, @selector(rr_delegate), wrapper, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+
+#pragma mark -
+
 - (void)navigationController:(UINavigationController *)navigationController willShowViewController:(UIViewController *)viewController animated:(BOOL)animated {
+    if (self.rr_delegate && [self.rr_delegate respondsToSelector:@selector(rr_navigationController:willShowViewController:animated:)]) {
+        [self.rr_delegate rr_navigationController:navigationController willShowViewController:viewController animated:animated];
+    }
+    
     RRExcludeImpactBehaviorFor(navigationController);
     [self _handleWillShowViewController:viewController];
 }
 
 - (void)navigationController:(UINavigationController *)navigationController didShowViewController:(UIViewController *)viewController animated:(BOOL)animated {
+    if (self.rr_delegate && [self.rr_delegate respondsToSelector:@selector(rr_navigationController:didShowViewController:animated:)]) {
+        [self.rr_delegate rr_navigationController:navigationController didShowViewController:viewController animated:animated];
+    }
+    
     RRExcludeImpactBehaviorFor(navigationController);
     [self _handleDidShowViewController:viewController];
+}
+
+- (UIInterfaceOrientationMask)navigationControllerSupportedInterfaceOrientations:(UINavigationController *)navigationController {
+    if (self.rr_delegate && [self.rr_delegate respondsToSelector:@selector(rr_navigationControllerSupportedInterfaceOrientations:)]) {
+        return [self.rr_delegate rr_navigationControllerSupportedInterfaceOrientations:navigationController];
+    }
+    return UIInterfaceOrientationMaskAll;
+}
+
+- (UIInterfaceOrientation)navigationControllerPreferredInterfaceOrientationForPresentation:(UINavigationController *)navigationController {
+    if (self.rr_delegate && [self.rr_delegate respondsToSelector:@selector(rr_navigationControllerPreferredInterfaceOrientationForPresentation:)]) {
+        return [self.rr_delegate rr_navigationControllerPreferredInterfaceOrientationForPresentation:navigationController];
+    }
+    return UIInterfaceOrientationUnknown;
+}
+
+- (nullable id <UIViewControllerInteractiveTransitioning>)navigationController:(UINavigationController *)navigationController
+                                   interactionControllerForAnimationController:(id <UIViewControllerAnimatedTransitioning>) animationController {
+    if (self.rr_delegate && [self.rr_delegate respondsToSelector:@selector(rr_navigationController:interactionControllerForAnimationController:)]) {
+        return [self.rr_delegate rr_navigationController:navigationController interactionControllerForAnimationController:animationController];
+    }
+    return nil;
+}
+
+- (nullable id <UIViewControllerAnimatedTransitioning>)navigationController:(UINavigationController *)navigationController
+                                            animationControllerForOperation:(UINavigationControllerOperation)operation
+                                                         fromViewController:(UIViewController *)fromVC
+                                                           toViewController:(UIViewController *)toVC  {
+    if (self.rr_delegate && [self.rr_delegate respondsToSelector:@selector(rr_navigationController:animationControllerForOperation:fromViewController:toViewController:)]) {
+        return [self.rr_delegate rr_navigationController:navigationController animationControllerForOperation:operation fromViewController:fromVC toViewController:toVC];
+    }
+    return nil;
 }
 
 #pragma mark - UIGestureRecognizerDelegate
