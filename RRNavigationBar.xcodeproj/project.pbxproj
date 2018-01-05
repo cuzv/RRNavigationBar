@@ -33,6 +33,7 @@
 		46F46E0B1E7AEEB9000C8011 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 46F46E001E7AEEB9000C8011 /* LaunchScreen.storyboard */; };
 		46F46E0D1E7AEEB9000C8011 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 46F46E051E7AEEB9000C8011 /* AppDelegate.m */; };
 		46F46E0F1E7AEEB9000C8011 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 46F46E071E7AEEB9000C8011 /* main.m */; };
+		B45BD4411FFF46DA009280A5 /* _RRNavigationControllerDelegateImpl.m in Sources */ = {isa = PBXBuildFile; fileRef = B45BD4401FFF46DA009280A5 /* _RRNavigationControllerDelegateImpl.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -88,7 +89,9 @@
 		46F46E051E7AEEB9000C8011 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		46F46E061E7AEEB9000C8011 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		46F46E071E7AEEB9000C8011 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		B40F69961FFE2E98007C1237 /* RRNavigationControllerDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RRNavigationControllerDelegate.h; sourceTree = "<group>"; };
+		B45BD43F1FFF46DA009280A5 /* _RRNavigationControllerDelegateImpl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = _RRNavigationControllerDelegateImpl.h; sourceTree = "<group>"; };
+		B45BD4401FFF46DA009280A5 /* _RRNavigationControllerDelegateImpl.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = _RRNavigationControllerDelegateImpl.m; sourceTree = "<group>"; };
+		B48E82781FFF4AC300A90F38 /* UINavigationController+RRNavigationBar_Internal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UINavigationController+RRNavigationBar_Internal.h"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -198,21 +201,23 @@
 				4625A81F1E8918070092247A /* RRNavigationBar.h */,
 				460410F21E82BF9200FC3E2B /* UIViewController+RRNavigationBar.h */,
 				460410F31E82BF9200FC3E2B /* UIViewController+RRNavigationBar.m */,
+				B48E82781FFF4AC300A90F38 /* UINavigationController+RRNavigationBar_Internal.h */,
 				465E1C291E8662830082389A /* UINavigationController+RRNavigationBar.h */,
 				465E1C2A1E8662830082389A /* UINavigationController+RRNavigationBar.m */,
 				4625A81E1E8917C20092247A /* UINavigationBar+RRNavigationBar_Internal.h */,
 				465FE9D41E87E92A000654C1 /* UINavigationBar+RRNavigationBar.h */,
 				465FE9D51E87E92A000654C1 /* UINavigationBar+RRNavigationBar.m */,
+				46C3CF1F1F6E884100FF682B /* UIView+RRNavigationBar_internal.h */,
+				46C3CF201F6E925E00FF682B /* UIView+RRNavigationBar.h */,
+				46C3CF1D1F6E870200FF682B /* UIView+RRNavigationBar.m */,
 				4625A8191E88F4B40092247A /* _RRNavigationBar.h */,
 				4625A81A1E88F4B40092247A /* _RRNavigationBar.m */,
 				46C646F61E8A377500A3349A /* _RRWeakAssociatedObjectWrapper.h */,
 				46C646F71E8A377500A3349A /* _RRWeakAssociatedObjectWrapper.m */,
+				B45BD43F1FFF46DA009280A5 /* _RRNavigationControllerDelegateImpl.h */,
+				B45BD4401FFF46DA009280A5 /* _RRNavigationControllerDelegateImpl.m */,
 				465E1C2C1E8662CF0082389A /* RRUtils.h */,
 				465E1C2D1E8662CF0082389A /* RRUtils.m */,
-				46C3CF1F1F6E884100FF682B /* UIView+RRNavigationBar_internal.h */,
-				46C3CF201F6E925E00FF682B /* UIView+RRNavigationBar.h */,
-				46C3CF1D1F6E870200FF682B /* UIView+RRNavigationBar.m */,
-				B40F69961FFE2E98007C1237 /* RRNavigationControllerDelegate.h */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -303,6 +308,7 @@
 				465E1C2B1E8662830082389A /* UINavigationController+RRNavigationBar.m in Sources */,
 				4625A8311E8938A60092247A /* Helper.m in Sources */,
 				46C3CF1E1F6E870200FF682B /* UIView+RRNavigationBar.m in Sources */,
+				B45BD4411FFF46DA009280A5 /* _RRNavigationControllerDelegateImpl.m in Sources */,
 				466E980F1F7543F900B9BD91 /* NoneTranslucentNextViewController.m in Sources */,
 				4625A81B1E88F4B40092247A /* _RRNavigationBar.m in Sources */,
 				466E980C1F7542CA00B9BD91 /* NoneTranslucentViewController.m in Sources */,

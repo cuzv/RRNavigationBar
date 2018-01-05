@@ -6,6 +6,8 @@
 //  Copyright © 2017 RedRain. All rights reserved.
 //
 
+#import "UINavigationController+RRNavigationBar.h"
+#import "UINavigationController+RRNavigationBar_Internal.h"
 #import "UINavigationBar+RRNavigationBar.h"
 #import "UINavigationBar+RRNavigationBar_Internal.h"
 #import <objc/runtime.h>
@@ -13,7 +15,7 @@
 #import "RRUtils.h"
 #import "_RRWeakAssociatedObjectWrapper.h"
 #import "UIView+RRNavigationBar_internal.h"
-#import "RRNavigationControllerDelegate.h"
+#import "_RRNavigationControllerDelegateImpl.h"
 
 #ifndef RRRecoverObject
 #   define RRRecoverObject(from, to, info, property) (to.property = info[@#property] ?: from.property)
@@ -31,19 +33,6 @@
 #   define RRRecoverDobule(from, to, info, property) (to.property = info[@#property] ? [info[@#property] doubleValue] : from.property)
 #endif
 
-#ifndef RRExcludeImpactBehaviorFor
-#   define RRExcludeImpactBehaviorFor(instance) \
-        for (Class clazz in _excludeNVCClassess) { \
-            if ([instance isKindOfClass:clazz]) { return; } \
-        } \
-        for (UINavigationController *nvc in _excludeNVCInstance) { \
-            if ([instance isEqual:nvc]) { return; } \
-        }
-#endif
-
-static NSMutableSet *_excludeNVCClassess;
-static NSMutableSet *_excludeNVCInstance;
-
 void RRNavigationBarExcludeImpactBehaviorForClass(Class _Nonnull nvcClass) {
     if (![nvcClass isSubclassOfClass:UINavigationController.class]) {
         return;
@@ -60,9 +49,10 @@ void RRNavigationBarExcludeImpactBehaviorForInstance(__kindof UINavigationContro
     [_excludeNVCInstance addObject:nvc];
 }
 
-@interface UINavigationController ()<UINavigationControllerDelegate, UIGestureRecognizerDelegate>
+@interface UINavigationController ()<UIGestureRecognizerDelegate>
 @property (nonatomic, weak, nullable) UIViewController *_visibleTopViewController;
 @property (nonatomic, assign) BOOL _navigationBarInitialized;
+@property (nonatomic, retain, nullable) _RRNavigationControllerDelegateImpl *_delegateImpl;
 @end
 
 @implementation UINavigationController (RRNavigationBar)
@@ -73,6 +63,7 @@ void RRNavigationBarExcludeImpactBehaviorForInstance(__kindof UINavigationContro
         RRSwizzleInstanceMethod(self.class, @selector(viewDidLoad), @selector(_rr_nvc_viewDidLoad));
         RRSwizzleInstanceMethod(self.class, @selector(viewWillLayoutSubviews), @selector(_rr_nvc_viewWillLayoutSubviews));
         RRSwizzleInstanceMethod(self.class, @selector(preferredStatusBarStyle), @selector(_rr_nvc_preferredStatusBarStyle));
+        RRSwizzleInstanceMethod(self.class, @selector(setDelegate:), @selector(_rr_setDelegate:));
     });
 }
 
@@ -88,8 +79,8 @@ void RRNavigationBarExcludeImpactBehaviorForInstance(__kindof UINavigationContro
     });
     
     RRExcludeImpactBehaviorFor(self);
-    
-    self.delegate = self;
+    self._delegateImpl = [_RRNavigationControllerDelegateImpl new];
+    self.delegate = self._delegateImpl;
     self.interactivePopGestureRecognizer.delegate = self;
 }
 
@@ -137,6 +128,14 @@ void RRNavigationBarExcludeImpactBehaviorForInstance(__kindof UINavigationContro
     return self._rr_nvc_preferredStatusBarStyle;
 }
 
+- (void)_rr_setDelegate:(nonnull id<UINavigationControllerDelegate>)delegate {
+    [self _rr_setDelegate:self._delegateImpl];
+    
+    if (delegate != self._delegateImpl) {
+        self._delegateImpl.delegate = delegate;
+    }
+}
+
 #pragma mark - Private
 
 - (nullable UIViewController *)_visibleTopViewController {
@@ -154,6 +153,18 @@ void RRNavigationBarExcludeImpactBehaviorForInstance(__kindof UINavigationContro
 
 - (void)set_navigationBarInitialized:(BOOL)_navigationBarInitialized {
     objc_setAssociatedObject(self, @selector(_navigationBarInitialized), @(_navigationBarInitialized), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+
+- (_RRNavigationControllerDelegateImpl *)_delegateImpl {
+    return objc_getAssociatedObject(self, _cmd);
+}
+
+- (void)set_delegateImpl:(_RRNavigationControllerDelegateImpl *)_delegateImpl {
+    objc_setAssociatedObject(self, @selector(_delegateImpl), _delegateImpl, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+
+- (id<UINavigationControllerDelegate>)rr_delegate {
+    return self._delegateImpl.delegate;
 }
 
 #pragma mark -
@@ -308,69 +319,6 @@ void RRNavigationBarExcludeImpactBehaviorForInstance(__kindof UINavigationContro
 }
 
 #endif
-
-#pragma mark - UINavigationControllerDelegate
-
-- (nullable id <RRNavigationControllerDelegate>)rr_delegate {
-    return ((_RRWeakAssociatedObjectWrapper *)objc_getAssociatedObject(self, _cmd)).object;
-}
-
-- (void)setRr_delegate:(id <RRNavigationControllerDelegate>)rr_delegate {
-    _RRWeakAssociatedObjectWrapper *wrapper = [[_RRWeakAssociatedObjectWrapper alloc] initWithObject:rr_delegate];
-    objc_setAssociatedObject(self, @selector(rr_delegate), wrapper, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-}
-
-#pragma mark -
-
-- (void)navigationController:(UINavigationController *)navigationController willShowViewController:(UIViewController *)viewController animated:(BOOL)animated {
-    if (self.rr_delegate && [self.rr_delegate respondsToSelector:@selector(rr_navigationController:willShowViewController:animated:)]) {
-        [self.rr_delegate rr_navigationController:navigationController willShowViewController:viewController animated:animated];
-    }
-    
-    RRExcludeImpactBehaviorFor(navigationController);
-    [self _handleWillShowViewController:viewController];
-}
-
-- (void)navigationController:(UINavigationController *)navigationController didShowViewController:(UIViewController *)viewController animated:(BOOL)animated {
-    if (self.rr_delegate && [self.rr_delegate respondsToSelector:@selector(rr_navigationController:didShowViewController:animated:)]) {
-        [self.rr_delegate rr_navigationController:navigationController didShowViewController:viewController animated:animated];
-    }
-    
-    RRExcludeImpactBehaviorFor(navigationController);
-    [self _handleDidShowViewController:viewController];
-}
-
-- (UIInterfaceOrientationMask)navigationControllerSupportedInterfaceOrientations:(UINavigationController *)navigationController {
-    if (self.rr_delegate && [self.rr_delegate respondsToSelector:@selector(rr_navigationControllerSupportedInterfaceOrientations:)]) {
-        return [self.rr_delegate rr_navigationControllerSupportedInterfaceOrientations:navigationController];
-    }
-    return UIInterfaceOrientationMaskAll;
-}
-
-- (UIInterfaceOrientation)navigationControllerPreferredInterfaceOrientationForPresentation:(UINavigationController *)navigationController {
-    if (self.rr_delegate && [self.rr_delegate respondsToSelector:@selector(rr_navigationControllerPreferredInterfaceOrientationForPresentation:)]) {
-        return [self.rr_delegate rr_navigationControllerPreferredInterfaceOrientationForPresentation:navigationController];
-    }
-    return UIInterfaceOrientationUnknown;
-}
-
-- (nullable id <UIViewControllerInteractiveTransitioning>)navigationController:(UINavigationController *)navigationController
-                                   interactionControllerForAnimationController:(id <UIViewControllerAnimatedTransitioning>) animationController {
-    if (self.rr_delegate && [self.rr_delegate respondsToSelector:@selector(rr_navigationController:interactionControllerForAnimationController:)]) {
-        return [self.rr_delegate rr_navigationController:navigationController interactionControllerForAnimationController:animationController];
-    }
-    return nil;
-}
-
-- (nullable id <UIViewControllerAnimatedTransitioning>)navigationController:(UINavigationController *)navigationController
-                                            animationControllerForOperation:(UINavigationControllerOperation)operation
-                                                         fromViewController:(UIViewController *)fromVC
-                                                           toViewController:(UIViewController *)toVC  {
-    if (self.rr_delegate && [self.rr_delegate respondsToSelector:@selector(rr_navigationController:animationControllerForOperation:fromViewController:toViewController:)]) {
-        return [self.rr_delegate rr_navigationController:navigationController animationControllerForOperation:operation fromViewController:fromVC toViewController:toVC];
-    }
-    return nil;
-}
 
 #pragma mark - UIGestureRecognizerDelegate
 

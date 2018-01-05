@@ -8,10 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
-@protocol RRNavigationControllerDelegate;
-
 @interface UINavigationController (RRNavigationBar)
 
-@property(nullable, nonatomic, weak) id<RRNavigationControllerDelegate> rr_delegate;
+/// Acquire the `UINavigationControllerDelegate` you set before.
+@property(nullable, nonatomic, weak, readonly) id<UINavigationControllerDelegate> rr_delegate;
 
 @end

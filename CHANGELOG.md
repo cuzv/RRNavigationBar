@@ -38,3 +38,8 @@
 ### 0.4.0
 
 - `RRNavigationControllerDelegate`
+
+### 0.4.1
+
+- Remove `RRNavigationControllerDelegate`
+- Re-implement `UINavigationControllerDelegate`
