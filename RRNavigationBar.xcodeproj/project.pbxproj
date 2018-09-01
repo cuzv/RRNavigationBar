@@ -257,7 +257,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastUpgradeCheck = 0900;
-				ORGANIZATIONNAME = RedRain;
+				ORGANIZATIONNAME = Shaw;
 				TargetAttributes = {
 					4692E4191E7AED4A00C53A89 = {
 						CreatedOnToolsVersion = 8.2.1;

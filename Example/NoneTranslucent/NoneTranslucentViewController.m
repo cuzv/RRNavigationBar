@@ -2,8 +2,8 @@
 //  NoneTranslucentViewController.m
 //  RRNavigationBar
 //
-//  Created by Roy Shaw on 9/22/17.
-//  Copyright © 2017 RedRain. All rights reserved.
+//  Created by Shaw on 9/22/17.
+//  Copyright © 2017 Shaw. All rights reserved.
 //
 
 #import "NoneTranslucentViewController.h"

@@ -2,8 +2,8 @@
 //  _RRWeakAssociatedObjectWrapper.h
 //  RRNavigationBar
 //
-//  Created by Roy Shaw on 3/28/17.
-//  Copyright © 2017 RedRain. All rights reserved.
+//  Created by Shaw on 3/28/17.
+//  Copyright © 2017 Shaw. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>

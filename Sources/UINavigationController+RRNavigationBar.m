@@ -2,8 +2,8 @@
 //  UINavigationController+RRNavigationBar.m
 //  RRNavigationBar
 //
-//  Created by Roy Shaw on 3/25/17.
-//  Copyright © 2017 RedRain. All rights reserved.
+//  Created by Shaw on 3/25/17.
+//  Copyright © 2017 Shaw. All rights reserved.
 //
 
 #import "UINavigationController+RRNavigationBar.h"

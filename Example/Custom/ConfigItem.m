@@ -2,8 +2,8 @@
 //  ConfigItem.m
 //  RRNavigationBar
 //
-//  Created by Roy Shaw on 3/22/17.
-//  Copyright © 2017 RedRain. All rights reserved.
+//  Created by Shaw on 3/22/17.
+//  Copyright © 2017 Shaw. All rights reserved.
 //
 
 #import "ConfigItem.h"

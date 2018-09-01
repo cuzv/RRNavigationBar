@@ -2,8 +2,8 @@
 //  _RRNavigationControllerDelegateImpl.m
 //  RRNavigationBar
 //
-//  Created by Roy Shaw on 1/5/18.
-//  Copyright © 2018 RedRain. All rights reserved.
+//  Created by Shaw on 1/5/18.
+//  Copyright © 2018 Shaw. All rights reserved.
 //
 
 #import "_RRNavigationControllerDelegateImpl.h"
