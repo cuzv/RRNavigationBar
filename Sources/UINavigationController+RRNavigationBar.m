@@ -79,7 +79,7 @@ void RRNavigationBarExcludeImpactBehaviorForInstance(__kindof UINavigationContro
     });
     
     RRExcludeImpactBehaviorFor(self);
-    self._delegateImpl = [_RRNavigationControllerDelegateImpl new];
+    
     self.delegate = self._delegateImpl;
     self.interactivePopGestureRecognizer.delegate = self;
 }
@@ -128,12 +128,18 @@ void RRNavigationBarExcludeImpactBehaviorForInstance(__kindof UINavigationContro
     return self._rr_nvc_preferredStatusBarStyle;
 }
 
-- (void)_rr_setDelegate:(nonnull id<UINavigationControllerDelegate>)delegate {
-    [self _rr_setDelegate:self._delegateImpl];
-    
-    if (delegate != self._delegateImpl) {
-        self._delegateImpl.delegate = delegate;
+- (void)_rr_setDelegate:(id<UINavigationControllerDelegate>)delegate {
+    if (delegate == self._delegateImpl) {
+        [self _rr_setDelegate:delegate];
+    } else {
+        if (self._delegateImpl.delegate != delegate) {
+            self._delegateImpl.delegate = delegate;
+        }
     }
+}
+
+- (id<UINavigationControllerDelegate>)rr_originalDelegate {
+    return self._delegateImpl.delegate;
 }
 
 #pragma mark - Private
@@ -156,15 +162,18 @@ void RRNavigationBarExcludeImpactBehaviorForInstance(__kindof UINavigationContro
 }
 
 - (_RRNavigationControllerDelegateImpl *)_delegateImpl {
-    return objc_getAssociatedObject(self, _cmd);
+    _RRNavigationControllerDelegateImpl *retval = objc_getAssociatedObject(self, _cmd);
+    if (!retval) {
+        retval = [_RRNavigationControllerDelegateImpl new];
+        retval.delegate = self.delegate;
+        self._delegateImpl = retval;
+        self.delegate = self._delegateImpl;
+    }
+    return retval;
 }
 
 - (void)set_delegateImpl:(_RRNavigationControllerDelegateImpl *)_delegateImpl {
     objc_setAssociatedObject(self, @selector(_delegateImpl), _delegateImpl, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-}
-
-- (id<UINavigationControllerDelegate>)rr_delegate {
-    return self._delegateImpl.delegate;
 }
 
 #pragma mark -

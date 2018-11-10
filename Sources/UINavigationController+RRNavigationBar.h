@@ -11,6 +11,6 @@
 @interface UINavigationController (RRNavigationBar)
 
 /// Acquire the `UINavigationControllerDelegate` you set before.
-@property(nullable, nonatomic, weak, readonly) id<UINavigationControllerDelegate> rr_delegate;
+@property(nullable, nonatomic, weak, readonly) id<UINavigationControllerDelegate> rr_originalDelegate;
 
 @end
