@@ -47,7 +47,9 @@
 }
 
 - (void)handleClickMore:(UIBarButtonItem *)sender {
-    [self.navigationController pushViewController:[ProductMoreViewController new] animated:YES];
+    UIViewController *vc = [ProductMoreViewController new];
+    vc.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSKeyValueChangeKey,id> *)change context:(void *)context {

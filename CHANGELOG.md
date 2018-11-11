@@ -43,3 +43,8 @@
 
 - Remove `RRNavigationControllerDelegate`
 - Re-implement `UINavigationControllerDelegate`
+
+### 1.0
+
+- Working with `RRNavigationTransitioning`
+

@@ -14,6 +14,26 @@
 #import "NoneTranslucentViewController.h"
 #import "Helper.h"
 #import "UIColor+EKExtension.h"
+//#import <RRNavigationTransitioning/RRNavigationTransitioning.h>
+
+@interface RRNavigationController : UINavigationController
+//@property (nonatomic, strong) RRNavigationTransition *transition;
+@end
+
+
+@implementation RRNavigationController
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    
+//    RRNavigationTransition *transition = [[RRNavigationTransition alloc] initWithNavigationController:self];
+//    self.transition = transition;
+//    self.delegate = self.transition;
+//    self.interactivePopGestureRecognizer.delegate = nil;
+//    self.interactivePopGestureRecognizer.enabled = NO;
+}
+
+@end
 
 @interface EmbedTabBarController ()
 
@@ -34,19 +54,19 @@
 //        global.backIndicatorTransitionMaskImage = indicatorImage;
     }
 
-    UINavigationController *productRoot = [[UINavigationController alloc] initWithRootViewController:[ProductListViewController new]];
+    UINavigationController *productRoot = [[RRNavigationController alloc] initWithRootViewController:[ProductListViewController new]];
     productRoot.tabBarItem.title = @"Product";
     productRoot.navigationBar.tintColor = [UIColor redColor];
     
 //    UINavigationController *exampleRoot = [UINavigationController new];
 //    exampleRoot.viewControllers = @[[TableViewController new], [TableViewController new], [TableViewController new]];
-    UINavigationController *exampleRoot = [[UINavigationController alloc] initWithRootViewController:[TableViewController new]];
+    UINavigationController *exampleRoot = [[RRNavigationController alloc] initWithRootViewController:[TableViewController new]];
     exampleRoot.tabBarItem.title = @"Custom";
     
-    UINavigationController *storyboardRoot = [[UINavigationController alloc] initWithRootViewController:[StoryboardViewController new]];
+    UINavigationController *storyboardRoot = [[RRNavigationController alloc] initWithRootViewController:[StoryboardViewController new]];
     storyboardRoot.tabBarItem.title = @"Storyboard";
 
-    UINavigationController *noneTranslucentRoot = [[UINavigationController alloc] initWithRootViewController:[NoneTranslucentViewController new]];
+    UINavigationController *noneTranslucentRoot = [[RRNavigationController alloc] initWithRootViewController:[NoneTranslucentViewController new]];
     noneTranslucentRoot.tabBarItem.title = @"NoneTranslucent";
     noneTranslucentRoot.navigationBar.translucent = NO;
     noneTranslucentRoot.navigationItem.title = @"NoneTranslucent";

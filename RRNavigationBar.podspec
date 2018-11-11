@@ -1,11 +1,11 @@
 Pod::Spec.new do |s|
   s.name         = "RRNavigationBar"
-  s.version      = "0.4.1"
+  s.version      = "1.0"
   s.summary      = "bring `UINavigationBar` to` UIViewController`"
 
   s.homepage     = "https://github.com/cuzv/RRNavigationBar.git"
   s.license      = "MIT"
-  s.author       = { "Moch Xiao" => "cuzval@gmail.com" }
+  s.author       = { "Shaw" => "cuzval@gmail.com" }
   s.platform     = :ios, "7.0"
   s.requires_arc = true
   s.source       = { :git => "https://github.com/cuzv/RRNavigationBar.git",

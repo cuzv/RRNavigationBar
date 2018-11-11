@@ -210,8 +210,10 @@ void RRNavigationBarExcludeImpactBehaviorForInstance(__kindof UINavigationContro
             RRLog(@"Pop canceled.");
         }
     };
-    if ([transitionCoordinator respondsToSelector:@selector(notifyWhenInteractionChangesUsingBlock:)]) {
-        [transitionCoordinator notifyWhenInteractionChangesUsingBlock:handleCancel];
+    if (@available(ios 10.0, *)) {
+        if ([transitionCoordinator respondsToSelector:@selector(notifyWhenInteractionChangesUsingBlock:)]) {
+            [transitionCoordinator notifyWhenInteractionChangesUsingBlock:handleCancel];
+        }
     } else {
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
