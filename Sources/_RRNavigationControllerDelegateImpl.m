@@ -64,7 +64,13 @@
     if (self.delegateImplementsPreferredInterfaceOrientationForPresentation) {
         return [self.delegate navigationControllerPreferredInterfaceOrientationForPresentation:navigationController];
     }
-    return (UIInterfaceOrientation)UIDevice.currentDevice.orientation;
+    
+    switch (UIDevice.currentDevice.orientation) {
+        case UIDeviceOrientationPortraitUpsideDown: return UIInterfaceOrientationPortraitUpsideDown;
+        case UIDeviceOrientationLandscapeRight: return UIInterfaceOrientationLandscapeLeft;
+        case UIDeviceOrientationLandscapeLeft: return UIInterfaceOrientationLandscapeRight;
+        default: return UIInterfaceOrientationPortrait;
+    }
 }
 
 - (nullable id <UIViewControllerInteractiveTransitioning>)navigationController:(UINavigationController *)navigationController
