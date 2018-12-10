@@ -48,3 +48,6 @@
 
 - Working with `RRNavigationTransitioning`
 
+### 1.1
+
+- Fix a crash.

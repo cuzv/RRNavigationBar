@@ -64,7 +64,7 @@
     if (self.delegateImplementsPreferredInterfaceOrientationForPresentation) {
         return [self.delegate navigationControllerPreferredInterfaceOrientationForPresentation:navigationController];
     }
-    return UIInterfaceOrientationUnknown;
+    return (UIInterfaceOrientation)UIDevice.currentDevice.orientation;
 }
 
 - (nullable id <UIViewControllerInteractiveTransitioning>)navigationController:(UINavigationController *)navigationController
