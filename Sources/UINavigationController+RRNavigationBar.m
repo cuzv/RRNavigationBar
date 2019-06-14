@@ -13,9 +13,9 @@
 #import <objc/runtime.h>
 #import "UIViewController+RRNavigationBar.h"
 #import "RRUtils.h"
-#import "_RRWeakAssociatedObjectWrapper.h"
+#import "_RRWeakObjectBox.h"
 #import "UIView+RRNavigationBar_internal.h"
-#import "_RRNavigationControllerDelegateImpl.h"
+#import "_RRNavigationControllerDelegateInterceptor.h"
 
 #ifndef RRRecoverObject
 #   define RRRecoverObject(from, to, info, property) (to.property = info[@#property] ?: from.property)
@@ -33,26 +33,10 @@
 #   define RRRecoverDobule(from, to, info, property) (to.property = info[@#property] ? [info[@#property] doubleValue] : from.property)
 #endif
 
-void RRNavigationBarExcludeImpactBehaviorForClass(Class _Nonnull nvcClass) {
-    if (![nvcClass isSubclassOfClass:UINavigationController.class]) {
-        return;
-    }
-    assert(_excludeNVCClassess);
-    [_excludeNVCClassess addObject:nvcClass];
-}
-
-void RRNavigationBarExcludeImpactBehaviorForInstance(__kindof UINavigationController *_Nonnull nvc) {
-    if (![nvc isKindOfClass:UINavigationController.class]) {
-        return;
-    }
-    assert(_excludeNVCInstance);
-    [_excludeNVCInstance addObject:nvc];
-}
 
 @interface UINavigationController ()<UIGestureRecognizerDelegate>
 @property (nonatomic, weak, nullable) UIViewController *_visibleTopViewController;
 @property (nonatomic, assign) BOOL _navigationBarInitialized;
-@property (nonatomic, retain, nullable) _RRNavigationControllerDelegateImpl *_delegateImpl;
 @end
 
 @implementation UINavigationController (RRNavigationBar)
@@ -71,24 +55,13 @@ void RRNavigationBarExcludeImpactBehaviorForInstance(__kindof UINavigationContro
 
 - (void)_rr_nvc_viewDidLoad {
     [self _rr_nvc_viewDidLoad];
-    
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        _excludeNVCClassess = [NSMutableSet setWithObject:UIImagePickerController.class];
-        _excludeNVCInstance = [NSMutableSet new];
-    });
-    
-    RRExcludeImpactBehaviorFor(self);
-    
-    self.delegate = self._delegateImpl;
+    self.delegate = self._delegateInterceptor;
     self.interactivePopGestureRecognizer.delegate = self;
 }
 
 - (void)_rr_nvc_viewWillLayoutSubviews {
     [self _rr_nvc_viewWillLayoutSubviews];
 
-    RRExcludeImpactBehaviorFor(self);
-    
     if (!self._navigationBarInitialized && self.navigationBar) {
         self.rr_navigationBar = RRUINavigationBarDuplicate(self.navigationBar);
         [self.rr_navigationBar _rr_apply];
@@ -129,27 +102,25 @@ void RRNavigationBarExcludeImpactBehaviorForInstance(__kindof UINavigationContro
 }
 
 - (void)_rr_setDelegate:(id<UINavigationControllerDelegate>)delegate {
-    if (delegate == self._delegateImpl) {
-        [self _rr_setDelegate:delegate];
-    } else {
-        if (self._delegateImpl.delegate != delegate) {
-            self._delegateImpl.delegate = delegate;
-        }
+    _RRNavigationControllerDelegateInterceptor *interceptor =  self._delegateInterceptor;
+    if (delegate != interceptor) {
+        interceptor.delegate = delegate;
     }
+    [self _rr_setDelegate:interceptor];
 }
 
 - (id<UINavigationControllerDelegate>)rr_originalDelegate {
-    return self._delegateImpl.delegate;
+    return self._delegateInterceptor.delegate;
 }
 
 #pragma mark - Private
 
 - (nullable UIViewController *)_visibleTopViewController {
-    return ((_RRWeakAssociatedObjectWrapper *)objc_getAssociatedObject(self, _cmd)).object;
+    return ((_RRWeakObjectBox *)objc_getAssociatedObject(self, _cmd)).object;
 }
 
 - (void)set_visibleTopViewController:(nullable UIViewController *)_visibleTopViewController {
-    _RRWeakAssociatedObjectWrapper *wrapper = [[_RRWeakAssociatedObjectWrapper alloc] initWithObject:_visibleTopViewController];
+    _RRWeakObjectBox *wrapper = [[_RRWeakObjectBox alloc] initWithObject:_visibleTopViewController];
     objc_setAssociatedObject(self, @selector(_visibleTopViewController), wrapper, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
@@ -161,19 +132,14 @@ void RRNavigationBarExcludeImpactBehaviorForInstance(__kindof UINavigationContro
     objc_setAssociatedObject(self, @selector(_navigationBarInitialized), @(_navigationBarInitialized), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
-- (_RRNavigationControllerDelegateImpl *)_delegateImpl {
-    _RRNavigationControllerDelegateImpl *retval = objc_getAssociatedObject(self, _cmd);
-    if (!retval) {
-        retval = [_RRNavigationControllerDelegateImpl new];
-        retval.delegate = self.delegate;
-        self._delegateImpl = retval;
-        self.delegate = self._delegateImpl;
+- (nonnull _RRNavigationControllerDelegateInterceptor *)_delegateInterceptor {
+    _RRNavigationControllerDelegateInterceptor *candidate = objc_getAssociatedObject(self, _cmd);
+    if (!candidate) {
+        candidate = [_RRNavigationControllerDelegateInterceptor new];
+        candidate.delegate = self.delegate;
+        objc_setAssociatedObject(self, _cmd, candidate, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
     }
-    return retval;
-}
-
-- (void)set_delegateImpl:(_RRNavigationControllerDelegateImpl *)_delegateImpl {
-    objc_setAssociatedObject(self, @selector(_delegateImpl), _delegateImpl, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    return candidate;
 }
 
 #pragma mark -
@@ -201,7 +167,7 @@ void RRNavigationBarExcludeImpactBehaviorForInstance(__kindof UINavigationContro
     }
     
     // If cancel pop, needs recover.
-    id <UIViewControllerTransitionCoordinator> transitionCoordinator = fromVC.transitionCoordinator;
+    id<UIViewControllerTransitionCoordinator> transitionCoordinator = fromVC.transitionCoordinator;
     __weak typeof(self) weakSelf = self;
     void (^handleCancel)(id<UIViewControllerTransitionCoordinatorContext>  _Nonnull context) = ^(id<UIViewControllerTransitionCoordinatorContext>  _Nonnull context) {
         if (context.isCancelled) {

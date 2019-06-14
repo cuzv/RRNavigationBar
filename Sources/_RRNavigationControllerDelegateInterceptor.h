@@ -1,5 +1,5 @@
 //
-//  _RRNavigationControllerDelegateImpl.h
+//  _RRNavigationControllerDelegateInterceptor.h
 //  RRNavigationBar
 //
 //  Created by Shaw on 1/5/18.
@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface _RRNavigationControllerDelegateImpl : NSObject <UINavigationControllerDelegate>
+@interface _RRNavigationControllerDelegateInterceptor : NSObject <UINavigationControllerDelegate>
 
 @property(nullable, nonatomic, weak) id<UINavigationControllerDelegate> delegate;
 

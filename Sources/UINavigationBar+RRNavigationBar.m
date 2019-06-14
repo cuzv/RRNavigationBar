@@ -9,7 +9,7 @@
 #import "UINavigationBar+RRNavigationBar.h"
 #import "UINavigationBar+RRNavigationBar_Internal.h"
 #import <objc/runtime.h>
-#import "_RRWeakAssociatedObjectWrapper.h"
+#import "_RRWeakObjectBox.h"
 #import "RRUtils.h"
 #import "UIView+RRNavigationBar_internal.h"
 
@@ -32,11 +32,11 @@
 }
 
 - (nullable UIViewController *)_rr_holder {
-    return ((_RRWeakAssociatedObjectWrapper *)objc_getAssociatedObject(self, _cmd)).object;
+    return ((_RRWeakObjectBox *)objc_getAssociatedObject(self, _cmd)).object;
 }
 
 - (void)set_rr_holder:(UIViewController *)_rr_holder {
-    _RRWeakAssociatedObjectWrapper *wrapper = [[_RRWeakAssociatedObjectWrapper alloc] initWithObject:_rr_holder];
+    _RRWeakObjectBox *wrapper = [[_RRWeakObjectBox alloc] initWithObject:_rr_holder];
     objc_setAssociatedObject(self, @selector(_rr_holder), wrapper, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 

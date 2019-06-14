@@ -1,5 +1,5 @@
 //
-//  _RRWeakAssociatedObjectWrapper.h
+//  _RRWeakObjectBox.h
 //  RRNavigationBar
 //
 //  Created by Shaw on 3/28/17.
@@ -8,10 +8,10 @@
 
 #import <Foundation/Foundation.h>
 
-@interface _RRWeakAssociatedObjectWrapper : NSObject
+@interface _RRWeakObjectBox : NSObject
 
-@property (nonatomic, weak, nullable) id object;
-- (nonnull instancetype)initWithObject:(nullable id)object;
+@property (nonatomic, weak, nullable, readonly) id object;
+- (nonnull instancetype)initWithObject:(nonnull id)object;
 - (nonnull instancetype)init UNAVAILABLE_ATTRIBUTE;
 + (nonnull instancetype)new UNAVAILABLE_ATTRIBUTE;
 
