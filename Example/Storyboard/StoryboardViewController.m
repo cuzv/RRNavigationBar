@@ -11,6 +11,23 @@
 
 #pragma mark -
 
+@interface _ImagePickerController : UIImagePickerController
+@end
+
+@implementation _ImagePickerController
+
+- (UIInterfaceOrientationMask)supportedInterfaceOrientations {
+    return UIInterfaceOrientationMaskAll;
+}
+
+- (BOOL)shouldAutorotate {
+    return true;
+}
+
+@end
+
+#pragma mark -
+
 @interface StoryboardViewController () <UINavigationControllerDelegate, UIImagePickerControllerDelegate>
 @end
 
@@ -31,7 +48,7 @@
 }
 
 - (void)pick:(UIBarButtonItem *)sender {
-    UIImagePickerController *controller = [UIImagePickerController new];
+    UIImagePickerController *controller = [_ImagePickerController new];
     controller.delegate = self;
     if (controller) {
         [self presentViewController:controller animated:YES completion:nil];
@@ -47,6 +64,13 @@
     NSLog(@"%@", @"Canceled");
 }
 
-@end
+- (UIInterfaceOrientationMask)navigationControllerSupportedInterfaceOrientations:(UINavigationController *)navigationController {
+    return UIInterfaceOrientationMaskAll;
+}
 
+- (UIInterfaceOrientation)navigationControllerPreferredInterfaceOrientationForPresentation:(UINavigationController *)navigationController {
+    return UIInterfaceOrientationLandscapeLeft;
+}
+
+@end
 

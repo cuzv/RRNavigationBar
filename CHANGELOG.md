@@ -51,3 +51,7 @@
 ### 1.1
 
 - Fix a crash.
+
+### 1.3
+
+- Forward delegate calls.
