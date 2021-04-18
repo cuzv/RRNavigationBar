@@ -14,6 +14,10 @@ let package = Package(
     dependencies: [
     ],
     targets: [
-        .target(name: "RRNavigationBar", dependencies: [], path: "Sources"),
+        .target(
+            name: "RRNavigationBar",
+            path: "Sources",
+            publicHeadersPath: ""
+        ),
     ]
 )
