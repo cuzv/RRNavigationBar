@@ -10,8 +10,8 @@
 #import "UINavigationBar+RRNavigationBar_Internal.h"
 #import <objc/runtime.h>
 #import "_RRWeakObjectBox.h"
-#import "RRUtils.h"
-#import "UIView+RRNavigationBar_internal.h"
+#import "_RRUtils.h"
+#import "UIView+RRNavigationBar_Internal.h"
 
 @implementation UINavigationBar (RRNavigationBar)
 

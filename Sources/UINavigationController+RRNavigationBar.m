@@ -12,9 +12,9 @@
 #import "UINavigationBar+RRNavigationBar_Internal.h"
 #import <objc/runtime.h>
 #import "UIViewController+RRNavigationBar.h"
-#import "RRUtils.h"
+#import "_RRUtils.h"
 #import "_RRWeakObjectBox.h"
-#import "UIView+RRNavigationBar_internal.h"
+#import "UIView+RRNavigationBar_Internal.h"
 #import "_RRNavigationControllerDelegateInterceptor.h"
 
 #ifndef RRRecoverObject

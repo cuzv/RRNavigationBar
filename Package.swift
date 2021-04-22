@@ -17,7 +17,10 @@ let package = Package(
         .target(
             name: "RRNavigationBar",
             path: "Sources",
-            publicHeadersPath: ""
+            publicHeadersPath: "",
+            cSettings: [
+                .headerSearchPath("Internal"),
+            ]
         ),
     ]
 )

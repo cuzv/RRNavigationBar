@@ -6,12 +6,11 @@
 //  Copyright © 2017 Shaw. All rights reserved.
 //
 
-#import "UIView+RRNavigationBar.h"
-#import "UIView+RRNavigationBar_internal.h"
-#import "RRUtils.h"
+#import "UIView+RRNavigationBar_Internal.h"
+#import "_RRUtils.h"
 #import <objc/runtime.h>
 
-@implementation UIView (RRNavigationBar)
+@implementation UIView (RRNavigationBar_Internal)
 
 #ifdef __IPHONE_11_0
 
@@ -57,7 +56,7 @@
 
 #ifdef __IPHONE_11_0
 
-@implementation UIScrollView (RRNavigationBar_internal)
+@implementation UIScrollView (RRNavigationBar_Internal)
 
 - (UIScrollViewContentInsetAdjustmentBehavior)_rr_contentInsetAdjustmentBehavior {
     return [objc_getAssociatedObject(self, _cmd) integerValue];

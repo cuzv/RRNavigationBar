@@ -14,10 +14,15 @@
 #import "NoneTranslucentViewController.h"
 #import "Helper.h"
 #import "UIColor+EKExtension.h"
-//#import <RRNavigationTransitioning/RRNavigationTransitioning.h>
+#if __has_include(<RRNavigationTransitioning/RRNavigationTransitioning.h>)
+#import <RRNavigationTransitioning/RRNavigationTransitioning.h>
+#define __HAS_RRNavigationTransitioning_FRAMEWORK__
+#endif
 
 @interface RRNavigationController : UINavigationController
-//@property (nonatomic, strong) RRNavigationTransition *transition;
+#ifdef __HAS_RRNavigationTransitioning_FRAMEWORK__
+@property (nonatomic, strong) RRNavigationTransition *transition;
+#endif
 @end
 
 
@@ -25,12 +30,14 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-//    RRNavigationTransition *transition = [[RRNavigationTransition alloc] initWithNavigationController:self];
-//    self.transition = transition;
-//    self.delegate = self.transition;
-//    self.interactivePopGestureRecognizer.delegate = nil;
-//    self.interactivePopGestureRecognizer.enabled = NO;
+
+#ifdef __HAS_RRNavigationTransitioning_FRAMEWORK__
+    RRNavigationTransition *transition = [[RRNavigationTransition alloc] initWithNavigationController:self];
+    self.transition = transition;
+    self.delegate = self.transition;
+    self.interactivePopGestureRecognizer.delegate = nil;
+    self.interactivePopGestureRecognizer.enabled = NO;
+#endif
 }
 
 @end

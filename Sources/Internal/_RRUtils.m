@@ -1,12 +1,12 @@
 //
-//  RRUtils.m
+//  _RRUtils.m
 //  RRNavigationBar
 //
 //  Created by Shaw on 3/25/17.
 //  Copyright © 2017 Shaw. All rights reserved.
 //
 
-#import "RRUtils.h"
+#import "_RRUtils.h"
 #import <objc/runtime.h>
 #import "_RRNavigationBar.h"
 

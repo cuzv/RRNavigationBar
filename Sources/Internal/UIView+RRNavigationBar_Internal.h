@@ -1,5 +1,5 @@
 //
-//  UIView+RRNavigationBar_internal.h
+//  UIView+RRNavigationBar_Internal.h
 //  RRNavigationBar
 //
 //  Created by Shaw on 9/17/17.
@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 
 /// Following methods used in library, you should not use any directly.
-@interface UIView (RRNavigationBar_internal)
+@interface UIView (RRNavigationBar_Internal)
 
 @property (nonatomic, assign) BOOL _rr_clipsToBounds NS_AVAILABLE_IOS(7_0);
 
@@ -25,7 +25,7 @@
 
 #ifdef __IPHONE_11_0
 
-@interface UIScrollView (RRNavigationBar_internal)
+@interface UIScrollView (RRNavigationBar_Internal)
 
 /// iOS 11+ use.
 @property (nonatomic, assign) UIScrollViewContentInsetAdjustmentBehavior _rr_contentInsetAdjustmentBehavior NS_AVAILABLE_IOS(11_0);
