@@ -6,11 +6,11 @@
 //  Copyright © 2017 Shaw. All rights reserved.
 //
 
+#import <objc/runtime.h>
 #import "UINavigationController+RRNavigationBar.h"
 #import "UINavigationController+RRNavigationBar_Internal.h"
 #import "UINavigationBar+RRNavigationBar.h"
 #import "UINavigationBar+RRNavigationBar_Internal.h"
-#import <objc/runtime.h>
 #import "UIViewController+RRNavigationBar.h"
 #import "_RRUtils.h"
 #import "_RRWeakObjectBox.h"
@@ -33,6 +33,21 @@
 #   define RRRecoverDobule(from, to, info, property) (to.property = info[@#property] ? [info[@#property] doubleValue] : from.property)
 #endif
 
+void RRNavigationBarExcludeImpactBehaviorForClass(Class _Nonnull nvcClass) {
+    if (![nvcClass isSubclassOfClass:UINavigationController.class]) {
+        return;
+    }
+    assert(_excludeNVCClassess);
+    [_excludeNVCClassess addObject:nvcClass];
+}
+
+void RRNavigationBarExcludeImpactBehaviorForInstance(__kindof UINavigationController *_Nonnull nvc) {
+    if (![nvc isKindOfClass:UINavigationController.class]) {
+        return;
+    }
+    assert(_excludeNVCInstance);
+    [_excludeNVCInstance addObject:nvc];
+}
 
 @interface UINavigationController ()<UIGestureRecognizerDelegate>
 @property (nonatomic, weak, nullable) UIViewController *_visibleTopViewController;
@@ -55,12 +70,23 @@
 
 - (void)_rr_nvc_viewDidLoad {
     [self _rr_nvc_viewDidLoad];
+
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        _excludeNVCClassess = [NSMutableSet setWithObject:UIImagePickerController.class];
+        _excludeNVCInstance = [NSMutableSet new];
+    });
+
+    RRExcludeImpactBehaviorFor(self);
+
     self.delegate = self._delegateInterceptor;
     self.interactivePopGestureRecognizer.delegate = self;
 }
 
 - (void)_rr_nvc_viewWillLayoutSubviews {
     [self _rr_nvc_viewWillLayoutSubviews];
+
+    RRExcludeImpactBehaviorFor(self);
 
     if (!self._navigationBarInitialized && self.navigationBar) {
         self.rr_navigationBar = RRUINavigationBarDuplicate(self.navigationBar);

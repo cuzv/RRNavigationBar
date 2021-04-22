@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface UINavigationBar (RRAddition)
+@interface UINavigationBar (RRNavigationBar)
 
 /// Normally, set `shadowImage` to `nil` only effect when `backgroundImage` is transparent.
 /// This property will ignore that policy, make shim shadow image hidden/show by force.

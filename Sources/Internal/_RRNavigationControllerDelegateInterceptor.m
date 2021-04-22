@@ -12,6 +12,10 @@
 @interface _RRNavigationControllerDelegateInterceptor ()
 @property (nonatomic, assign) BOOL delegateImplementsWillShowViewControllerAnimated;
 @property (nonatomic, assign) BOOL delegateImplementsDidShowViewControllerAnimated;
+@property (nonatomic, assign) BOOL delegateImplementsSupportedInterfaceOrientations;
+@property (nonatomic, assign) BOOL delegateImplementsPreferredInterfaceOrientationForPresentation;
+@property (nonatomic, assign) BOOL delegateImplementsInteractionControllerForAnimationController;
+@property (nonatomic, assign) BOOL delegateImplementsAnimationControllerForOperationFromViewControllerToViewController;
 @end
 
 @implementation _RRNavigationControllerDelegateInterceptor
@@ -24,6 +28,10 @@
         
         _delegateImplementsWillShowViewControllerAnimated = [_delegate respondsToSelector:@selector(navigationController:willShowViewController:animated:)];
         _delegateImplementsDidShowViewControllerAnimated = [_delegate respondsToSelector:@selector(navigationController:didShowViewController:animated:)];
+        _delegateImplementsSupportedInterfaceOrientations = [_delegate respondsToSelector:@selector(navigationControllerSupportedInterfaceOrientations:)];
+        _delegateImplementsPreferredInterfaceOrientationForPresentation = [_delegate respondsToSelector:@selector(navigationControllerPreferredInterfaceOrientationForPresentation:)];
+        _delegateImplementsInteractionControllerForAnimationController = [_delegate respondsToSelector:@selector(navigationController:interactionControllerForAnimationController:)];
+        _delegateImplementsAnimationControllerForOperationFromViewControllerToViewController = [_delegate respondsToSelector:@selector(navigationController:animationControllerForOperation:fromViewController:toViewController:)];
     }
 }
 
@@ -31,6 +39,9 @@
     if (self.delegateImplementsWillShowViewControllerAnimated) {
         [self.delegate navigationController:navigationController willShowViewController:viewController animated:animated];
     }
+
+    RRExcludeImpactBehaviorFor(navigationController);
+
     [navigationController _handleWillShowViewController:viewController];
 }
 
@@ -38,7 +49,48 @@
     if (self.delegateImplementsDidShowViewControllerAnimated) {
         [self.delegate navigationController:navigationController didShowViewController:viewController animated:animated];
     }
+
+    RRExcludeImpactBehaviorFor(navigationController);
+
     [navigationController _handleDidShowViewController:viewController];
+}
+
+- (UIInterfaceOrientationMask)navigationControllerSupportedInterfaceOrientations:(UINavigationController *)navigationController {
+    if (self.delegateImplementsSupportedInterfaceOrientations) {
+        return [self.delegate navigationControllerSupportedInterfaceOrientations:navigationController];
+    }
+    return UIInterfaceOrientationMaskAll;
+}
+
+- (UIInterfaceOrientation)navigationControllerPreferredInterfaceOrientationForPresentation:(UINavigationController *)navigationController {
+    if (self.delegateImplementsPreferredInterfaceOrientationForPresentation) {
+        return [self.delegate navigationControllerPreferredInterfaceOrientationForPresentation:navigationController];
+    }
+
+    switch (UIDevice.currentDevice.orientation) {
+        case UIDeviceOrientationPortraitUpsideDown: return UIInterfaceOrientationPortraitUpsideDown;
+        case UIDeviceOrientationLandscapeRight: return UIInterfaceOrientationLandscapeLeft;
+        case UIDeviceOrientationLandscapeLeft: return UIInterfaceOrientationLandscapeRight;
+        default: return UIInterfaceOrientationPortrait;
+    }
+}
+
+- (nullable id <UIViewControllerInteractiveTransitioning>)navigationController:(UINavigationController *)navigationController
+                                   interactionControllerForAnimationController:(id <UIViewControllerAnimatedTransitioning>) animationController {
+    if (self.delegateImplementsInteractionControllerForAnimationController) {
+        return [self.delegate navigationController:navigationController interactionControllerForAnimationController:animationController];
+    }
+    return nil;
+}
+
+- (nullable id <UIViewControllerAnimatedTransitioning>)navigationController:(UINavigationController *)navigationController
+                                            animationControllerForOperation:(UINavigationControllerOperation)operation
+                                                         fromViewController:(UIViewController *)fromVC
+                                                           toViewController:(UIViewController *)toVC  {
+    if (self.delegateImplementsAnimationControllerForOperationFromViewControllerToViewController) {
+        return [self.delegate navigationController:navigationController animationControllerForOperation:operation fromViewController:fromVC toViewController:toVC];
+    }
+    return nil;
 }
 
 - (BOOL)respondsToSelector:(SEL)aSelector {
