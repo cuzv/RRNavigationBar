@@ -111,17 +111,14 @@
 }
 
 - (void)handleClickShadowImageSwitch:(UISwitch *)sender {
-    sender.on = !sender.isOn;
     _nextVCData[3].value = sender.isOn ? ConfigValueTrue : ConfigValueFalse;
 }
 
 - (void)handleClickTranslucentSwitch:(UISwitch *)sender {
-    sender.on = !sender.isOn;
     _nextVCData[4].value = sender.isOn ? ConfigValueTrue : ConfigValueFalse;
 }
 
 - (void)handleClickBarStyleSwitch:(UISwitch *)sender {
-    sender.on = !sender.isOn;
     _nextVCData[5].value = sender.isOn ? ConfigValueTrue : ConfigValueFalse;
 }
 

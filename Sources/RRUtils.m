@@ -75,14 +75,27 @@ UINavigationBar *_Nonnull RRUINavigationBarDuplicate(UINavigationBar *_Nonnull o
     UINavigationBar *bar = [_RRNavigationBar new];
     bar.barStyle = one.barStyle;
     bar.translucent = one.translucent;
+    bar.alpha = one.alpha;
     bar.tintColor = one.tintColor;
     bar.barTintColor = one.barTintColor;
     bar.backgroundColor = one.backgroundColor;
     bar.shadowImage =  one.shadowImage;
-    [bar setBackgroundImage:[one backgroundImageForBarMetrics:UIBarMetricsDefault] forBarMetrics:UIBarMetricsDefault];
-    bar.alpha = one.alpha;
+    [@[
+        @(UIBarMetricsDefault),
+        @(UIBarMetricsCompact),
+        @(UIBarMetricsCompactPrompt),
+        @(UIBarMetricsDefaultPrompt)
+    ] enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        [bar setBackgroundImage:[one backgroundImageForBarMetrics:[obj integerValue]] forBarMetrics:[obj integerValue]];
+    }];
     bar.backIndicatorImage = one.backIndicatorImage;
     bar.backIndicatorTransitionMaskImage = one.backIndicatorTransitionMaskImage;
     bar.titleTextAttributes = one.titleTextAttributes;
+    if (@available(iOS 11.0, *)) {
+        bar.largeTitleTextAttributes = one.largeTitleTextAttributes;
+    }
+#ifdef __IPHONE_14_0
+    bar.items = @[[[UINavigationItem alloc] initWithTitle:@""]];
+#endif
     return bar;
 }
