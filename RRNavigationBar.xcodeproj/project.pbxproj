@@ -37,6 +37,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		3752BFBD264CCDB300075C95 /* RRNavigationBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RRNavigationBar.h; sourceTree = "<group>"; };
 		37C566D322B3A11D001944AC /* _RRNavigationControllerDelegateInterceptor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _RRNavigationControllerDelegateInterceptor.m; sourceTree = "<group>"; };
 		37EEA14326314A35004F7BCE /* UIView+RRNavigationBar_Internal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+RRNavigationBar_Internal.m"; sourceTree = "<group>"; };
 		37EEA14426314A35004F7BCE /* _RRUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _RRUtils.h; sourceTree = "<group>"; };
@@ -48,7 +49,6 @@
 		4625A8191E88F4B40092247A /* _RRNavigationBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _RRNavigationBar.h; sourceTree = "<group>"; };
 		4625A81A1E88F4B40092247A /* _RRNavigationBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _RRNavigationBar.m; sourceTree = "<group>"; };
 		4625A81E1E8917C20092247A /* UINavigationBar+RRNavigationBar_Internal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UINavigationBar+RRNavigationBar_Internal.h"; sourceTree = "<group>"; };
-		4625A81F1E8918070092247A /* RRNavigationBar.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RRNavigationBar.h; sourceTree = "<group>"; };
 		4625A8251E8931940092247A /* ProductListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProductListViewController.h; sourceTree = "<group>"; };
 		4625A8261E8931940092247A /* ProductListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProductListViewController.m; sourceTree = "<group>"; };
 		4625A8281E8931A00092247A /* ProductViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProductViewController.h; sourceTree = "<group>"; };
@@ -104,6 +104,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3752BFBC264CCDB300075C95 /* Public */ = {
+			isa = PBXGroup;
+			children = (
+				3752BFBD264CCDB300075C95 /* RRNavigationBar.h */,
+				460410F21E82BF9200FC3E2B /* UIViewController+RRNavigationBar.h */,
+				465E1C291E8662830082389A /* UINavigationController+RRNavigationBar.h */,
+				465FE9D41E87E92A000654C1 /* UINavigationBar+RRNavigationBar.h */,
+			);
+			path = Public;
+			sourceTree = "<group>";
+		};
 		37EEA13F263147DC004F7BCE /* Internal */ = {
 			isa = PBXGroup;
 			children = (
@@ -216,13 +227,10 @@
 		46AFDF9C1E7AF006008288AC /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				3752BFBC264CCDB300075C95 /* Public */,
 				37EEA13F263147DC004F7BCE /* Internal */,
-				4625A81F1E8918070092247A /* RRNavigationBar.h */,
-				460410F21E82BF9200FC3E2B /* UIViewController+RRNavigationBar.h */,
 				460410F31E82BF9200FC3E2B /* UIViewController+RRNavigationBar.m */,
-				465E1C291E8662830082389A /* UINavigationController+RRNavigationBar.h */,
 				465E1C2A1E8662830082389A /* UINavigationController+RRNavigationBar.m */,
-				465FE9D41E87E92A000654C1 /* UINavigationBar+RRNavigationBar.h */,
 				465FE9D51E87E92A000654C1 /* UINavigationBar+RRNavigationBar.m */,
 			);
 			path = Sources;
