@@ -7,10 +7,11 @@
 //
 
 #import <Foundation/Foundation.h>
-#if __has_include(<RRNavigation/UIViewController+RRNavigationBar.h>)
-#import <RRNavigation/UIViewController+RRNavigationBar.h>
-#import <RRNavigation/UINavigationBar+RRNavigationBar.h>
-#import <RRNavigation/UINavigationController+RRNavigationBar.h>
+
+#if __has_include(<RRNavigationBar/UIViewController+RRNavigationBar.h>)
+#import <RRNavigationBar/UIViewController+RRNavigationBar.h>
+#import <RRNavigationBar/UINavigationBar+RRNavigationBar.h>
+#import <RRNavigationBar/UINavigationController+RRNavigationBar.h>
 #else
 #import "UIViewController+RRNavigationBar.h"
 #import "UINavigationBar+RRNavigationBar.h"
